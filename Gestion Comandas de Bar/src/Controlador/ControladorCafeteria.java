@@ -27,6 +27,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		this.vista = vista;
 		this.vista.btnInicioSesion.addActionListener(this);
 		this.vista.btn_GuardarCambios.addActionListener(this);
+		this.vista.comboBox_Menu.addActionListener(this);
 		this.vista.lbl_Detalles.addMouseListener(this);
 		this.vista.lbl_CerrarSesion.addMouseListener(this);
 		this.vista.lbl_Salir.addMouseListener(this);
@@ -64,7 +65,16 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		if(e.getSource()==vista.btn_GuardarCambios) {
 			guardarCambiosEmpleado();
 		}
-
+		
+		if(e.getSource()==vista.comboBox_Menu) {
+			if(vista.comboBox_Menu.getSelectedItem().equals("Comidas")) {
+				vista.panel_Comidas.setVisible(true);
+				vista.panel_Bebidas.setVisible(false);
+			}else if(vista.comboBox_Menu.getSelectedItem().equals("Bebidas")) {
+				vista.panel_Comidas.setVisible(false);
+				vista.panel_Bebidas.setVisible(true);
+			}
+		}
 	}	
 	
 	public void autenticarEmpleado(ArrayList<Empleado> empleados) {
@@ -147,38 +157,61 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 	}
 	
 	private void guardarCambiosEmpleado() {
-		if(!vista.textField_Direccion.getText().equals(empleadoActual.getDireccion()) || !vista.textField_Contraseña.getText().equals(empleadoActual.getContraseña()) || !vista.textField_Telefono.getText().equals(empleadoActual.getTelefono())) {
-			
+		boolean cambiosGuardados=false;
+		
+		//VALIDACION CONTRASEÑA
+		if(!vista.textField_Contraseña.getText().equals(empleadoActual.getContraseña())) {
 			if(vista.textField_Contraseña.getText().length()<8) {
-				vista.textArea_MensajeInformacion.setText("La contraseña es demasiado corta".toUpperCase());
-				vista.textArea_MensajeInformacion.setForeground(new Color(255,0,0));
-				vista.textArea_MensajeInformacion.setVisible(true);
+				vista.textArea_MensajeInformacionCambiosRealizados.setText("La contraseña es incorrecta. Introduzca otra".toUpperCase());
+				vista.textArea_MensajeInformacionCambiosRealizados.setForeground(new Color (255, 0, 0));
+				vista.textArea_MensajeInformacionCambiosRealizados.setVisible(true);
 				vista.textField_Contraseña.setText("");
-			}
-			if(vista.textField_Telefono.getText().length()<9){
-				vista.textArea_MensajeInformacion.setText("El teléfono es incorrecto. Intentalo otra vez".toUpperCase());
-				vista.textArea_MensajeInformacion.setForeground(new Color(255,0,0));
-				vista.textArea_MensajeInformacion.setVisible(true);
-				vista.textField_Telefono.setText("");
-			}
-			if(vista.textField_Telefono.getText().length()>=9 && vista.textField_Telefono.getText().contains("abcdefghijklmnopqrstuvwxyz+-*/")) {
-				vista.textArea_MensajeInformacion.setText("El teléfono es incorrecto. Intentalo otra vez".toUpperCase());
-				vista.textArea_MensajeInformacion.setForeground(new Color(255,0,0));
-				vista.textArea_MensajeInformacion.setVisible(true);
-				vista.textField_Telefono.setText("");
-			}
-			if((vista.textField_Telefono.getText().length()==9 && !vista.textField_Telefono.getText().contains("abcdefghijklmnopqrstuvwxyz+-*/")) && vista.textField_Contraseña.getText().length()>=8){
+			}else {
 				empleadoActual.setContraseña(vista.textField_Contraseña.getText());
-				empleadoActual.setTelefono(vista.textField_Telefono.getText());
-				empleadoActual.setDireccion(vista.textField_Direccion.getText());
-				
-				vista.textArea_MensajeInformacion.setText("Los cambios se han realizado correctamente".toUpperCase());
-				vista.textArea_MensajeInformacion.setForeground(new Color(0, 136, 0));
-				vista.textArea_MensajeInformacion.setVisible(true);
+				cambiosGuardados=true;
 			}
+		}//FIN IF CONTRASEÑA
 		
-		}//FIN IF PRINCIPAL
+		//VALIDAR TELEFONO
+		String telefono = vista.textField_Telefono.getText();
 		
+		if(!esTelefonoValido(telefono)) {
+			vista.textArea_MensajeInformacionCambiosRealizados.setText("El teléfono debe tener 9 dígitos sin espacios ni caracteres especiales".toUpperCase());
+			vista.textArea_MensajeInformacionCambiosRealizados.setForeground(new Color (255, 0, 0));
+			vista.textArea_MensajeInformacionCambiosRealizados.setVisible(true);
+			vista.textField_Telefono.setText("");
+		}else {
+			if(!vista.textField_Telefono.getText().equals(empleadoActual.getTelefono())) {
+				empleadoActual.setTelefono(vista.textField_Telefono.getText());
+				cambiosGuardados=true;
+			}
+		}
+		
+		//GUARDAR DIRECCION
+		if(!vista.textField_Direccion.getText().equals(empleadoActual.getDireccion())) {
+			empleadoActual.setDireccion(vista.textField_Direccion.getText());
+			cambiosGuardados=true;
+		}
+		
+		if(cambiosGuardados) {
+			vista.textArea_MensajeInformacionCambiosRealizados.setText("Se han guardado los cambios correctamente".toUpperCase());
+			vista.textArea_MensajeInformacionCambiosRealizados.setForeground(new Color (0,136,0));
+			vista.textArea_MensajeInformacionCambiosRealizados.setVisible(true);
+		}
+		
+	}//FIN GUARDAR CAMBIOS
+	
+	private boolean esTelefonoValido(String telefono) {
+		if(telefono.length() != 9) {
+			return false;
+		}
+		for(int i=0; i<telefono.length(); i++) {
+			char c= telefono.charAt(i);
+			if(c < '0' || c>'9') {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	private void iniciarGestionComandas() {
@@ -195,14 +228,29 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		vista.lbl_Comida4.setIcon(ajustarTamañoImg("src/img/milhojas de crema.jpg", vista.lbl_Comida4.getWidth(), vista.lbl_Comida4.getHeight()));
 		vista.lbl_Comida5.setIcon(ajustarTamañoImg("src/img/tarta de queso.jpg", vista.lbl_Comida5.getWidth(), vista.lbl_Comida5.getHeight()));
 		vista.lbl_Comida6.setIcon(ajustarTamañoImg("src/img/bizcocho.jpg", vista.lbl_Comida6.getWidth(), vista.lbl_Comida6.getHeight()));
+		vista.panel_Comidas.setVisible(true);
+		vista.panel_Bebidas.setVisible(false);
+		
 		rellenarComboBox();
 	}
 	
 	private void rellenarComboBox() {
-		vista.comboBox_Menu.removeAllItems();
-		
-		vista.comboBox_Menu.addItem("Comida");
-		vista.comboBox_Menu.addItem("Bebida");
+		if(!existeItemEnComboBox("Comidas")) {
+			vista.comboBox_Menu.addItem("Comidas");
+		}
+		if(!existeItemEnComboBox("Bebidas")) {
+			vista.comboBox_Menu.addItem("Bebidas");
+		}
+		vista.comboBox_Menu.setSelectedItem("Comidas");
+	}
+	
+	private boolean existeItemEnComboBox(String item) {
+		for(int i=0; i<vista.comboBox_Menu.getItemCount(); i++) {
+			if(vista.comboBox_Menu.getItemAt(i).equals(item)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private void iniciarPanelInformacionProductos() {
@@ -223,13 +271,13 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 			boolean cambiosNoGuardados = !vista.textField_Direccion.getText().equals(empleadoActual.getDireccion()) || !vista.textField_Contraseña.getText().equals(empleadoActual.getContraseña()) || !vista.textField_Telefono.getText().equals(empleadoActual.getTelefono());
 			
 			if(cambiosNoGuardados) {
-				vista.textArea_MensajeInformacion.setText("No has guardado los cambios".toUpperCase());
-				vista.textArea_MensajeInformacion.setForeground(new Color(255, 0, 0));
-				vista.textArea_MensajeInformacion.setVisible(true);
+				vista.textArea_MensajeInformacionCambiosRealizados.setText("No has guardado los cambios".toUpperCase());
+				vista.textArea_MensajeInformacionCambiosRealizados.setForeground(new Color(255, 0, 0));
+				vista.textArea_MensajeInformacionCambiosRealizados.setVisible(true);
 			}else {
 				vista.panel_DetallesEmpleado.setVisible(false);
 				vista.panel_PantallaPrincipal.setVisible(true);
-				vista.textArea_MensajeInformacion.setVisible(false);
+				vista.textArea_MensajeInformacionCambiosRealizados.setVisible(false);
 			}
 		}
 		
