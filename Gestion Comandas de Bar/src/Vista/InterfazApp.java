@@ -131,6 +131,7 @@ public class InterfazApp extends JFrame {
 	public JLabel lbl_ImgFondoComandas;
 	public JLabel lbl_Mesa_o_Taburete;
 	public JTextArea txtrelTelfonoDebe;
+	public JLabel lbl_ImgFondoInfoProductos;
 
 	/**
 	 * Launch the application.
@@ -160,139 +161,6 @@ public class InterfazApp extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		panel_DetallesEmpleado = new JPanel();
-		panel_DetallesEmpleado.setBackground(new Color(245, 209, 215));
-		panel_DetallesEmpleado.setBounds(0, 0, 897, 532);
-		contentPane.add(panel_DetallesEmpleado);
-		panel_DetallesEmpleado.setLayout(null);
-		
-		txtrelTelfonoDebe = new JTextArea();
-		txtrelTelfonoDebe.setWrapStyleWord(true);
-		txtrelTelfonoDebe.setLineWrap(true);
-		txtrelTelfonoDebe.setForeground(new Color(83, 83, 83));
-		txtrelTelfonoDebe.setFont(new Font("Consolas", Font.BOLD, 12));
-		txtrelTelfonoDebe.setText("*El teléfono debe contener 9 números y sin caracteres especiales y sin espacios");
-		txtrelTelfonoDebe.setBackground(new Color(245, 209, 215));
-		txtrelTelfonoDebe.setBounds(376, 383, 340, 32);
-		panel_DetallesEmpleado.add(txtrelTelfonoDebe);
-		
-		textArea_MensajeInformacion = new JTextArea();
-		textArea_MensajeInformacion.setFont(new Font("Consolas", Font.BOLD, 14));
-		textArea_MensajeInformacion.setWrapStyleWord(true);
-		textArea_MensajeInformacion.setLineWrap(true);
-		textArea_MensajeInformacion.setBackground(new Color(245, 209, 215));
-		textArea_MensajeInformacion.setEditable(false);
-		textArea_MensajeInformacion.setOpaque(false);
-		textArea_MensajeInformacion.setBounds(183, 306, 181, 55);
-		panel_DetallesEmpleado.add(textArea_MensajeInformacion);
-		
-		textArea_RequisitosContraseña = new JTextArea();
-		textArea_RequisitosContraseña.setEditable(false);
-		textArea_RequisitosContraseña.setForeground(new Color(83, 83, 83));
-		textArea_RequisitosContraseña.setFont(new Font("Consolas", Font.BOLD, 12));
-		textArea_RequisitosContraseña.setText("*La contraseña debe contener 8 o más caracteres");
-		textArea_RequisitosContraseña.setBackground(new Color(245, 209, 215));
-		textArea_RequisitosContraseña.setBounds(376, 367, 340, 16);
-		textArea_RequisitosContraseña.setOpaque(false);
-		panel_DetallesEmpleado.add(textArea_RequisitosContraseña);
-		
-		btn_GuardarCambios = new JButton("Guardar Cambios");
-		btn_GuardarCambios.setForeground(Color.WHITE);
-		btn_GuardarCambios.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btn_GuardarCambios.setBackground(new Color(128, 0, 128));
-		btn_GuardarCambios.setBounds(376, 419, 165, 44);
-		panel_DetallesEmpleado.add(btn_GuardarCambios);
-		
-		textField_Contraseña = new JTextField();
-		textField_Contraseña.setFont(new Font("Consolas", Font.BOLD, 18));
-		textField_Contraseña.setBounds(376, 339, 171, 22);
-		panel_DetallesEmpleado.add(textField_Contraseña);
-		textField_Contraseña.setColumns(10);
-		
-		lbl_Contraseña = new JLabel("Contraseña*");
-		lbl_Contraseña.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_Contraseña.setForeground(new Color(60, 0, 200));
-		lbl_Contraseña.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_Contraseña.setBounds(376, 320, 102, 22);
-		panel_DetallesEmpleado.add(lbl_Contraseña);
-		
-		textField_Telefono = new JTextField();
-		textField_Telefono.setFont(new Font("Consolas", Font.BOLD, 18));
-		textField_Telefono.setColumns(10);
-		textField_Telefono.setBounds(376, 290, 171, 22);
-		panel_DetallesEmpleado.add(textField_Telefono);
-		
-		lbl_Telefono = new JLabel("Teléfono*");
-		lbl_Telefono.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_Telefono.setForeground(new Color(60, 0, 200));
-		lbl_Telefono.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_Telefono.setBounds(376, 270, 83, 22);
-		panel_DetallesEmpleado.add(lbl_Telefono);
-		
-		textField_Direccion = new JTextField();
-		textField_Direccion.setFont(new Font("Consolas", Font.BOLD, 18));
-		textField_Direccion.setBounds(376, 237, 171, 22);
-		panel_DetallesEmpleado.add(textField_Direccion);
-		textField_Direccion.setColumns(10);
-		
-		lbl_Direccion = new JLabel("Dirección");
-		lbl_Direccion.setForeground(new Color(60, 0, 200));
-		lbl_Direccion.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_Direccion.setBounds(376, 216, 102, 21);
-		panel_DetallesEmpleado.add(lbl_Direccion);
-		
-		lbl_InformacionFechaIngreso = new JLabel("");
-		lbl_InformacionFechaIngreso.setFont(new Font("Consolas", Font.BOLD, 18));
-		lbl_InformacionFechaIngreso.setBounds(376, 193, 130, 21);
-		panel_DetallesEmpleado.add(lbl_InformacionFechaIngreso);
-		
-		lbl_FechaIngreso = new JLabel("Fecha Ingreso");
-		lbl_FechaIngreso.setForeground(new Color(60, 0, 200));
-		lbl_FechaIngreso.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_FechaIngreso.setBounds(376, 178, 135, 16);
-		panel_DetallesEmpleado.add(lbl_FechaIngreso);
-		
-		lbl_InformacionApellidos = new JLabel("");
-		lbl_InformacionApellidos.setFont(new Font("Consolas", Font.BOLD, 18));
-		lbl_InformacionApellidos.setBounds(376, 150, 201, 16);
-		panel_DetallesEmpleado.add(lbl_InformacionApellidos);
-		
-		lbl_InformacionNombre = new JLabel("");
-		lbl_InformacionNombre.setFont(new Font("Consolas", Font.BOLD, 18));
-		lbl_InformacionNombre.setBounds(376, 104, 124, 16);
-		panel_DetallesEmpleado.add(lbl_InformacionNombre);
-		
-		lbl_Apellidos = new JLabel("Apellidos");
-		lbl_Apellidos.setForeground(new Color(60, 0, 200));
-		lbl_Apellidos.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_Apellidos.setBounds(376, 127, 100, 22);
-		panel_DetallesEmpleado.add(lbl_Apellidos);
-		
-		lbl_Nombre = new JLabel("Nombre ");
-		lbl_Nombre.setForeground(new Color(60, 0, 200));
-		lbl_Nombre.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_Nombre.setBounds(376, 88, 73, 16);
-		panel_DetallesEmpleado.add(lbl_Nombre);
-		
-		panel_FotoEmpleado = new JPanel();
-		panel_FotoEmpleado.setBackground(new Color(245, 209, 215));
-		panel_FotoEmpleado.setBorder(new LineBorder(new Color(60, 0, 200), 4, true));
-		panel_FotoEmpleado.setBounds(183, 85, 184, 213);
-		panel_DetallesEmpleado.add(panel_FotoEmpleado);
-		panel_FotoEmpleado.setLayout(null);
-		
-		lbl_FotoEmpleado = new JLabel("");
-		lbl_FotoEmpleado.setBounds(12, 12, 160, 189);
-		panel_FotoEmpleado.add(lbl_FotoEmpleado);
-		
-		lbl_Salir = new JLabel("");
-		lbl_Salir.setBounds(0, 0, 68, 66);
-		panel_DetallesEmpleado.add(lbl_Salir);
-		
-		lbl_ImgDetallesEmpleado = new JLabel("");
-		lbl_ImgDetallesEmpleado.setBounds(0, 0, 897, 532);
-		panel_DetallesEmpleado.add(lbl_ImgDetallesEmpleado);
 		
 		panel_GestionComandas = new JPanel();
 		panel_GestionComandas.setBackground(new Color(245, 209, 215));
@@ -525,6 +393,149 @@ public class InterfazApp extends JFrame {
 		lbl_ImgFondoComandas.setBounds(0, 0, 897, 532);
 		panel_GestionComandas.add(lbl_ImgFondoComandas);
 		
+		panel_InformacionProducto = new JPanel();
+		panel_InformacionProducto.setBackground(new Color(245, 209, 215));
+		panel_InformacionProducto.setBounds(0, 0, 897, 532);
+		contentPane.add(panel_InformacionProducto);
+		panel_InformacionProducto.setLayout(null);
+		
+		lbl_ImgFondoInfoProductos = new JLabel("");
+		lbl_ImgFondoInfoProductos.setBounds(0, 0, 897, 532);
+		panel_InformacionProducto.add(lbl_ImgFondoInfoProductos);
+		
+		panel_DetallesEmpleado = new JPanel();
+		panel_DetallesEmpleado.setBackground(new Color(245, 209, 215));
+		panel_DetallesEmpleado.setBounds(0, 0, 897, 532);
+		contentPane.add(panel_DetallesEmpleado);
+		panel_DetallesEmpleado.setLayout(null);
+		
+		txtrelTelfonoDebe = new JTextArea();
+		txtrelTelfonoDebe.setWrapStyleWord(true);
+		txtrelTelfonoDebe.setLineWrap(true);
+		txtrelTelfonoDebe.setForeground(new Color(83, 83, 83));
+		txtrelTelfonoDebe.setFont(new Font("Consolas", Font.BOLD, 12));
+		txtrelTelfonoDebe.setText("*El teléfono debe contener 9 números y sin caracteres especiales y sin espacios");
+		txtrelTelfonoDebe.setBackground(new Color(245, 209, 215));
+		txtrelTelfonoDebe.setBounds(376, 384, 340, 32);
+		panel_DetallesEmpleado.add(txtrelTelfonoDebe);
+		
+		textArea_MensajeInformacion = new JTextArea();
+		textArea_MensajeInformacion.setFont(new Font("Consolas", Font.BOLD, 14));
+		textArea_MensajeInformacion.setWrapStyleWord(true);
+		textArea_MensajeInformacion.setLineWrap(true);
+		textArea_MensajeInformacion.setBackground(new Color(245, 209, 215));
+		textArea_MensajeInformacion.setEditable(false);
+		textArea_MensajeInformacion.setOpaque(false);
+		textArea_MensajeInformacion.setBounds(183, 306, 181, 55);
+		panel_DetallesEmpleado.add(textArea_MensajeInformacion);
+		
+		textArea_RequisitosContraseña = new JTextArea();
+		textArea_RequisitosContraseña.setEditable(false);
+		textArea_RequisitosContraseña.setForeground(new Color(83, 83, 83));
+		textArea_RequisitosContraseña.setFont(new Font("Consolas", Font.BOLD, 12));
+		textArea_RequisitosContraseña.setText("*La contraseña debe contener 8 o más caracteres");
+		textArea_RequisitosContraseña.setBackground(new Color(245, 209, 215));
+		textArea_RequisitosContraseña.setBounds(376, 367, 340, 16);
+		textArea_RequisitosContraseña.setOpaque(false);
+		panel_DetallesEmpleado.add(textArea_RequisitosContraseña);
+		
+		btn_GuardarCambios = new JButton("Guardar Cambios");
+		btn_GuardarCambios.setForeground(Color.WHITE);
+		btn_GuardarCambios.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btn_GuardarCambios.setBackground(new Color(128, 0, 128));
+		btn_GuardarCambios.setBounds(376, 419, 165, 44);
+		panel_DetallesEmpleado.add(btn_GuardarCambios);
+		
+		textField_Contraseña = new JTextField();
+		textField_Contraseña.setFont(new Font("Consolas", Font.BOLD, 18));
+		textField_Contraseña.setBounds(376, 339, 171, 22);
+		panel_DetallesEmpleado.add(textField_Contraseña);
+		textField_Contraseña.setColumns(10);
+		
+		lbl_Contraseña = new JLabel("Contraseña*");
+		lbl_Contraseña.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_Contraseña.setForeground(new Color(60, 0, 200));
+		lbl_Contraseña.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_Contraseña.setBounds(376, 320, 102, 22);
+		panel_DetallesEmpleado.add(lbl_Contraseña);
+		
+		textField_Telefono = new JTextField();
+		textField_Telefono.setFont(new Font("Consolas", Font.BOLD, 18));
+		textField_Telefono.setColumns(10);
+		textField_Telefono.setBounds(376, 290, 171, 22);
+		panel_DetallesEmpleado.add(textField_Telefono);
+		
+		lbl_Telefono = new JLabel("Teléfono*");
+		lbl_Telefono.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_Telefono.setForeground(new Color(60, 0, 200));
+		lbl_Telefono.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_Telefono.setBounds(376, 270, 83, 22);
+		panel_DetallesEmpleado.add(lbl_Telefono);
+		
+		textField_Direccion = new JTextField();
+		textField_Direccion.setFont(new Font("Consolas", Font.BOLD, 18));
+		textField_Direccion.setBounds(376, 237, 171, 22);
+		panel_DetallesEmpleado.add(textField_Direccion);
+		textField_Direccion.setColumns(10);
+		
+		lbl_Direccion = new JLabel("Dirección");
+		lbl_Direccion.setForeground(new Color(60, 0, 200));
+		lbl_Direccion.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_Direccion.setBounds(376, 220, 102, 16);
+		panel_DetallesEmpleado.add(lbl_Direccion);
+		
+		lbl_InformacionFechaIngreso = new JLabel("");
+		lbl_InformacionFechaIngreso.setFont(new Font("Consolas", Font.BOLD, 18));
+		lbl_InformacionFechaIngreso.setBounds(376, 193, 130, 21);
+		panel_DetallesEmpleado.add(lbl_InformacionFechaIngreso);
+		
+		lbl_FechaIngreso = new JLabel("Fecha Ingreso");
+		lbl_FechaIngreso.setForeground(new Color(60, 0, 200));
+		lbl_FechaIngreso.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_FechaIngreso.setBounds(376, 178, 135, 16);
+		panel_DetallesEmpleado.add(lbl_FechaIngreso);
+		
+		lbl_InformacionApellidos = new JLabel("");
+		lbl_InformacionApellidos.setFont(new Font("Consolas", Font.BOLD, 18));
+		lbl_InformacionApellidos.setBounds(376, 150, 201, 16);
+		panel_DetallesEmpleado.add(lbl_InformacionApellidos);
+		
+		lbl_InformacionNombre = new JLabel("");
+		lbl_InformacionNombre.setFont(new Font("Consolas", Font.BOLD, 18));
+		lbl_InformacionNombre.setBounds(376, 104, 124, 16);
+		panel_DetallesEmpleado.add(lbl_InformacionNombre);
+		
+		lbl_Apellidos = new JLabel("Apellidos");
+		lbl_Apellidos.setForeground(new Color(60, 0, 200));
+		lbl_Apellidos.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_Apellidos.setBounds(376, 127, 100, 22);
+		panel_DetallesEmpleado.add(lbl_Apellidos);
+		
+		lbl_Nombre = new JLabel("Nombre ");
+		lbl_Nombre.setForeground(new Color(60, 0, 200));
+		lbl_Nombre.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_Nombre.setBounds(376, 88, 73, 16);
+		panel_DetallesEmpleado.add(lbl_Nombre);
+		
+		panel_FotoEmpleado = new JPanel();
+		panel_FotoEmpleado.setBackground(new Color(245, 209, 215));
+		panel_FotoEmpleado.setBorder(new LineBorder(new Color(60, 0, 200), 4, true));
+		panel_FotoEmpleado.setBounds(183, 85, 184, 213);
+		panel_DetallesEmpleado.add(panel_FotoEmpleado);
+		panel_FotoEmpleado.setLayout(null);
+		
+		lbl_FotoEmpleado = new JLabel("");
+		lbl_FotoEmpleado.setBounds(12, 12, 160, 189);
+		panel_FotoEmpleado.add(lbl_FotoEmpleado);
+		
+		lbl_Salir = new JLabel("");
+		lbl_Salir.setBounds(0, 0, 68, 66);
+		panel_DetallesEmpleado.add(lbl_Salir);
+		
+		lbl_ImgDetallesEmpleado = new JLabel("");
+		lbl_ImgDetallesEmpleado.setBounds(0, 0, 897, 532);
+		panel_DetallesEmpleado.add(lbl_ImgDetallesEmpleado);
+		
 		panel_PantallaPrincipal = new JPanel();
 		panel_PantallaPrincipal.setBackground(new Color(245, 209, 215));
 		panel_PantallaPrincipal.setBounds(0, 0, 897, 532);
@@ -697,12 +708,6 @@ public class InterfazApp extends JFrame {
 		lbl_ImgFondo = new JLabel("");
 		lbl_ImgFondo.setBounds(0, 0, 897, 532);
 		panel_InicioSesion.add(lbl_ImgFondo);
-		
-		panel_InformacionProducto = new JPanel();
-		panel_InformacionProducto.setBackground(new Color(245, 209, 215));
-		panel_InformacionProducto.setBounds(0, 0, 897, 532);
-		contentPane.add(panel_InformacionProducto);
-		panel_InformacionProducto.setLayout(null);
 		
 		inicializarApp();
 	}

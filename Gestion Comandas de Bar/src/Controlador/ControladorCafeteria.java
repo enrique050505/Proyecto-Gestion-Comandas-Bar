@@ -39,6 +39,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		this.vista.lbl_Taburete1.addMouseListener(this);
 		this.vista.lbl_Taburete2.addMouseListener(this);
 		this.vista.lbl_Taburete3.addMouseListener(this);
+		this.vista.lbl_InformacionComida1.addMouseListener(this);
 		rellenarListaEmpleados(empleados);
 		
 		fechaYHora = new Timer(1000, new ActionListener() {
@@ -153,22 +154,20 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 				vista.textArea_MensajeInformacion.setForeground(new Color(255,0,0));
 				vista.textArea_MensajeInformacion.setVisible(true);
 				vista.textField_Contraseña.setText("");
-			}else if(vista.textField_Telefono.getText().length()<9){
+			}
+			if(vista.textField_Telefono.getText().length()<9){
 				vista.textArea_MensajeInformacion.setText("El teléfono es incorrecto. Intentalo otra vez".toUpperCase());
 				vista.textArea_MensajeInformacion.setForeground(new Color(255,0,0));
 				vista.textArea_MensajeInformacion.setVisible(true);
 				vista.textField_Telefono.setText("");
-			}else if(vista.textField_Telefono.getText().length()>9 && vista.textField_Telefono.getText().contains("abcdefghijklmnopqrstuvwxyz+-*/")) {
+			}
+			if(vista.textField_Telefono.getText().length()>=9 && vista.textField_Telefono.getText().contains("abcdefghijklmnopqrstuvwxyz+-*/")) {
 				vista.textArea_MensajeInformacion.setText("El teléfono es incorrecto. Intentalo otra vez".toUpperCase());
 				vista.textArea_MensajeInformacion.setForeground(new Color(255,0,0));
 				vista.textArea_MensajeInformacion.setVisible(true);
 				vista.textField_Telefono.setText("");
-			}else if(vista.textField_Telefono.getText().length()==9 && vista.textField_Telefono.getText().contains("abcdefghijklmnopqrstuvwxyz+-*/")) {
-				vista.textArea_MensajeInformacion.setText("El teléfono es incorrecto. Intentalo otra vez".toUpperCase());
-				vista.textArea_MensajeInformacion.setForeground(new Color(255,0,0));
-				vista.textArea_MensajeInformacion.setVisible(true);
-				vista.textField_Telefono.setText("");
-			}else if(vista.textField_Telefono.getText().length()==9 && !vista.textField_Telefono.getText().contains("abcdefghijklmnopqrstuvwxyz+-*/")){
+			}
+			if((vista.textField_Telefono.getText().length()==9 && !vista.textField_Telefono.getText().contains("abcdefghijklmnopqrstuvwxyz+-*/")) && vista.textField_Contraseña.getText().length()>=8){
 				empleadoActual.setContraseña(vista.textField_Contraseña.getText());
 				empleadoActual.setTelefono(vista.textField_Telefono.getText());
 				empleadoActual.setDireccion(vista.textField_Direccion.getText());
@@ -204,6 +203,10 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		
 		vista.comboBox_Menu.addItem("Comida");
 		vista.comboBox_Menu.addItem("Bebida");
+	}
+	
+	private void iniciarPanelInformacionProductos() {
+		vista.lbl_ImgFondoInfoProductos.setIcon(ajustarTamañoImg("src/img/fondoInformacionProducto.png", vista.lbl_ImgFondoInfoProductos.getWidth(), vista.lbl_ImgFondoInfoProductos.getHeight()));
 	}
 	
 	@Override
@@ -297,6 +300,12 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		if(e.getClickCount()==1 && e.getSource()==vista.lbl_SalirComandas) {
 			vista.panel_PantallaPrincipal.setVisible(true);
 			vista.panel_GestionComandas.setVisible(false);
+		}
+		
+		if(e.getClickCount()==1 && e.getSource()==vista.lbl_InformacionComida1) {
+			vista.panel_GestionComandas.setVisible(false);
+			vista.panel_InformacionProducto.setVisible(true);
+			iniciarPanelInformacionProductos();
 		}
 		
 	}
