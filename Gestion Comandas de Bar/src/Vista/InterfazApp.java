@@ -154,7 +154,7 @@ public class InterfazApp extends JFrame {
 	public JProgressBar progressBar_Bebida3;
 	public JLabel lbl_Batido;
 	public JComboBox comboBox_TipoBatido;
-	public JLabel lbl_Refresco_1;
+	public JLabel lbl_BebidaCaliente;
 	public JLabel lbl_InformacionBebida2;
 	public JButton btnAñadirBebida2;
 	public JButton btnRetirarBebida2;
@@ -203,15 +203,21 @@ public class InterfazApp extends JFrame {
 		panel_Bebidas = new JPanel();
 		panel_Bebidas.setBackground(new Color(245, 209, 215));
 		panel_Bebidas.setBounds(0, 82, 715, 450);
-		panel_Bebidas.setOpaque(false);
+		//panel_Bebidas.setOpaque(false);
 		panel_GestionComandas.add(panel_Bebidas);
 		panel_Bebidas.setLayout(null);
 		
+		lbl_Refresco = new JLabel("");
+		lbl_Refresco.setBounds(22, 243, 169, 165);
+		panel_Bebidas.add(lbl_Refresco);
+		
 		comboBox_TipoCafe = new JComboBox();
-		comboBox_TipoCafe.setBounds(203, 31, 133, 25);
+		comboBox_TipoCafe.setFont(new Font("Consolas", Font.BOLD, 14));
+		comboBox_TipoCafe.setForeground(new Color(0, 0, 0));
+		comboBox_TipoCafe.setBounds(203, 22, 138, 33);
 		panel_Bebidas.add(comboBox_TipoCafe);
 		
-		lbl_Cafe = new JLabel("New label");
+		lbl_Cafe = new JLabel("");
 		lbl_Cafe.setBounds(22, 22, 169, 165);
 		panel_Bebidas.add(lbl_Cafe);
 		
@@ -233,16 +239,14 @@ public class InterfazApp extends JFrame {
 		btnRetirarBebida1.setBounds(203, 154, 92, 31);
 		panel_Bebidas.add(btnRetirarBebida1);
 		
-		lbl_Refresco = new JLabel("New label");
-		lbl_Refresco.setBounds(22, 243, 169, 165);
-		panel_Bebidas.add(lbl_Refresco);
-		
 		progressBar_Bebida1 = new JProgressBar();
 		progressBar_Bebida1.setBounds(22, 199, 169, 14);
 		panel_Bebidas.add(progressBar_Bebida1);
 		
 		comboBox_TipoRefresco = new JComboBox();
-		comboBox_TipoRefresco.setBounds(203, 253, 133, 25);
+		comboBox_TipoRefresco.setFont(new Font("Consolas", Font.BOLD, 14));
+		comboBox_TipoRefresco.setForeground(new Color(0, 0, 0));
+		comboBox_TipoRefresco.setBounds(203, 243, 138, 33);
 		panel_Bebidas.add(comboBox_TipoRefresco);
 		
 		btnAñadirBebida3 = new JButton("Añadir");
@@ -267,64 +271,66 @@ public class InterfazApp extends JFrame {
 		progressBar_Bebida3.setBounds(22, 420, 169, 14);
 		panel_Bebidas.add(progressBar_Bebida3);
 		
-		lbl_Batido = new JLabel("New label");
-		lbl_Batido.setBounds(387, 22, 169, 165);
+		lbl_Batido = new JLabel("");
+		lbl_Batido.setBounds(365, 22, 169, 165);
 		panel_Bebidas.add(lbl_Batido);
 		
 		comboBox_TipoBatido = new JComboBox();
-		comboBox_TipoBatido.setBounds(570, 31, 133, 25);
+		comboBox_TipoBatido.setFont(new Font("Consolas", Font.BOLD, 14));
+		comboBox_TipoBatido.setBounds(546, 22, 153, 33);
 		panel_Bebidas.add(comboBox_TipoBatido);
 		
-		lbl_Refresco_1 = new JLabel("New label");
-		lbl_Refresco_1.setBounds(387, 243, 169, 165);
-		panel_Bebidas.add(lbl_Refresco_1);
+		lbl_BebidaCaliente = new JLabel("");
+		lbl_BebidaCaliente.setBounds(365, 243, 169, 165);
+		panel_Bebidas.add(lbl_BebidaCaliente);
 		
 		lbl_InformacionBebida2 = new JLabel("");
-		lbl_InformacionBebida2.setBounds(570, 67, 32, 32);
+		lbl_InformacionBebida2.setBounds(546, 67, 32, 32);
 		panel_Bebidas.add(lbl_InformacionBebida2);
 		
 		btnAñadirBebida2 = new JButton("Añadir");
 		btnAñadirBebida2.setForeground(Color.BLACK);
 		btnAñadirBebida2.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnAñadirBebida2.setBackground(new Color(0, 213, 0));
-		btnAñadirBebida2.setBounds(570, 111, 92, 31);
+		btnAñadirBebida2.setBounds(546, 111, 92, 31);
 		panel_Bebidas.add(btnAñadirBebida2);
 		
 		btnRetirarBebida2 = new JButton("Retirar");
 		btnRetirarBebida2.setForeground(Color.BLACK);
 		btnRetirarBebida2.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnRetirarBebida2.setBackground(Color.RED);
-		btnRetirarBebida2.setBounds(570, 154, 92, 31);
+		btnRetirarBebida2.setBounds(546, 154, 92, 31);
 		panel_Bebidas.add(btnRetirarBebida2);
 		
 		progressBar_Bebida2 = new JProgressBar();
-		progressBar_Bebida2.setBounds(387, 199, 169, 14);
+		progressBar_Bebida2.setBounds(365, 199, 169, 14);
 		panel_Bebidas.add(progressBar_Bebida2);
 		
 		comboBox_TipoBebidaCaliente = new JComboBox();
-		comboBox_TipoBebidaCaliente.setBounds(570, 253, 133, 25);
+		comboBox_TipoBebidaCaliente.setFont(new Font("Consolas", Font.BOLD, 14));
+		comboBox_TipoBebidaCaliente.setBounds(542, 243, 157, 33);
 		panel_Bebidas.add(comboBox_TipoBebidaCaliente);
 		
 		lbl_InformacionBebida4 = new JLabel("");
-		lbl_InformacionBebida4.setBounds(570, 290, 32, 32);
+		lbl_InformacionBebida4.setBounds(546, 290, 32, 32);
 		panel_Bebidas.add(lbl_InformacionBebida4);
 		
 		btnAñadirBebida4 = new JButton("Añadir");
 		btnAñadirBebida4.setForeground(Color.BLACK);
 		btnAñadirBebida4.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnAñadirBebida4.setBackground(new Color(0, 213, 0));
-		btnAñadirBebida4.setBounds(570, 334, 92, 31);
+		btnAñadirBebida4.setBounds(546, 334, 92, 31);
 		panel_Bebidas.add(btnAñadirBebida4);
 		
 		btnRetirarBebida4 = new JButton("Retirar");
 		btnRetirarBebida4.setForeground(Color.BLACK);
 		btnRetirarBebida4.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnRetirarBebida4.setBackground(Color.RED);
-		btnRetirarBebida4.setBounds(570, 377, 92, 31);
+		btnRetirarBebida4.setBounds(546, 377, 92, 31);
 		panel_Bebidas.add(btnRetirarBebida4);
 		
 		progressBar_Bebida4 = new JProgressBar();
-		progressBar_Bebida4.setBounds(387, 420, 169, 14);
+		progressBar_Bebida4.setBounds(365, 420, 169, 14);
 		panel_Bebidas.add(progressBar_Bebida4);
 		
 		panel_Comidas = new JPanel();

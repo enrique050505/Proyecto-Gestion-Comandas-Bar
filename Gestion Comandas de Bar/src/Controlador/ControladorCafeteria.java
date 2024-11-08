@@ -28,6 +28,10 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		this.vista.btnInicioSesion.addActionListener(this);
 		this.vista.btn_GuardarCambios.addActionListener(this);
 		this.vista.comboBox_Menu.addActionListener(this);
+		this.vista.comboBox_TipoCafe.addActionListener(this);
+		this.vista.comboBox_TipoBatido.addActionListener(this);
+		this.vista.comboBox_TipoRefresco.addActionListener(this);
+		this.vista.comboBox_TipoBebidaCaliente.addActionListener(this);
 		this.vista.lbl_Detalles.addMouseListener(this);
 		this.vista.lbl_CerrarSesion.addMouseListener(this);
 		this.vista.lbl_Salir.addMouseListener(this);
@@ -41,7 +45,9 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		this.vista.lbl_Taburete2.addMouseListener(this);
 		this.vista.lbl_Taburete3.addMouseListener(this);
 		this.vista.lbl_InformacionComida1.addMouseListener(this);
+		
 		rellenarListaEmpleados(empleados);
+		rellenarComboBoxBebidas();
 		
 		fechaYHora = new Timer(1000, new ActionListener() {
 			@Override
@@ -75,6 +81,19 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 				vista.panel_Bebidas.setVisible(true);
 			}
 		}
+		
+		if(e.getSource()==vista.comboBox_TipoCafe) {
+			mostrarImagenCafeSeleccionado();
+		}
+		
+		if(e.getSource()==vista.comboBox_TipoBatido) {
+			mostrarImagenBatidoSeleccionado();
+		}
+		
+		if(e.getSource()==vista.comboBox_TipoRefresco) {
+			mostrarImagenRefrescoSeleccionado();
+		}
+		
 	}	
 	
 	public void autenticarEmpleado(ArrayList<Empleado> empleados) {
@@ -126,13 +145,6 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		vista.lbl_ImgEmpleado.setIcon(ajustarTamañoImg(empleado.getImagenEmpleado().getDescription(), vista.lbl_ImgEmpleado.getWidth(), vista.lbl_ImgEmpleado.getHeight()));
 		vista.lbl_NombreEmpleado.setText(empleado.getNombre());
 	}
-	
-	private ImageIcon ajustarTamañoImg(String ruta, int ancho, int alto) {
-        ImageIcon imagen = new ImageIcon((ruta));
-        Image imagenOriginal = imagen.getImage();
-        Image imagenAjustada = imagenOriginal.getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
-        return new ImageIcon(imagenAjustada);
-	}//FIN AJUSTAR TAMAÑO IMG
 	
 	private void rellenarListaEmpleados(ArrayList<Empleado> empleados) {
 		empleados.add(new Empleado(new ImageIcon("src/img/usuario1.png"), "Mario", "01234567", "C/Las Rozas, 20", "686869342" , "García Lorca", "08/09/2022"));
@@ -228,8 +240,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		vista.lbl_Comida4.setIcon(ajustarTamañoImg("src/img/milhojas de crema.jpg", vista.lbl_Comida4.getWidth(), vista.lbl_Comida4.getHeight()));
 		vista.lbl_Comida5.setIcon(ajustarTamañoImg("src/img/tarta de queso.jpg", vista.lbl_Comida5.getWidth(), vista.lbl_Comida5.getHeight()));
 		vista.lbl_Comida6.setIcon(ajustarTamañoImg("src/img/bizcocho.jpg", vista.lbl_Comida6.getWidth(), vista.lbl_Comida6.getHeight()));
-		vista.lbl_Cafe.setIcon(ajustarTamañoImg("src/img/bombom.jpeg", vista.lbl_Cafe.getWidth(), vista.lbl_Cafe.getHeight()));
-		vista.lbl_Refresco.setIcon(ajustarTamañoImg("src/img/cafe con leche.jpg", vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
+		
 		vista.panel_Comidas.setVisible(true);
 		vista.panel_Bebidas.setVisible(false);
 		
@@ -237,16 +248,16 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 	}
 	
 	private void rellenarComboBoxMenu() {
-		if(!comprobarItemEnComboBox("Comidas")) {
+		if(!comprobarItemEnComboBoxMenu("Comidas")) {
 			vista.comboBox_Menu.addItem("Comidas");
 		}
-		if(!comprobarItemEnComboBox("Bebidas")) {
+		if(!comprobarItemEnComboBoxMenu("Bebidas")) {
 			vista.comboBox_Menu.addItem("Bebidas");
 		}
 		vista.comboBox_Menu.setSelectedItem("Comidas");
 	}
 	
-	private boolean comprobarItemEnComboBox(String item) {
+	private boolean comprobarItemEnComboBoxMenu(String item) {
 		for(int i=0; i<vista.comboBox_Menu.getItemCount(); i++) {
 			if(vista.comboBox_Menu.getItemAt(i).equals(item)) {
 				return true;
@@ -255,9 +266,124 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		return false;
 	}
 	
+	private void rellenarComboBoxBebidas() {
+		//COMBOBOX CAFES
+		this.vista.comboBox_TipoCafe.addItem("Café con leche");
+		this.vista.comboBox_TipoCafe.addItem("Capuccino");
+		this.vista.comboBox_TipoCafe.addItem("Café Americano");
+		this.vista.comboBox_TipoCafe.addItem("Café Bombón");
+		this.vista.comboBox_TipoCafe.addItem("Café Cortado");
+		this.vista.comboBox_TipoCafe.setSelectedItem("Café con leche");
+		
+		//COMBOBOX BATIDOS
+		this.vista.comboBox_TipoBatido.addItem("Batido Chocolate");
+		this.vista.comboBox_TipoBatido.addItem("Batido Fresa");
+		this.vista.comboBox_TipoBatido.addItem("Batido Oreo");
+		this.vista.comboBox_TipoBatido.addItem("Batido Vainilla");
+		this.vista.comboBox_TipoBatido.addItem("Batido Mango");
+		this.vista.comboBox_TipoBatido.setSelectedItem("Batido Chocolate");
+		
+		//COMBOBOX REFRESCOS
+		this.vista.comboBox_TipoRefresco.addItem("Agua");
+		this.vista.comboBox_TipoRefresco.addItem("Aquarius Limón");
+		this.vista.comboBox_TipoRefresco.addItem("Fanta Naranja");
+		this.vista.comboBox_TipoRefresco.addItem("Nestea");
+		this.vista.comboBox_TipoRefresco.addItem("Coca-Cola");
+		this.vista.comboBox_TipoRefresco.setSelectedItem("Agua");
+	}
+	
+	private void mostrarImagenCafeSeleccionado() {
+		String tipoCafe = (String) vista.comboBox_TipoCafe.getSelectedItem();
+		String rutaImagen="";
+		
+		switch(tipoCafe) {
+			case "Café con leche":
+				rutaImagen = "src/img/cafe con leche.png";
+				break;
+			case "Capuccino":
+				rutaImagen = "src/img/capuccino.png";
+				break;
+			case "Café Americano":
+				rutaImagen = "src/img/cafe americano.png";
+				break;
+			case "Café Bombón":
+				rutaImagen = "src/img/cafe bombon.png";
+				break;
+			case "Café Cortado":
+				rutaImagen = "src/img/cafe cortado.png";
+				break;
+			default:
+				rutaImagen = "src/img/cafe con leche.png";
+				break;
+		}
+		
+		vista.lbl_Cafe.setIcon(ajustarTamañoImg(rutaImagen, vista.lbl_Cafe.getWidth(), vista.lbl_Cafe.getHeight()));
+	}
+	
+	private void mostrarImagenBatidoSeleccionado() {
+		String tipoBatido = (String) vista.comboBox_TipoBatido.getSelectedItem();
+		String rutaImagen = "";
+		
+		switch(tipoBatido) {
+			case "Batido Chocolate":
+				rutaImagen = "src/img/batido de chocolate.png";
+				break;
+			case "Batido Fresa":
+				rutaImagen = "src/img/batido de fresa.png";
+				break;
+			case "Batido Oreo":
+				rutaImagen = "src/img/batido de oreo.png";
+				break;
+			case "Batido Vainilla":
+				rutaImagen = "src/img/batido de vainilla.png";
+				break;
+			case "Batido Mango":
+				rutaImagen = "src/img/batido de mango.png";
+				break;
+			default:
+				rutaImagen = "src/img/batido de chocolate.png";
+				break;
+		}
+		vista.lbl_Batido.setIcon(ajustarTamañoImg(rutaImagen, vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
+	}
+	
+	private void mostrarImagenRefrescoSeleccionado() {
+		String tipoResfresco = (String) vista.comboBox_TipoRefresco.getSelectedItem();
+		String rutaImagen = "";
+		
+		switch(tipoResfresco) {
+			case "Agua":
+				rutaImagen = "src/img/agua.png";
+				break;
+			case "Aquarius Limón":
+				rutaImagen = "src/img/aquarius.png";
+				break;
+			case "Fanta Naranja":
+				rutaImagen = "src/img/fanta de naranja.png";
+				break;
+			case "Nestea":
+				rutaImagen = "src/img/nestea.png";
+				break;
+			case "Coca-Cola":
+				rutaImagen = "src/img/coca cola.png";
+				break;
+			default:
+				rutaImagen = "src/img/agua.png";
+				break;
+		}
+		vista.lbl_Refresco.setIcon(ajustarTamañoImg(rutaImagen, vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
+	}
+	
 	private void iniciarPanelInformacionProductos() {
 		vista.lbl_ImgFondoInfoProductos.setIcon(ajustarTamañoImg("src/img/fondoInformacionProducto.png", vista.lbl_ImgFondoInfoProductos.getWidth(), vista.lbl_ImgFondoInfoProductos.getHeight()));
 	}
+
+	private ImageIcon ajustarTamañoImg(String ruta, int ancho, int alto) {
+        ImageIcon imagen = new ImageIcon((ruta));
+        Image imagenOriginal = imagen.getImage();
+        Image imagenAjustada = imagenOriginal.getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+        return new ImageIcon(imagenAjustada);
+	}//FIN AJUSTAR TAMAÑO IMG
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -345,7 +471,6 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 			iniciarGestionComandas();
 			vista.lbl_Mesa_o_Taburete.setText("TABURETE 3");
 		}
-		
 		
 		if(e.getClickCount()==1 && e.getSource()==vista.lbl_SalirComandas) {
 			vista.panel_PantallaPrincipal.setVisible(true);
