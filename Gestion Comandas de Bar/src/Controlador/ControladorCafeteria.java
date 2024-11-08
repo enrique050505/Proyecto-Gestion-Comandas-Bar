@@ -228,23 +228,25 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		vista.lbl_Comida4.setIcon(ajustarTamañoImg("src/img/milhojas de crema.jpg", vista.lbl_Comida4.getWidth(), vista.lbl_Comida4.getHeight()));
 		vista.lbl_Comida5.setIcon(ajustarTamañoImg("src/img/tarta de queso.jpg", vista.lbl_Comida5.getWidth(), vista.lbl_Comida5.getHeight()));
 		vista.lbl_Comida6.setIcon(ajustarTamañoImg("src/img/bizcocho.jpg", vista.lbl_Comida6.getWidth(), vista.lbl_Comida6.getHeight()));
+		vista.lbl_Cafe.setIcon(ajustarTamañoImg("src/img/bombom.jpeg", vista.lbl_Cafe.getWidth(), vista.lbl_Cafe.getHeight()));
+		vista.lbl_Refresco.setIcon(ajustarTamañoImg("src/img/cafe con leche.jpg", vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
 		vista.panel_Comidas.setVisible(true);
 		vista.panel_Bebidas.setVisible(false);
 		
-		rellenarComboBox();
+		rellenarComboBoxMenu();
 	}
 	
-	private void rellenarComboBox() {
-		if(!existeItemEnComboBox("Comidas")) {
+	private void rellenarComboBoxMenu() {
+		if(!comprobarItemEnComboBox("Comidas")) {
 			vista.comboBox_Menu.addItem("Comidas");
 		}
-		if(!existeItemEnComboBox("Bebidas")) {
+		if(!comprobarItemEnComboBox("Bebidas")) {
 			vista.comboBox_Menu.addItem("Bebidas");
 		}
 		vista.comboBox_Menu.setSelectedItem("Comidas");
 	}
 	
-	private boolean existeItemEnComboBox(String item) {
+	private boolean comprobarItemEnComboBox(String item) {
 		for(int i=0; i<vista.comboBox_Menu.getItemCount(); i++) {
 			if(vista.comboBox_Menu.getItemAt(i).equals(item)) {
 				return true;
