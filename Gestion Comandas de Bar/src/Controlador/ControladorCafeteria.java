@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
 import Modelo.Bebida;
+import Modelo.Comida;
 import Modelo.Empleado;
 import Vista.InterfazApp;
 
@@ -21,6 +22,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 	
 	InterfazApp vista = new InterfazApp();
 	ArrayList<Empleado> empleados = new ArrayList<Empleado>();
+	ArrayList<Comida> comidas = new ArrayList<Comida>();
 	ArrayList<Bebida> cafes = new ArrayList<Bebida>();
 	ArrayList<Bebida> refrescos = new ArrayList<Bebida>();
 	ArrayList<Bebida> batidos = new ArrayList<Bebida>();
@@ -52,7 +54,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		this.vista.lbl_InformacionComida1.addMouseListener(this);
 		
 		rellenarListaEmpleados(empleados);
-		
+		rellenarComidas(comidas);
 		rellenarCafes(cafes);
 		rellenarRefrescos(refrescos);
 		rellenarBatidos(batidos);
@@ -248,12 +250,10 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		vista.lbl_InformacionComida4.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionComida4.getWidth(), vista.lbl_InformacionComida4.getHeight()));
 		vista.lbl_InformacionComida5.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionComida5.getWidth(), vista.lbl_InformacionComida5.getHeight()));
 		vista.lbl_InformacionComida6.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionComida6.getWidth(), vista.lbl_InformacionComida6.getHeight()));
-		vista.lbl_Comida1.setIcon(ajustarTamañoImg("src/img/croissant.jpg", vista.lbl_Comida1.getWidth(), vista.lbl_Comida1.getHeight()));
-		vista.lbl_Comida2.setIcon(ajustarTamañoImg("src/img/napolitana.jpg", vista.lbl_Comida2.getWidth(), vista.lbl_Comida2.getHeight()));
-		vista.lbl_Comida3.setIcon(ajustarTamañoImg("src/img/brazo de gitano.png", vista.lbl_Comida3.getWidth(), vista.lbl_Comida3.getHeight()));
-		vista.lbl_Comida4.setIcon(ajustarTamañoImg("src/img/milhojas de crema.jpg", vista.lbl_Comida4.getWidth(), vista.lbl_Comida4.getHeight()));
-		vista.lbl_Comida5.setIcon(ajustarTamañoImg("src/img/tarta de queso.jpg", vista.lbl_Comida5.getWidth(), vista.lbl_Comida5.getHeight()));
-		vista.lbl_Comida6.setIcon(ajustarTamañoImg("src/img/bizcocho.jpg", vista.lbl_Comida6.getWidth(), vista.lbl_Comida6.getHeight()));
+		vista.lbl_PedirComanda.setIcon(ajustarTamañoImg("src/img/pedir comanda.png", vista.lbl_PedirComanda.getWidth(), vista.lbl_PedirComanda.getHeight()));
+		vista.lbl_PagarComanda.setIcon(ajustarTamañoImg("src/img/pagar.png", vista.lbl_PagarComanda.getWidth(), vista.lbl_PagarComanda.getHeight()));
+		
+		mostrarComidas();
 		
 		vista.panel_Comidas.setVisible(true);
 		vista.panel_Bebidas.setVisible(false);
@@ -280,6 +280,60 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		return false;
 	}
 	
+	private void rellenarComidas(ArrayList<Comida> comidas) {
+		comidas.add(new Comida(new ImageIcon("src/img/bizcocho.png"), 3.50, "Bizcocho"));
+		comidas.add(new Comida(new ImageIcon("src/img/napolitana.png"), 1.80, "Napolitana"));
+		comidas.add(new Comida(new ImageIcon("src/img/croissant.png"), 1.50, "Croissant"));
+		comidas.add(new Comida(new ImageIcon("src/img/brazo de gitano.png"), 3.25, "Brazo de gitano"));
+		comidas.add(new Comida(new ImageIcon("src/img/milhojas de crema.png"), 2.50, "Milhojas de crema"));
+		comidas.add(new Comida(new ImageIcon("src/img/tarta de queso.png"), 3.50, "Tarta de queso"));
+	}//RELLENAR ARRAYLIST COMIDAS
+	
+	private void mostrarComidas() {
+		for(int i=0; i<comidas.size(); i++) {
+			switch(i) {
+				case 0:
+					vista.lbl_Comida1.setIcon(ajustarTamañoImg(comidas.get(i).getImagenComida().getDescription(), vista.lbl_Comida1.getWidth(), vista.lbl_Comida1.getHeight()));
+					vista.lbl_NombreComida1.setText(comidas.get(i).getNombre());
+					vista.lbl_PrecioComida1.setText(String.valueOf(comidas.get(i).getPrecio()));
+					vista.lbl_SimboloEuroComida1.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_SimboloEuroComida1.getWidth(), vista.lbl_SimboloEuroComida1.getHeight()));
+					break;
+				case 1:
+					vista.lbl_Comida2.setIcon(ajustarTamañoImg(comidas.get(i).getImagenComida().getDescription(), vista.lbl_Comida2.getWidth(), vista.lbl_Comida2.getHeight()));
+					vista.lbl_NombreComida2.setText(comidas.get(i).getNombre());
+					vista.lbl_PrecioComida2.setText(String.valueOf(comidas.get(i).getPrecio()));
+					vista.lbl_SimboloEuroComida2.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_SimboloEuroComida2.getWidth(), vista.lbl_SimboloEuroComida2.getHeight()));
+					break;
+				case 2:
+					vista.lbl_Comida3.setIcon(ajustarTamañoImg(comidas.get(i).getImagenComida().getDescription(), vista.lbl_Comida3.getWidth(), vista.lbl_Comida3.getHeight()));
+					vista.lbl_NombreComida3.setText(comidas.get(i).getNombre());
+					vista.lbl_PrecioComida3.setText(String.valueOf(comidas.get(i).getPrecio()));
+					vista.lbl_SimboloEuroComida3.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_SimboloEuroComida3.getWidth(), vista.lbl_SimboloEuroComida3.getHeight()));
+					break;
+				case 3:
+					vista.lbl_Comida4.setIcon(ajustarTamañoImg(comidas.get(i).getImagenComida().getDescription(), vista.lbl_Comida4.getWidth(), vista.lbl_Comida4.getHeight()));
+					vista.lbl_NombreComida4.setText(comidas.get(i).getNombre());
+					vista.lbl_PrecioComida4.setText(String.valueOf(comidas.get(i).getPrecio()));
+					vista.lbl_SimboloEuroComida4.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_SimboloEuroComida4.getWidth(), vista.lbl_SimboloEuroComida2.getHeight()));
+					break;
+				case 4:
+					vista.lbl_Comida5.setIcon(ajustarTamañoImg(comidas.get(i).getImagenComida().getDescription(), vista.lbl_Comida5.getWidth(), vista.lbl_Comida5.getHeight()));
+					vista.lbl_NombreComida5.setText(comidas.get(i).getNombre());
+					vista.lbl_PrecioComida5.setText(String.valueOf(comidas.get(i).getPrecio()));
+					vista.lbl_SimboloEuroComida5.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_SimboloEuroComida5.getWidth(), vista.lbl_SimboloEuroComida5.getHeight()));
+					break;
+				case 5:
+					vista.lbl_Comida6.setIcon(ajustarTamañoImg(comidas.get(i).getImagenComida().getDescription(), vista.lbl_Comida6.getWidth(), vista.lbl_Comida6.getHeight()));
+					vista.lbl_NombreComida6.setText(comidas.get(i).getNombre());
+					vista.lbl_PrecioComida6.setText(String.valueOf(comidas.get(i).getPrecio()));
+					vista.lbl_SimboloEuroComida6.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_SimboloEuroComida6.getWidth(), vista.lbl_SimboloEuroComida6.getHeight()));
+					break;
+				default:
+					break;
+			}
+		}
+	}
+	
 	private void rellenarCafes(ArrayList<Bebida> cafes) {
 		cafes.add(new Bebida(new ImageIcon("src/img/cafe.png"), 0.00, "Cafés"));
 		cafes.add(new Bebida(new ImageIcon("src/img/cafe con leche.png"), 1.30, "Café con leche"));
@@ -302,7 +356,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		batidos.add(new Bebida(new ImageIcon("src/img/batido.png"), 0.00, "Batidos"));
 		batidos.add(new Bebida(new ImageIcon("src/img/batido de chocolate.png"), 3.00, "Batido Chocolate"));
 		batidos.add(new Bebida(new ImageIcon("src/img/batido de fresa.png"), 3.00, "Batido Fresa"));
-		batidos.add(new Bebida(new ImageIcon("src/img/batido de chocolate.png"), 3.50, "Batido Oreo"));
+		batidos.add(new Bebida(new ImageIcon("src/img/batido de oreo.png"), 3.50, "Batido Oreo"));
 		batidos.add(new Bebida(new ImageIcon("src/img/batido de vainilla.png"), 3.00, "Batido Vainilla"));
 		batidos.add(new Bebida(new ImageIcon("src/img/batido de mango.png"), 3.25, "Batido Mango"));
 	}
@@ -313,7 +367,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		bebidasCalientesOFrias.add(new Bebida(new ImageIcon("src/img/te de menta.png"), 1.60, "Té de menta"));
 		bebidasCalientesOFrias.add(new Bebida(new ImageIcon("src/img/te de frutos rojos.png"), 2.20, "Té de frutos rojos"));
 		bebidasCalientesOFrias.add(new Bebida(new ImageIcon("src/img/horchata.png"), 2.00, "Horchata"));
-		bebidasCalientesOFrias.add(new Bebida(new ImageIcon("src/img/limonada.png"), 2.10, "Limonada"));
+		bebidasCalientesOFrias.add(new Bebida(new ImageIcon("src/img/limonada.png"), 2.00, "Limonada"));
 		bebidasCalientesOFrias.add(new Bebida(new ImageIcon("src/img/infusion de canela y manzana.png"), 2.75, "Infusión"));
 	}
 	

@@ -95,7 +95,7 @@ public class InterfazApp extends JFrame {
 	public JLabel lbl_InformacionComida1;
 	public JLabel lbl_Comida4;
 	public JLabel lbl_NombreComida1;
-	public JLabel lbl_NombreComida1_1;
+	public JLabel lbl_NombreComida4;
 	public JButton btnAñadirComida1;
 	public JButton btnEliminarComida1;
 	public JLabel lbl_PrecioComida1;
@@ -172,6 +172,14 @@ public class InterfazApp extends JFrame {
 	public JLabel lbl_IconoEuro2;
 	public JLabel lbl_PrecioBebidaVariada;
 	public JLabel lbl_IconoEuro4;
+	public JLabel lbl_SimboloEuroComida1;
+	public JLabel lbl_SimboloEuroComida4;
+	public JLabel lbl_SimboloEuroComida2;
+	public JLabel lbl_SimboloEuroComida3;
+	public JLabel lbl_SimboloEuroComida5;
+	public JLabel lbl_SimboloEuroComida6;
+	public JLabel lbl_PedirComanda;
+	public JLabel lbl_PagarComanda;
 
 	/**
 	 * Launch the application.
@@ -207,6 +215,283 @@ public class InterfazApp extends JFrame {
 		panel_GestionComandas.setBounds(0, 0, 897, 532);
 		contentPane.add(panel_GestionComandas);
 		panel_GestionComandas.setLayout(null);
+		
+		lbl_PagarComanda = new JLabel("");
+		lbl_PagarComanda.setBounds(775, 416, 64, 64);
+		panel_GestionComandas.add(lbl_PagarComanda);
+		
+		lbl_PedirComanda = new JLabel("");
+		lbl_PedirComanda.setBounds(775, 340, 64, 64);
+		panel_GestionComandas.add(lbl_PedirComanda);
+		
+		panel_Comidas = new JPanel();
+		panel_Comidas.setBackground(new Color(245, 209, 215));
+		panel_Comidas.setBounds(0, 82, 715, 450);
+		panel_GestionComandas.add(panel_Comidas);
+		panel_Comidas.setLayout(null);
+		
+		lbl_SimboloEuroComida1 = new JLabel("");
+		lbl_SimboloEuroComida1.setForeground(new Color(0, 0, 0));
+		lbl_SimboloEuroComida1.setBounds(194, 182, 32, 31);
+		panel_Comidas.add(lbl_SimboloEuroComida1);
+		
+		lbl_PrecioComida1 = new JLabel("");
+		lbl_PrecioComida1.setForeground(new Color(0, 0, 0));
+		lbl_PrecioComida1.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_PrecioComida1.setBounds(150, 190, 37, 16);
+		panel_Comidas.add(lbl_PrecioComida1);
+		
+		progressBar_Comida6 = new JProgressBar();
+		progressBar_Comida6.setBounds(12, 419, 160, 14);
+		panel_Comidas.add(progressBar_Comida6);
+		
+		progressBar_Comida5 = new JProgressBar();
+		progressBar_Comida5.setBounds(248, 419, 160, 14);
+		panel_Comidas.add(progressBar_Comida5);
+		
+		progressBar_Comida4 = new JProgressBar();
+		progressBar_Comida4.setBounds(480, 419, 160, 14);
+		panel_Comidas.add(progressBar_Comida4);
+		
+		progressBar_Comida3 = new JProgressBar();
+		progressBar_Comida3.setBounds(480, 218, 160, 14);
+		panel_Comidas.add(progressBar_Comida3);
+		
+		progressBar_Comida2 = new JProgressBar();
+		progressBar_Comida2.setBounds(248, 218, 160, 14);
+		panel_Comidas.add(progressBar_Comida2);
+		
+		progressBar_Comida1 = new JProgressBar();
+		progressBar_Comida1.setBounds(12, 218, 160, 14);
+		panel_Comidas.add(progressBar_Comida1);
+		
+		btnAñadirComida6 = new JButton("Añadir");
+		btnAñadirComida6.setForeground(Color.BLACK);
+		btnAñadirComida6.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnAñadirComida6.setBackground(new Color(0, 213, 0));
+		btnAñadirComida6.setBounds(616, 307, 92, 31);
+		panel_Comidas.add(btnAñadirComida6);
+		
+		lbl_NombreComida6 = new JLabel("");
+		lbl_NombreComida6.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_NombreComida6.setForeground(new Color(0, 0, 0));
+		lbl_NombreComida6.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_NombreComida6.setBounds(483, 391, 125, 16);
+		panel_Comidas.add(lbl_NombreComida6);
+		
+		lbl_InformacionComida6 = new JLabel("");
+		lbl_InformacionComida6.setBounds(616, 253, 32, 32);
+		panel_Comidas.add(lbl_InformacionComida6);
+		
+		btnEliminarComida6 = new JButton("Retirar");
+		btnEliminarComida6.setForeground(Color.BLACK);
+		btnEliminarComida6.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnEliminarComida6.setBackground(Color.RED);
+		btnEliminarComida6.setBounds(616, 348, 92, 31);
+		panel_Comidas.add(btnEliminarComida6);
+		
+		lbl_PrecioComida6 = new JLabel("");
+		lbl_PrecioComida6.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_PrecioComida6.setBounds(635, 391, 37, 16);
+		panel_Comidas.add(lbl_PrecioComida6);
+		
+		lbl_PrecioComida5 = new JLabel("");
+		lbl_PrecioComida5.setForeground(new Color(0, 0, 0));
+		lbl_PrecioComida5.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_PrecioComida5.setBounds(400, 391, 37, 16);
+		panel_Comidas.add(lbl_PrecioComida5);
+		
+		lbl_Comida6 = new JLabel("");
+		lbl_Comida6.setBounds(480, 256, 128, 126);
+		panel_Comidas.add(lbl_Comida6);
+		
+		lbl_NombreComida3 = new JLabel("");
+		lbl_NombreComida3.setForeground(new Color(0, 0, 0));
+		lbl_NombreComida3.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_NombreComida3.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_NombreComida3.setBounds(483, 190, 125, 16);
+		panel_Comidas.add(lbl_NombreComida3);
+		
+		btnEliminarComida3 = new JButton("Retirar");
+		btnEliminarComida3.setForeground(Color.BLACK);
+		btnEliminarComida3.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnEliminarComida3.setBackground(Color.RED);
+		btnEliminarComida3.setBounds(616, 148, 92, 31);
+		panel_Comidas.add(btnEliminarComida3);
+		
+		lbl_PrecioComida3 = new JLabel("");
+		lbl_PrecioComida3.setForeground(new Color(0, 0, 0));
+		lbl_PrecioComida3.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_PrecioComida3.setBounds(635, 192, 37, 16);
+		panel_Comidas.add(lbl_PrecioComida3);
+		
+		lbl_InformacionComida3 = new JLabel("");
+		lbl_InformacionComida3.setBounds(616, 52, 32, 32);
+		panel_Comidas.add(lbl_InformacionComida3);
+		
+		btnAñadirComida3 = new JButton("Añadir");
+		btnAñadirComida3.setForeground(Color.BLACK);
+		btnAñadirComida3.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnAñadirComida3.setBackground(new Color(0, 213, 0));
+		btnAñadirComida3.setBounds(616, 104, 92, 31);
+		panel_Comidas.add(btnAñadirComida3);
+		
+		lbl_Comida3 = new JLabel("");
+		lbl_Comida3.setBounds(480, 52, 128, 126);
+		panel_Comidas.add(lbl_Comida3);
+		
+		lbl_InformacionComida5 = new JLabel("");
+		lbl_InformacionComida5.setBounds(380, 253, 32, 32);
+		panel_Comidas.add(lbl_InformacionComida5);
+		
+		JButton btnEliminarComida5 = new JButton("Retirar");
+		btnEliminarComida5.setForeground(Color.BLACK);
+		btnEliminarComida5.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnEliminarComida5.setBackground(Color.RED);
+		btnEliminarComida5.setBounds(380, 348, 92, 31);
+		panel_Comidas.add(btnEliminarComida5);
+		
+		btnAñadirComida5 = new JButton("Añadir");
+		btnAñadirComida5.setForeground(Color.BLACK);
+		btnAñadirComida5.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnAñadirComida5.setBackground(new Color(0, 213, 0));
+		btnAñadirComida5.setBounds(380, 307, 92, 31);
+		panel_Comidas.add(btnAñadirComida5);
+		
+		lbl_NombreComida5 = new JLabel("");
+		lbl_NombreComida5.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_NombreComida5.setForeground(new Color(0, 0, 0));
+		lbl_NombreComida5.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_NombreComida5.setBounds(240, 391, 153, 16);
+		panel_Comidas.add(lbl_NombreComida5);
+		
+		lbl_Comida5 = new JLabel("");
+		lbl_Comida5.setBounds(248, 256, 128, 126);
+		panel_Comidas.add(lbl_Comida5);
+		
+		lbl_NombreComida2 = new JLabel("");
+		lbl_NombreComida2.setForeground(new Color(0, 0, 0));
+		lbl_NombreComida2.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_NombreComida2.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_NombreComida2.setBounds(248, 190, 128, 16);
+		panel_Comidas.add(lbl_NombreComida2);
+		
+		lbl_PrecioComida2 = new JLabel("");
+		lbl_PrecioComida2.setForeground(new Color(0, 0, 0));
+		lbl_PrecioComida2.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_PrecioComida2.setBounds(400, 190, 37, 16);
+		panel_Comidas.add(lbl_PrecioComida2);
+		
+		btnEliminarComida2 = new JButton("Retirar");
+		btnEliminarComida2.setForeground(Color.BLACK);
+		btnEliminarComida2.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnEliminarComida2.setBackground(Color.RED);
+		btnEliminarComida2.setBounds(380, 148, 92, 31);
+		panel_Comidas.add(btnEliminarComida2);
+		
+		btnAñadirComida2 = new JButton("Añadir");
+		btnAñadirComida2.setForeground(Color.BLACK);
+		btnAñadirComida2.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnAñadirComida2.setBackground(new Color(0, 213, 0));
+		btnAñadirComida2.setBounds(380, 104, 92, 31);
+		panel_Comidas.add(btnAñadirComida2);
+		
+		lbl_InformacionComida2 = new JLabel("");
+		lbl_InformacionComida2.setBounds(380, 52, 32, 32);
+		panel_Comidas.add(lbl_InformacionComida2);
+		
+		lbl_Comida2 = new JLabel("");
+		lbl_Comida2.setBounds(248, 52, 128, 126);
+		panel_Comidas.add(lbl_Comida2);
+		
+		btnAñadirComida4 = new JButton("Añadir");
+		btnAñadirComida4.setForeground(Color.BLACK);
+		btnAñadirComida4.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnAñadirComida4.setBackground(new Color(0, 213, 0));
+		btnAñadirComida4.setBounds(138, 307, 92, 31);
+		panel_Comidas.add(btnAñadirComida4);
+		
+		btnEliminarComida4 = new JButton("Retirar");
+		btnEliminarComida4.setForeground(new Color(0, 0, 0));
+		btnEliminarComida4.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnEliminarComida4.setBackground(Color.RED);
+		btnEliminarComida4.setBounds(138, 348, 92, 31);
+		panel_Comidas.add(btnEliminarComida4);
+		
+		lbl_InformacionComida4 = new JLabel("");
+		lbl_InformacionComida4.setBounds(140, 253, 32, 32);
+		panel_Comidas.add(lbl_InformacionComida4);
+		
+		lbl_NombreComida4 = new JLabel("");
+		lbl_NombreComida4.setForeground(new Color(0, 0, 0));
+		lbl_NombreComida4.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_NombreComida4.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_NombreComida4.setBounds(6, 391, 135, 16);
+		panel_Comidas.add(lbl_NombreComida4);
+		
+		lbl_NombreComida1 = new JLabel("");
+		lbl_NombreComida1.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_NombreComida1.setForeground(new Color(0, 0, 0));
+		lbl_NombreComida1.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_NombreComida1.setBounds(6, 190, 135, 16);
+		panel_Comidas.add(lbl_NombreComida1);
+		
+		lbl_InformacionComida1 = new JLabel("");
+		lbl_InformacionComida1.setBounds(140, 52, 32, 32);
+		panel_Comidas.add(lbl_InformacionComida1);
+		
+		lbl_Comida1 = new JLabel("");
+		lbl_Comida1.setBounds(6, 52, 128, 126);
+		panel_Comidas.add(lbl_Comida1);
+		
+		lbl_Comida4 = new JLabel("");
+		lbl_Comida4.setBounds(6, 253, 128, 126);
+		panel_Comidas.add(lbl_Comida4);
+		
+		btnAñadirComida1 = new JButton("Añadir");
+		btnAñadirComida1.setBackground(new Color(0, 213, 0));
+		btnAñadirComida1.setForeground(new Color(0, 0, 0));
+		btnAñadirComida1.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnAñadirComida1.setBounds(138, 104, 92, 31);
+		panel_Comidas.add(btnAñadirComida1);
+		
+		btnEliminarComida1 = new JButton("Retirar");
+		btnEliminarComida1.setForeground(new Color(0, 0, 0));
+		btnEliminarComida1.setBackground(new Color(255, 0, 0));
+		btnEliminarComida1.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnEliminarComida1.setBounds(138, 147, 92, 31);
+		panel_Comidas.add(btnEliminarComida1);
+		
+		lbl_PrecioComida4 = new JLabel("");
+		lbl_PrecioComida4.setForeground(new Color(0, 0, 0));
+		lbl_PrecioComida4.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_PrecioComida4.setBounds(150, 391, 37, 16);
+		panel_Comidas.add(lbl_PrecioComida4);
+		
+		lbl_SimboloEuroComida4 = new JLabel("");
+		lbl_SimboloEuroComida4.setForeground(Color.BLACK);
+		lbl_SimboloEuroComida4.setBounds(194, 382, 32, 31);
+		panel_Comidas.add(lbl_SimboloEuroComida4);
+		
+		lbl_SimboloEuroComida2 = new JLabel("");
+		lbl_SimboloEuroComida2.setForeground(Color.BLACK);
+		lbl_SimboloEuroComida2.setBounds(436, 182, 32, 31);
+		panel_Comidas.add(lbl_SimboloEuroComida2);
+		
+		lbl_SimboloEuroComida3 = new JLabel("");
+		lbl_SimboloEuroComida3.setForeground(Color.BLACK);
+		lbl_SimboloEuroComida3.setBounds(671, 182, 32, 31);
+		panel_Comidas.add(lbl_SimboloEuroComida3);
+		
+		lbl_SimboloEuroComida5 = new JLabel("");
+		lbl_SimboloEuroComida5.setForeground(Color.BLACK);
+		lbl_SimboloEuroComida5.setBounds(436, 382, 32, 31);
+		panel_Comidas.add(lbl_SimboloEuroComida5);
+		
+		lbl_SimboloEuroComida6 = new JLabel("");
+		lbl_SimboloEuroComida6.setForeground(Color.BLACK);
+		lbl_SimboloEuroComida6.setBounds(671, 382, 32, 31);
+		panel_Comidas.add(lbl_SimboloEuroComida6);
 		
 		panel_Bebidas = new JPanel();
 		panel_Bebidas.setBackground(new Color(245, 209, 215));
@@ -383,236 +668,15 @@ public class InterfazApp extends JFrame {
 		progressBar_Bebida4.setBounds(365, 420, 169, 14);
 		panel_Bebidas.add(progressBar_Bebida4);
 		
-		panel_Comidas = new JPanel();
-		panel_Comidas.setBackground(new Color(245, 209, 215));
-		panel_Comidas.setBounds(0, 82, 715, 450);
-		panel_Comidas.setOpaque(false);
-		panel_GestionComandas.add(panel_Comidas);
-		panel_Comidas.setLayout(null);
-		
-		progressBar_Comida6 = new JProgressBar();
-		progressBar_Comida6.setBounds(12, 419, 160, 14);
-		panel_Comidas.add(progressBar_Comida6);
-		
-		progressBar_Comida5 = new JProgressBar();
-		progressBar_Comida5.setBounds(248, 419, 160, 14);
-		panel_Comidas.add(progressBar_Comida5);
-		
-		progressBar_Comida4 = new JProgressBar();
-		progressBar_Comida4.setBounds(480, 419, 160, 14);
-		panel_Comidas.add(progressBar_Comida4);
-		
-		progressBar_Comida3 = new JProgressBar();
-		progressBar_Comida3.setBounds(480, 218, 160, 14);
-		panel_Comidas.add(progressBar_Comida3);
-		
-		progressBar_Comida2 = new JProgressBar();
-		progressBar_Comida2.setBounds(248, 218, 160, 14);
-		panel_Comidas.add(progressBar_Comida2);
-		
-		progressBar_Comida1 = new JProgressBar();
-		progressBar_Comida1.setBounds(12, 218, 160, 14);
-		panel_Comidas.add(progressBar_Comida1);
-		
-		btnAñadirComida6 = new JButton("Añadir");
-		btnAñadirComida6.setForeground(Color.BLACK);
-		btnAñadirComida6.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnAñadirComida6.setBackground(new Color(0, 213, 0));
-		btnAñadirComida6.setBounds(616, 307, 92, 31);
-		panel_Comidas.add(btnAñadirComida6);
-		
-		lbl_NombreComida6 = new JLabel("New label");
-		lbl_NombreComida6.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_NombreComida6.setBounds(480, 391, 145, 16);
-		panel_Comidas.add(lbl_NombreComida6);
-		
-		lbl_InformacionComida6 = new JLabel("");
-		lbl_InformacionComida6.setBounds(616, 253, 32, 32);
-		panel_Comidas.add(lbl_InformacionComida6);
-		
-		btnEliminarComida6 = new JButton("Retirar");
-		btnEliminarComida6.setForeground(Color.BLACK);
-		btnEliminarComida6.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnEliminarComida6.setBackground(Color.RED);
-		btnEliminarComida6.setBounds(616, 351, 92, 31);
-		panel_Comidas.add(btnEliminarComida6);
-		
-		lbl_PrecioComida6 = new JLabel("");
-		lbl_PrecioComida6.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_PrecioComida6.setBounds(644, 387, 51, 16);
-		panel_Comidas.add(lbl_PrecioComida6);
-		
-		lbl_PrecioComida5 = new JLabel("");
-		lbl_PrecioComida5.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_PrecioComida5.setBounds(412, 387, 51, 16);
-		panel_Comidas.add(lbl_PrecioComida5);
-		
-		lbl_Comida6 = new JLabel("");
-		lbl_Comida6.setBounds(480, 256, 128, 126);
-		panel_Comidas.add(lbl_Comida6);
-		
-		lbl_NombreComida3 = new JLabel("New label");
-		lbl_NombreComida3.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_NombreComida3.setBounds(480, 190, 145, 16);
-		panel_Comidas.add(lbl_NombreComida3);
-		
-		btnEliminarComida3 = new JButton("Retirar");
-		btnEliminarComida3.setForeground(Color.BLACK);
-		btnEliminarComida3.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnEliminarComida3.setBackground(Color.RED);
-		btnEliminarComida3.setBounds(616, 148, 92, 31);
-		panel_Comidas.add(btnEliminarComida3);
-		
-		lbl_PrecioComida3 = new JLabel("");
-		lbl_PrecioComida3.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_PrecioComida3.setBounds(648, 188, 51, 16);
-		panel_Comidas.add(lbl_PrecioComida3);
-		
-		lbl_InformacionComida3 = new JLabel("");
-		lbl_InformacionComida3.setBounds(616, 52, 32, 32);
-		panel_Comidas.add(lbl_InformacionComida3);
-		
-		btnAñadirComida3 = new JButton("Añadir");
-		btnAñadirComida3.setForeground(Color.BLACK);
-		btnAñadirComida3.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnAñadirComida3.setBackground(new Color(0, 213, 0));
-		btnAñadirComida3.setBounds(616, 104, 92, 31);
-		panel_Comidas.add(btnAñadirComida3);
-		
-		lbl_Comida3 = new JLabel("");
-		lbl_Comida3.setBounds(480, 52, 128, 126);
-		panel_Comidas.add(lbl_Comida3);
-		
-		lbl_InformacionComida5 = new JLabel("");
-		lbl_InformacionComida5.setBounds(380, 253, 32, 32);
-		panel_Comidas.add(lbl_InformacionComida5);
-		
-		JButton btnEliminarComida5 = new JButton("Retirar");
-		btnEliminarComida5.setForeground(Color.BLACK);
-		btnEliminarComida5.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnEliminarComida5.setBackground(Color.RED);
-		btnEliminarComida5.setBounds(380, 351, 92, 31);
-		panel_Comidas.add(btnEliminarComida5);
-		
-		btnAñadirComida5 = new JButton("Añadir");
-		btnAñadirComida5.setForeground(Color.BLACK);
-		btnAñadirComida5.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnAñadirComida5.setBackground(new Color(0, 213, 0));
-		btnAñadirComida5.setBounds(380, 307, 92, 31);
-		panel_Comidas.add(btnAñadirComida5);
-		
-		lbl_NombreComida5 = new JLabel("New label");
-		lbl_NombreComida5.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_NombreComida5.setBounds(248, 391, 145, 16);
-		panel_Comidas.add(lbl_NombreComida5);
-		
-		lbl_Comida5 = new JLabel("");
-		lbl_Comida5.setBounds(248, 256, 128, 126);
-		panel_Comidas.add(lbl_Comida5);
-		
-		lbl_NombreComida2 = new JLabel("New label");
-		lbl_NombreComida2.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_NombreComida2.setBounds(248, 190, 145, 16);
-		panel_Comidas.add(lbl_NombreComida2);
-		
-		lbl_PrecioComida2 = new JLabel("");
-		lbl_PrecioComida2.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_PrecioComida2.setBounds(410, 186, 51, 16);
-		panel_Comidas.add(lbl_PrecioComida2);
-		
-		btnEliminarComida2 = new JButton("Retirar");
-		btnEliminarComida2.setForeground(Color.BLACK);
-		btnEliminarComida2.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnEliminarComida2.setBackground(Color.RED);
-		btnEliminarComida2.setBounds(380, 148, 92, 31);
-		panel_Comidas.add(btnEliminarComida2);
-		
-		btnAñadirComida2 = new JButton("Añadir");
-		btnAñadirComida2.setForeground(Color.BLACK);
-		btnAñadirComida2.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnAñadirComida2.setBackground(new Color(0, 213, 0));
-		btnAñadirComida2.setBounds(380, 104, 92, 31);
-		panel_Comidas.add(btnAñadirComida2);
-		
-		lbl_InformacionComida2 = new JLabel("");
-		lbl_InformacionComida2.setBounds(380, 52, 32, 32);
-		panel_Comidas.add(lbl_InformacionComida2);
-		
-		lbl_Comida2 = new JLabel("");
-		lbl_Comida2.setBounds(248, 52, 128, 126);
-		panel_Comidas.add(lbl_Comida2);
-		
-		btnAñadirComida4 = new JButton("Añadir");
-		btnAñadirComida4.setForeground(Color.BLACK);
-		btnAñadirComida4.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnAñadirComida4.setBackground(new Color(0, 213, 0));
-		btnAñadirComida4.setBounds(138, 307, 92, 31);
-		panel_Comidas.add(btnAñadirComida4);
-		
-		btnEliminarComida4 = new JButton("Retirar");
-		btnEliminarComida4.setForeground(new Color(0, 0, 0));
-		btnEliminarComida4.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnEliminarComida4.setBackground(Color.RED);
-		btnEliminarComida4.setBounds(138, 348, 92, 31);
-		panel_Comidas.add(btnEliminarComida4);
-		
-		lbl_InformacionComida4 = new JLabel("");
-		lbl_InformacionComida4.setBounds(140, 253, 32, 32);
-		panel_Comidas.add(lbl_InformacionComida4);
-		
-		lbl_NombreComida1_1 = new JLabel("New label");
-		lbl_NombreComida1_1.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_NombreComida1_1.setBounds(12, 391, 145, 16);
-		panel_Comidas.add(lbl_NombreComida1_1);
-		
-		lbl_NombreComida1 = new JLabel("New label");
-		lbl_NombreComida1.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_NombreComida1.setBounds(12, 190, 145, 16);
-		panel_Comidas.add(lbl_NombreComida1);
-		
-		lbl_InformacionComida1 = new JLabel("");
-		lbl_InformacionComida1.setBounds(140, 52, 32, 32);
-		panel_Comidas.add(lbl_InformacionComida1);
-		
-		lbl_Comida1 = new JLabel("");
-		lbl_Comida1.setBounds(6, 52, 128, 126);
-		panel_Comidas.add(lbl_Comida1);
-		
-		lbl_Comida4 = new JLabel("");
-		lbl_Comida4.setBounds(6, 253, 128, 126);
-		panel_Comidas.add(lbl_Comida4);
-		
-		btnAñadirComida1 = new JButton("Añadir");
-		btnAñadirComida1.setBackground(new Color(0, 213, 0));
-		btnAñadirComida1.setForeground(new Color(0, 0, 0));
-		btnAñadirComida1.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnAñadirComida1.setBounds(138, 104, 92, 31);
-		panel_Comidas.add(btnAñadirComida1);
-		
-		btnEliminarComida1 = new JButton("Retirar");
-		btnEliminarComida1.setForeground(new Color(0, 0, 0));
-		btnEliminarComida1.setBackground(new Color(255, 0, 0));
-		btnEliminarComida1.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnEliminarComida1.setBounds(138, 147, 92, 31);
-		panel_Comidas.add(btnEliminarComida1);
-		
-		lbl_PrecioComida1 = new JLabel("");
-		lbl_PrecioComida1.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_PrecioComida1.setBounds(173, 190, 51, 16);
-		panel_Comidas.add(lbl_PrecioComida1);
-		
-		lbl_PrecioComida4 = new JLabel("");
-		lbl_PrecioComida4.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_PrecioComida4.setBounds(169, 391, 51, 16);
-		panel_Comidas.add(lbl_PrecioComida4);
-		
 		lbl_Mesa_o_Taburete = new JLabel("");
+		lbl_Mesa_o_Taburete.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_Mesa_o_Taburete.setForeground(new Color(0, 0, 0));
-		lbl_Mesa_o_Taburete.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_Mesa_o_Taburete.setBounds(740, 55, 130, 37);
+		lbl_Mesa_o_Taburete.setFont(new Font("Consolas", Font.BOLD, 18));
+		lbl_Mesa_o_Taburete.setBounds(733, 50, 142, 37);
 		panel_GestionComandas.add(lbl_Mesa_o_Taburete);
 		
 		comboBox_Menu = new JComboBox();
+		comboBox_Menu.setForeground(new Color(0, 0, 0));
 		comboBox_Menu.setFont(new Font("Consolas", Font.BOLD, 16));
 		comboBox_Menu.setBounds(133, 12, 142, 37);
 		panel_GestionComandas.add(comboBox_Menu);
@@ -622,6 +686,8 @@ public class InterfazApp extends JFrame {
 		panel_GestionComandas.add(scrollPane);
 		
 		list_ListaPedidos = new JList();
+		list_ListaPedidos.setForeground(new Color(0, 0, 0));
+		list_ListaPedidos.setFont(new Font("Consolas", Font.BOLD, 16));
 		scrollPane.setViewportView(list_ListaPedidos);
 		
 		lbl_SalirComandas = new JLabel("");
@@ -631,16 +697,6 @@ public class InterfazApp extends JFrame {
 		lbl_ImgFondoComandas = new JLabel("");
 		lbl_ImgFondoComandas.setBounds(0, 0, 897, 532);
 		panel_GestionComandas.add(lbl_ImgFondoComandas);
-		
-		panel_InformacionProducto = new JPanel();
-		panel_InformacionProducto.setBackground(new Color(245, 209, 215));
-		panel_InformacionProducto.setBounds(0, 0, 897, 532);
-		contentPane.add(panel_InformacionProducto);
-		panel_InformacionProducto.setLayout(null);
-		
-		lbl_ImgFondoInfoProductos = new JLabel("");
-		lbl_ImgFondoInfoProductos.setBounds(0, 0, 897, 532);
-		panel_InformacionProducto.add(lbl_ImgFondoInfoProductos);
 		
 		panel_PantallaPrincipal = new JPanel();
 		panel_PantallaPrincipal.setBackground(new Color(245, 209, 215));
@@ -695,11 +751,11 @@ public class InterfazApp extends JFrame {
 		panel_PantallaPrincipal.add(btn_Inventario);
 		
 		lbl_Mesa5 = new JLabel("");
-		lbl_Mesa5.setBounds(598, 305, 110, 110);
+		lbl_Mesa5.setBounds(595, 305, 110, 110);
 		panel_PantallaPrincipal.add(lbl_Mesa5);
 		
 		lbl_Mesa4 = new JLabel("");
-		lbl_Mesa4.setBounds(390, 305, 110, 110);
+		lbl_Mesa4.setBounds(400, 305, 110, 110);
 		panel_PantallaPrincipal.add(lbl_Mesa4);
 		
 		lbl_Mesa3 = new JLabel("");
@@ -739,6 +795,16 @@ public class InterfazApp extends JFrame {
 		lbl_ImgPrincipalApp = new JLabel("");
 		lbl_ImgPrincipalApp.setBounds(0, 0, 897, 532);
 		panel_PantallaPrincipal.add(lbl_ImgPrincipalApp);
+		
+		panel_InformacionProducto = new JPanel();
+		panel_InformacionProducto.setBackground(new Color(245, 209, 215));
+		panel_InformacionProducto.setBounds(0, 0, 897, 532);
+		contentPane.add(panel_InformacionProducto);
+		panel_InformacionProducto.setLayout(null);
+		
+		lbl_ImgFondoInfoProductos = new JLabel("");
+		lbl_ImgFondoInfoProductos.setBounds(0, 0, 897, 532);
+		panel_InformacionProducto.add(lbl_ImgFondoInfoProductos);
 		
 		panel_InicioSesion = new JPanel();
 		panel_InicioSesion.setBackground(new Color(255, 209, 220));
@@ -825,7 +891,7 @@ public class InterfazApp extends JFrame {
 		textArea_RequisitosTelefono.setWrapStyleWord(true);
 		textArea_RequisitosTelefono.setLineWrap(true);
 		textArea_RequisitosTelefono.setForeground(new Color(83, 83, 83));
-		textArea_RequisitosTelefono.setFont(new Font("Consolas", Font.BOLD, 12));
+		textArea_RequisitosTelefono.setFont(new Font("Consolas", Font.BOLD, 13));
 		textArea_RequisitosTelefono.setText("*El teléfono debe contener 9 números y sin caracteres especiales y sin espacios");
 		textArea_RequisitosTelefono.setBackground(new Color(245, 209, 215));
 		textArea_RequisitosTelefono.setBounds(376, 384, 340, 32);
@@ -845,7 +911,7 @@ public class InterfazApp extends JFrame {
 		textArea_RequisitosContraseña = new JTextArea();
 		textArea_RequisitosContraseña.setEditable(false);
 		textArea_RequisitosContraseña.setForeground(new Color(83, 83, 83));
-		textArea_RequisitosContraseña.setFont(new Font("Consolas", Font.BOLD, 12));
+		textArea_RequisitosContraseña.setFont(new Font("Consolas", Font.BOLD, 13));
 		textArea_RequisitosContraseña.setText("*La contraseña debe contener 8 o más caracteres");
 		textArea_RequisitosContraseña.setBackground(new Color(245, 209, 215));
 		textArea_RequisitosContraseña.setBounds(376, 367, 340, 16);
