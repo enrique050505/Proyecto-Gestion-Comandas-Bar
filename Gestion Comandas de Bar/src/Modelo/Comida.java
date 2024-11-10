@@ -37,7 +37,5 @@ public class Comida {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	
-	
+
 }
