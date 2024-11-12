@@ -11,29 +11,35 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.Timer;
 
-import Modelo.Bebida;
-import Modelo.Comida;
+import Modelo.Comanda;
 import Modelo.Empleado;
+import Modelo.Lugar;
+import Modelo.Producto;
 import Vista.InterfazApp;
 
 public class ControladorCafeteria implements ActionListener, MouseListener{
 	
 	InterfazApp vista = new InterfazApp();
 	ArrayList<Empleado> empleados = new ArrayList<Empleado>();
-	ArrayList<Comida> comidas = new ArrayList<Comida>();
-	ArrayList<Bebida> cafes = new ArrayList<Bebida>();
-	ArrayList<Bebida> refrescos = new ArrayList<Bebida>();
-	ArrayList<Bebida> batidos = new ArrayList<Bebida>();
-	ArrayList<Bebida> bebidasCalientesOFrias = new ArrayList<Bebida>();
+	ArrayList<Producto> comidas = new ArrayList<Producto>();
+	ArrayList<Producto> cafes = new ArrayList<Producto>();
+	ArrayList<Producto> refrescos = new ArrayList<Producto>();
+	ArrayList<Producto> batidos = new ArrayList<Producto>();
+	ArrayList<Producto> bebidasCalientesOFrias = new ArrayList<Producto>();
+	ArrayList<Lugar> lugares = new ArrayList<>();
+	HashMap<String, JButton> botonesRetirarBebidas = new HashMap<>();
+	
 	Timer fechaYHora;
 	Empleado empleadoActual;
+	Comanda comandaActual;
 	DefaultListModel<String> comanda = new DefaultListModel<>();
-	HashMap<String, Integer> pedidos = new HashMap<>();
 	
 	public ControladorCafeteria(InterfazApp vista) {
 		this.vista = vista;
@@ -97,6 +103,9 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		
 		rellenarComboBoxBebidas(cafes, refrescos, batidos, bebidasCalientesOFrias);
 		
+		inicializarLugares();
+		inicializarBotonesRetirarBebidas();
+		
 		fechaYHora = new Timer(1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -138,7 +147,8 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 				vista.btnRetirarBebida1.setEnabled(false);
 			}else {
 				vista.btnAñadirBebida1.setEnabled(true);
-				vista.btnRetirarBebida1.setEnabled(false);
+				String cafeSeleccionado = vista.comboBox_TipoCafe.getSelectedItem().toString();
+				vista.btnRetirarBebida1.setEnabled(comprobarBebidaComanda(cafeSeleccionado));
 			}
 		}
 		
@@ -150,7 +160,8 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 				vista.btnRetirarBebida2.setEnabled(false);
 			}else {
 				vista.btnAñadirBebida2.setEnabled(true);
-				vista.btnRetirarBebida2.setEnabled(false);
+				String batidoSeleccionado = vista.comboBox_TipoBatido.getSelectedItem().toString();
+				vista.btnRetirarBebida2.setEnabled(comprobarBebidaComanda(batidoSeleccionado));
 			}
 		}
 		
@@ -162,7 +173,8 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 				vista.btnRetirarBebida3.setEnabled(false);
 			}else {
 				vista.btnAñadirBebida3.setEnabled(true);
-				vista.btnRetirarBebida3.setEnabled(false);
+				String refrescoSeleccionado = vista.comboBox_TipoRefresco.getSelectedItem().toString();
+				vista.btnRetirarBebida3.setEnabled(comprobarBebidaComanda(refrescoSeleccionado));
 			}
 		}
 		
@@ -174,7 +186,8 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 				vista.btnRetirarBebida4.setEnabled(false);
 			}else {
 				vista.btnAñadirBebida4.setEnabled(true);
-				vista.btnRetirarBebida4.setEnabled(false);
+				String bebidaSeleccionada = vista.comboBox_TipoBebidaCalienteoFria.getSelectedItem().toString();
+				vista.btnRetirarBebida4.setEnabled(comprobarBebidaComanda(bebidaSeleccionada));
 			}
 		}
 		
@@ -208,136 +221,89 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 			eliminarComidaDeComanda(comidas.get(5).getNombre());
 		}
 		
+
 		//BOTONES AÑADIR BEBIDAS
 		if(e.getSource()==vista.btnAñadirBebida1) {
-			String cafeSeleccionado = (String) vista.comboBox_TipoCafe.getSelectedItem();
-	
-			if(cafeSeleccionado.equals(cafes.get(1).getNombre())) {
-				añadirBebidasAComanda(cafes.get(1).getNombre());
-			}else if(cafeSeleccionado.equals(cafes.get(2).getNombre())) {
-				añadirBebidasAComanda(cafes.get(2).getNombre());
-			}else if(cafeSeleccionado.equals(cafes.get(3).getNombre())) {
-				añadirBebidasAComanda(cafes.get(3).getNombre());
-			}else if(cafeSeleccionado.equals(cafes.get(4).getNombre())) {
-				añadirBebidasAComanda(cafes.get(4).getNombre());
-			}else if(cafeSeleccionado.equals(cafes.get(5).getNombre())) {
-				añadirBebidasAComanda(cafes.get(5).getNombre());
+			int indiceCafeSeleccionado = vista.comboBox_TipoCafe.getSelectedIndex();
+			
+			if(indiceCafeSeleccionado > 0) {
+				Producto cafeSeleccionado = cafes.get(indiceCafeSeleccionado);
+				
+				añadirBebidasAComanda(cafeSeleccionado.getNombre());
+				
+				vista.btnRetirarBebida1.setEnabled(comprobarBebidaComanda(cafeSeleccionado.getNombre()));
+			}else {
+				vista.btnRetirarBebida1.setEnabled(false);
 			}
 		}
 		
 		if(e.getSource()==vista.btnAñadirBebida2) {
-			String batidoSeleccionado = (String) vista.comboBox_TipoBatido.getSelectedItem();
-	
-			if(batidoSeleccionado.equals(batidos.get(1).getNombre())) {
-				añadirBebidasAComanda(batidos.get(1).getNombre());
-			}else if(batidoSeleccionado.equals(batidos.get(2).getNombre())) {
-				añadirBebidasAComanda(batidos.get(2).getNombre());
-			}else if(batidoSeleccionado.equals(batidos.get(3).getNombre())) {
-				añadirBebidasAComanda(batidos.get(3).getNombre());
-			}else if(batidoSeleccionado.equals(batidos.get(4).getNombre())) {
-				añadirBebidasAComanda(batidos.get(4).getNombre());
-			}else if(batidoSeleccionado.equals(batidos.get(5).getNombre())) {
-				añadirBebidasAComanda(batidos.get(5).getNombre());
+			int indiceBatidoSeleccionado = vista.comboBox_TipoBatido.getSelectedIndex();
+			
+			if(indiceBatidoSeleccionado > 0) {
+				Producto batidoSeleccionado = batidos.get(indiceBatidoSeleccionado);
+				
+				añadirBebidasAComanda(batidoSeleccionado.getNombre());
+				
+				vista.btnRetirarBebida2.setEnabled(comprobarBebidaComanda(batidoSeleccionado.getNombre()));
+			}else {
+				vista.btnRetirarBebida2.setEnabled(false);
 			}
 		}
 		
 		if(e.getSource()==vista.btnAñadirBebida3) {
-			String refrescoSeleccionado = (String) vista.comboBox_TipoRefresco.getSelectedItem();
-	
-			if(refrescoSeleccionado.equals(refrescos.get(1).getNombre())) {
-				añadirBebidasAComanda(refrescos.get(1).getNombre());
-			}else if(refrescoSeleccionado.equals(refrescos.get(2).getNombre())) {
-				añadirBebidasAComanda(refrescos.get(2).getNombre());
-			}else if(refrescoSeleccionado.equals(refrescos.get(3).getNombre())) {
-				añadirBebidasAComanda(refrescos.get(3).getNombre());
-			}else if(refrescoSeleccionado.equals(refrescos.get(4).getNombre())) {
-				añadirBebidasAComanda(refrescos.get(4).getNombre());
-			}else if(refrescoSeleccionado.equals(refrescos.get(5).getNombre())) {
-				añadirBebidasAComanda(refrescos.get(5).getNombre());
+			int indiceRefrescoSeleccionado = vista.comboBox_TipoRefresco.getSelectedIndex();
+			
+			if(indiceRefrescoSeleccionado > 0) {
+				Producto refrescoSeleccionado = refrescos.get(indiceRefrescoSeleccionado);
+				
+				añadirBebidasAComanda(refrescoSeleccionado.getNombre());
+				
+				vista.btnRetirarBebida3.setEnabled(comprobarBebidaComanda(refrescoSeleccionado.getNombre()));
+			}else {
+				vista.btnRetirarBebida3.setEnabled(false);
 			}
 		}
 		
-
 		if(e.getSource()==vista.btnAñadirBebida4) {
-			String bebidaSeleccionada = (String) vista.comboBox_TipoBebidaCalienteoFria.getSelectedItem();
-	
-			if(bebidaSeleccionada.equals(bebidasCalientesOFrias.get(1).getNombre())) {
-				añadirBebidasAComanda(bebidasCalientesOFrias.get(1).getNombre());
-			}else if(bebidaSeleccionada.equals(bebidasCalientesOFrias.get(2).getNombre())) {
-				añadirBebidasAComanda(bebidasCalientesOFrias.get(2).getNombre());
-			}else if(bebidaSeleccionada.equals(bebidasCalientesOFrias.get(3).getNombre())) {
-				añadirBebidasAComanda(bebidasCalientesOFrias.get(3).getNombre());
-			}else if(bebidaSeleccionada.equals(bebidasCalientesOFrias.get(4).getNombre())) {
-				añadirBebidasAComanda(bebidasCalientesOFrias.get(4).getNombre());
-			}else if(bebidaSeleccionada.equals(bebidasCalientesOFrias.get(5).getNombre())) {
-				añadirBebidasAComanda(bebidasCalientesOFrias.get(5).getNombre());
+			int indiceBebidaSeleccionada = vista.comboBox_TipoBebidaCalienteoFria.getSelectedIndex();
+			
+			if(indiceBebidaSeleccionada > 0) {
+				Producto bebidaSeleccionada = bebidasCalientesOFrias.get(indiceBebidaSeleccionada);
+				
+				añadirBebidasAComanda(bebidaSeleccionada.getNombre());
+				
+				vista.btnRetirarBebida3.setEnabled(comprobarBebidaComanda(bebidaSeleccionada.getNombre()));
+			}else {
+				vista.btnRetirarBebida3.setEnabled(false);
 			}
 		}
 		
 		//BOTONES RETIRAR BEBIDAS
 		if(e.getSource()==vista.btnRetirarBebida1) {
-			String cafeSeleccionado = (String) vista.comboBox_TipoCafe.getSelectedItem();
+			String cafeSeleccionado = vista.comboBox_TipoCafe.getSelectedItem().toString();
 			
-			if(cafeSeleccionado.equals(cafes.get(1).getNombre())) {
-				eliminarBebidaDeComanda(cafes.get(1).getNombre());
-			}else if(cafeSeleccionado.equals(cafes.get(2).getNombre())) {
-				eliminarBebidaDeComanda(cafes.get(2).getNombre());
-			}else if(cafeSeleccionado.equals(cafes.get(3).getNombre())) {
-				eliminarBebidaDeComanda(cafes.get(3).getNombre());
-			}else if(cafeSeleccionado.equals(cafes.get(4).getNombre())) {
-				eliminarBebidaDeComanda(cafes.get(4).getNombre());
-			}else if(cafeSeleccionado.equals(cafes.get(5).getNombre())) {
-				eliminarBebidaDeComanda(cafes.get(5).getNombre());
-			}
+			retirarBebidas(cafes, cafeSeleccionado);
 		}
 		
 		if(e.getSource()==vista.btnRetirarBebida2) {
-			String batidoSeleccionado= (String) vista.comboBox_TipoBatido.getSelectedItem();
+			String batidoSeleccionado = vista.comboBox_TipoBatido.getSelectedItem().toString();
 			
-			if(batidoSeleccionado.equals(batidos.get(1).getNombre())) {
-				eliminarBebidaDeComanda(batidos.get(1).getNombre());
-			}else if(batidoSeleccionado.equals(batidos.get(2).getNombre())) {
-				eliminarBebidaDeComanda(batidos.get(2).getNombre());
-			}else if(batidoSeleccionado.equals(batidos.get(3).getNombre())) {
-				eliminarBebidaDeComanda(batidos.get(3).getNombre());
-			}else if(batidoSeleccionado.equals(batidos.get(4).getNombre())) {
-				eliminarBebidaDeComanda(batidos.get(4).getNombre());
-			}else if(batidoSeleccionado.equals(batidos.get(5).getNombre())) {
-				eliminarBebidaDeComanda(batidos.get(5).getNombre());
-			}
+			retirarBebidas(batidos, batidoSeleccionado);
 		}
 		
 		if(e.getSource()==vista.btnRetirarBebida3) {
-			String refrescoSeleccionado= (String) vista.comboBox_TipoRefresco.getSelectedItem();
+			String refrescoSeleccionado= vista.comboBox_TipoRefresco.getSelectedItem().toString();
 			
-			if(refrescoSeleccionado.equals(refrescos.get(1).getNombre())) {
-				eliminarBebidaDeComanda(refrescos.get(1).getNombre());
-			}else if(refrescoSeleccionado.equals(refrescos.get(2).getNombre())) {
-				eliminarBebidaDeComanda(refrescos.get(2).getNombre());
-			}else if(refrescoSeleccionado.equals(refrescos.get(3).getNombre())) {
-				eliminarBebidaDeComanda(refrescos.get(3).getNombre());
-			}else if(refrescoSeleccionado.equals(refrescos.get(4).getNombre())) {
-				eliminarBebidaDeComanda(refrescos.get(4).getNombre());
-			}else if(refrescoSeleccionado.equals(refrescos.get(5).getNombre())) {
-				eliminarBebidaDeComanda(refrescos.get(5).getNombre());
-			}
+			retirarBebidas(refrescos, refrescoSeleccionado);
 		}
 		
 		if(e.getSource()==vista.btnRetirarBebida4) {
-			String bebidaSeleccionada = (String) vista.comboBox_TipoBebidaCalienteoFria.getSelectedItem();
+			String bebidaSeleccionada = vista.comboBox_TipoBebidaCalienteoFria.getSelectedItem().toString();
 			
-			if(bebidaSeleccionada.equals(bebidasCalientesOFrias.get(1).getNombre())) {
-				eliminarBebidaDeComanda(bebidasCalientesOFrias.get(1).getNombre());
-			}else if(bebidaSeleccionada.equals(bebidasCalientesOFrias.get(2).getNombre())) {
-				eliminarBebidaDeComanda(bebidasCalientesOFrias.get(2).getNombre());
-			}else if(bebidaSeleccionada.equals(bebidasCalientesOFrias.get(3).getNombre())) {
-				eliminarBebidaDeComanda(bebidasCalientesOFrias.get(3).getNombre());
-			}else if(bebidaSeleccionada.equals(bebidasCalientesOFrias.get(4).getNombre())) {
-				eliminarBebidaDeComanda(bebidasCalientesOFrias.get(4).getNombre());
-			}else if(bebidaSeleccionada.equals(bebidasCalientesOFrias.get(5).getNombre())) {
-				eliminarBebidaDeComanda(bebidasCalientesOFrias.get(5).getNombre());
-			}
+			retirarBebidas(bebidasCalientesOFrias, bebidaSeleccionada);
 		}
+
 		
 	}//FIN ACTION PERFORMED	
 	
@@ -459,16 +425,18 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 	}//FIN GUARDAR CAMBIOS
 	
 	private boolean esTelefonoValido(String telefono) {
+		boolean telefonoValido=true;
+		
 		if(telefono.length() != 9) {
-			return false;
+			return telefonoValido=false;
 		}
 		for(int i=0; i<telefono.length(); i++) {
 			char c= telefono.charAt(i);
 			if(c < '0' || c>'9') {
-				return false;
+				return telefonoValido=false;
 			}
 		}
-		return true;
+		return telefonoValido;
 	}
 	
 	private void iniciarGestionComandas() {
@@ -501,58 +469,60 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 	}
 	
 	private boolean comprobarItemEnComboBoxMenu(String item) {
+		boolean itemExistente = false;
+		
 		for(int i=0; i<vista.comboBox_Menu.getItemCount(); i++) {
 			if(vista.comboBox_Menu.getItemAt(i).equals(item)) {
-				return true;
+				return itemExistente=true;
 			}
 		}
-		return false;
+		return itemExistente;
 	}
 	
-	private void rellenarComidas(ArrayList<Comida> comidas) {
-		comidas.add(new Comida(new ImageIcon("src/img/bizcocho.png"), 3.50, "Bizcocho"));
-		comidas.add(new Comida(new ImageIcon("src/img/napolitana.png"), 1.80, "Napolitana"));
-		comidas.add(new Comida(new ImageIcon("src/img/croissant.png"), 1.50, "Croissant"));
-		comidas.add(new Comida(new ImageIcon("src/img/brazo de gitano.png"), 3.25, "Brazo de gitano"));
-		comidas.add(new Comida(new ImageIcon("src/img/milhojas de crema.png"), 2.50, "Milhojas de crema"));
-		comidas.add(new Comida(new ImageIcon("src/img/tarta de queso.png"), 3.50, "Tarta de queso"));
+	private void rellenarComidas(ArrayList<Producto> comidas) {
+		comidas.add(new Producto(new ImageIcon("src/img/bizcocho.png"), 3.50, "Bizcocho"));
+		comidas.add(new Producto(new ImageIcon("src/img/napolitana.png"), 1.80, "Napolitana"));
+		comidas.add(new Producto(new ImageIcon("src/img/croissant.png"), 1.50, "Croissant"));
+		comidas.add(new Producto(new ImageIcon("src/img/brazo de gitano.png"), 3.25, "Brazo de gitano"));
+		comidas.add(new Producto(new ImageIcon("src/img/milhojas de crema.png"), 2.50, "Milhojas de crema"));
+		comidas.add(new Producto(new ImageIcon("src/img/tarta de queso.png"), 3.50, "Tarta de queso"));
 	}//RELLENAR ARRAYLIST COMIDAS
 	
 	private void mostrarComidas() {
 		for(int i=0; i<comidas.size(); i++) {
 			switch(i) {
 				case 0:
-					vista.lbl_Comida1.setIcon(ajustarTamañoImg(comidas.get(i).getImagenComida().getDescription(), vista.lbl_Comida1.getWidth(), vista.lbl_Comida1.getHeight()));
+					vista.lbl_Comida1.setIcon(ajustarTamañoImg(comidas.get(i).getImagenProducto().getDescription(), vista.lbl_Comida1.getWidth(), vista.lbl_Comida1.getHeight()));
 					vista.lbl_NombreComida1.setText(comidas.get(i).getNombre());
 					vista.lbl_PrecioComida1.setText(String.valueOf(comidas.get(i).getPrecio()));
 					vista.lbl_SimboloEuroComida1.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_SimboloEuroComida1.getWidth(), vista.lbl_SimboloEuroComida1.getHeight()));
 					break;
 				case 1:
-					vista.lbl_Comida2.setIcon(ajustarTamañoImg(comidas.get(i).getImagenComida().getDescription(), vista.lbl_Comida2.getWidth(), vista.lbl_Comida2.getHeight()));
+					vista.lbl_Comida2.setIcon(ajustarTamañoImg(comidas.get(i).getImagenProducto().getDescription(), vista.lbl_Comida2.getWidth(), vista.lbl_Comida2.getHeight()));
 					vista.lbl_NombreComida2.setText(comidas.get(i).getNombre());
 					vista.lbl_PrecioComida2.setText(String.valueOf(comidas.get(i).getPrecio()));
 					vista.lbl_SimboloEuroComida2.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_SimboloEuroComida2.getWidth(), vista.lbl_SimboloEuroComida2.getHeight()));
 					break;
 				case 2:
-					vista.lbl_Comida3.setIcon(ajustarTamañoImg(comidas.get(i).getImagenComida().getDescription(), vista.lbl_Comida3.getWidth(), vista.lbl_Comida3.getHeight()));
+					vista.lbl_Comida3.setIcon(ajustarTamañoImg(comidas.get(i).getImagenProducto().getDescription(), vista.lbl_Comida3.getWidth(), vista.lbl_Comida3.getHeight()));
 					vista.lbl_NombreComida3.setText(comidas.get(i).getNombre());
 					vista.lbl_PrecioComida3.setText(String.valueOf(comidas.get(i).getPrecio()));
 					vista.lbl_SimboloEuroComida3.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_SimboloEuroComida3.getWidth(), vista.lbl_SimboloEuroComida3.getHeight()));
 					break;
 				case 3:
-					vista.lbl_Comida4.setIcon(ajustarTamañoImg(comidas.get(i).getImagenComida().getDescription(), vista.lbl_Comida4.getWidth(), vista.lbl_Comida4.getHeight()));
+					vista.lbl_Comida4.setIcon(ajustarTamañoImg(comidas.get(i).getImagenProducto().getDescription(), vista.lbl_Comida4.getWidth(), vista.lbl_Comida4.getHeight()));
 					vista.lbl_NombreComida4.setText(comidas.get(i).getNombre());
 					vista.lbl_PrecioComida4.setText(String.valueOf(comidas.get(i).getPrecio()));
 					vista.lbl_SimboloEuroComida4.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_SimboloEuroComida4.getWidth(), vista.lbl_SimboloEuroComida2.getHeight()));
 					break;
 				case 4:
-					vista.lbl_Comida5.setIcon(ajustarTamañoImg(comidas.get(i).getImagenComida().getDescription(), vista.lbl_Comida5.getWidth(), vista.lbl_Comida5.getHeight()));
+					vista.lbl_Comida5.setIcon(ajustarTamañoImg(comidas.get(i).getImagenProducto().getDescription(), vista.lbl_Comida5.getWidth(), vista.lbl_Comida5.getHeight()));
 					vista.lbl_NombreComida5.setText(comidas.get(i).getNombre());
 					vista.lbl_PrecioComida5.setText(String.valueOf(comidas.get(i).getPrecio()));
 					vista.lbl_SimboloEuroComida5.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_SimboloEuroComida5.getWidth(), vista.lbl_SimboloEuroComida5.getHeight()));
 					break;
 				case 5:
-					vista.lbl_Comida6.setIcon(ajustarTamañoImg(comidas.get(i).getImagenComida().getDescription(), vista.lbl_Comida6.getWidth(), vista.lbl_Comida6.getHeight()));
+					vista.lbl_Comida6.setIcon(ajustarTamañoImg(comidas.get(i).getImagenProducto().getDescription(), vista.lbl_Comida6.getWidth(), vista.lbl_Comida6.getHeight()));
 					vista.lbl_NombreComida6.setText(comidas.get(i).getNombre());
 					vista.lbl_PrecioComida6.setText(String.valueOf(comidas.get(i).getPrecio()));
 					vista.lbl_SimboloEuroComida6.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_SimboloEuroComida6.getWidth(), vista.lbl_SimboloEuroComida6.getHeight()));
@@ -563,44 +533,44 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		}
 	}
 	
-	private void rellenarCafes(ArrayList<Bebida> cafes) {
-		cafes.add(new Bebida(new ImageIcon("src/img/cafe.png"), 0.00, "Cafés"));
-		cafes.add(new Bebida(new ImageIcon("src/img/cafe con leche.png"), 1.30, "Café con leche"));
-		cafes.add(new Bebida(new ImageIcon("src/img/capuccino.png"), 1.80, "Capuccino"));
-		cafes.add(new Bebida(new ImageIcon("src/img/cafe americano.png"), 1.40, "Café Americano"));
-		cafes.add(new Bebida(new ImageIcon("src/img/cafe bombon.png"), 1.90, "Café Bombón"));
-		cafes.add(new Bebida(new ImageIcon("src/img/cafe cortado.png"), 1.25, "Café Cortado"));
+	private void rellenarCafes(ArrayList<Producto> cafes) {
+		cafes.add(new Producto(new ImageIcon("src/img/cafe.png"), 0.00, "Cafés"));
+		cafes.add(new Producto(new ImageIcon("src/img/cafe con leche.png"), 1.30, "Café con leche"));
+		cafes.add(new Producto(new ImageIcon("src/img/capuccino.png"), 1.80, "Capuccino"));
+		cafes.add(new Producto(new ImageIcon("src/img/cafe americano.png"), 1.40, "Café Americano"));
+		cafes.add(new Producto(new ImageIcon("src/img/cafe bombon.png"), 1.90, "Café Bombón"));
+		cafes.add(new Producto(new ImageIcon("src/img/cafe cortado.png"), 1.25, "Café Cortado"));
 	}
 	
-	private void rellenarRefrescos(ArrayList<Bebida> refrescos) {
-		refrescos.add(new Bebida(new ImageIcon("src/img/refresco.png"), 0.00, "Refrescos"));
-		refrescos.add(new Bebida(new ImageIcon("src/img/agua.png"), 1.00, "Agua"));
-		refrescos.add(new Bebida(new ImageIcon("src/img/aquarius.png"), 1.75, "Aquarius Limón"));
-		refrescos.add(new Bebida(new ImageIcon("src/img/fanta de naranja.png"), 1.75, "Fanta Naranja"));
-		refrescos.add(new Bebida(new ImageIcon("src/img/nestea.png"), 1.60, "Nestea"));
-		refrescos.add(new Bebida(new ImageIcon("src/img/coca cola.png"), 1.90, "Coca-Cola"));
+	private void rellenarRefrescos(ArrayList<Producto> refrescos) {
+		refrescos.add(new Producto(new ImageIcon("src/img/refresco.png"), 0.00, "Refrescos"));
+		refrescos.add(new Producto(new ImageIcon("src/img/agua.png"), 1.00, "Agua"));
+		refrescos.add(new Producto(new ImageIcon("src/img/aquarius.png"), 1.75, "Aquarius Limón"));
+		refrescos.add(new Producto(new ImageIcon("src/img/fanta de naranja.png"), 1.75, "Fanta Naranja"));
+		refrescos.add(new Producto(new ImageIcon("src/img/nestea.png"), 1.60, "Nestea"));
+		refrescos.add(new Producto(new ImageIcon("src/img/coca cola.png"), 1.90, "Coca-Cola"));
 	}
 	
-	private void rellenarBatidos(ArrayList<Bebida> batidos) {
-		batidos.add(new Bebida(new ImageIcon("src/img/batido.png"), 0.00, "Batidos"));
-		batidos.add(new Bebida(new ImageIcon("src/img/batido de chocolate.png"), 3.00, "Batido Chocolate"));
-		batidos.add(new Bebida(new ImageIcon("src/img/batido de fresa.png"), 3.00, "Batido Fresa"));
-		batidos.add(new Bebida(new ImageIcon("src/img/batido de oreo.png"), 3.50, "Batido Oreo"));
-		batidos.add(new Bebida(new ImageIcon("src/img/batido de vainilla.png"), 3.00, "Batido Vainilla"));
-		batidos.add(new Bebida(new ImageIcon("src/img/batido de mango.png"), 3.25, "Batido Mango"));
+	private void rellenarBatidos(ArrayList<Producto> batidos) {
+		batidos.add(new Producto(new ImageIcon("src/img/batido.png"), 0.00, "Batidos"));
+		batidos.add(new Producto(new ImageIcon("src/img/batido de chocolate.png"), 3.00, "Batido Chocolate"));
+		batidos.add(new Producto(new ImageIcon("src/img/batido de fresa.png"), 3.00, "Batido Fresa"));
+		batidos.add(new Producto(new ImageIcon("src/img/batido de oreo.png"), 3.50, "Batido Oreo"));
+		batidos.add(new Producto(new ImageIcon("src/img/batido de vainilla.png"), 3.00, "Batido Vainilla"));
+		batidos.add(new Producto(new ImageIcon("src/img/batido de mango.png"), 3.25, "Batido Mango"));
 	}
 	
-	private void rellenarBebidasCalientesOFrias(ArrayList<Bebida> bebidasCalientesOFrias) {
-		bebidasCalientesOFrias.add(new Bebida(new ImageIcon("src/img/bebida caliente.png"), 0.00, "Bebidas Mixtas"));
-		bebidasCalientesOFrias.add(new Bebida(new ImageIcon("src/img/chocolate caliente.png"), 3.00, "Chocolate caliente"));
-		bebidasCalientesOFrias.add(new Bebida(new ImageIcon("src/img/te de menta.png"), 1.60, "Té de menta"));
-		bebidasCalientesOFrias.add(new Bebida(new ImageIcon("src/img/te de frutos rojos.png"), 2.20, "Té de frutos rojos"));
-		bebidasCalientesOFrias.add(new Bebida(new ImageIcon("src/img/horchata.png"), 2.00, "Horchata"));
-		bebidasCalientesOFrias.add(new Bebida(new ImageIcon("src/img/limonada.png"), 2.00, "Limonada"));
-		bebidasCalientesOFrias.add(new Bebida(new ImageIcon("src/img/infusion de canela y manzana.png"), 2.75, "Infusión"));
+	private void rellenarBebidasCalientesOFrias(ArrayList<Producto> bebidasCalientesOFrias) {
+		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/bebida caliente.png"), 0.00, "Bebidas Mixtas"));
+		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/chocolate caliente.png"), 3.00, "Chocolate caliente"));
+		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/te de menta.png"), 1.60, "Té de menta"));
+		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/te de frutos rojos.png"), 2.20, "Té de frutos rojos"));
+		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/horchata.png"), 2.00, "Horchata"));
+		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/limonada.png"), 2.00, "Limonada"));
+		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/infusion de canela y manzana.png"), 2.75, "Infusión"));
 	}
 	
-	private void rellenarComboBoxBebidas(ArrayList<Bebida> cafes, ArrayList<Bebida> refrescos, ArrayList<Bebida> batidos, ArrayList<Bebida> bebidasCalientesOFrias) {
+	private void rellenarComboBoxBebidas(ArrayList<Producto> cafes, ArrayList<Producto> refrescos, ArrayList<Producto> batidos, ArrayList<Producto> bebidasCalientesOFrias) {
 		//COMBOBOX CAFES
 		for(int i=0; i<cafes.size(); i++) {
 			this.vista.comboBox_TipoCafe.addItem(cafes.get(i).getNombre());
@@ -624,44 +594,39 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 	
 	private void mostrarInformacionCafeSeleccionado() {
 		String tipoCafe = (String) vista.comboBox_TipoCafe.getSelectedItem();
+		int numeroCafe;
 		
 		switch(tipoCafe) {
 			case "Café con leche":
-				vista.lbl_Cafe.setIcon(ajustarTamañoImg(cafes.get(1).getImagenBebida().getDescription(), vista.lbl_Cafe.getWidth(), vista.lbl_Cafe.getHeight()));
-				vista.lbl_PrecioCafe.setText(String.valueOf(cafes.get(1).getPrecio()));
-				vista.lbl_IconoEuro1.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro1.getWidth(), vista.lbl_IconoEuro1.getHeight()));
-				vista.lbl_InformacionBebida1.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida1.getWidth(), vista.lbl_InformacionBebida1.getHeight()));
+				numeroCafe=1;
 				break;
 			case "Capuccino":
-				vista.lbl_Cafe.setIcon(ajustarTamañoImg(cafes.get(2).getImagenBebida().getDescription(), vista.lbl_Cafe.getWidth(), vista.lbl_Cafe.getHeight()));
-				vista.lbl_PrecioCafe.setText(String.valueOf(cafes.get(2).getPrecio()));
-				vista.lbl_IconoEuro1.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro1.getWidth(), vista.lbl_IconoEuro1.getHeight()));
-				vista.lbl_InformacionBebida1.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida1.getWidth(), vista.lbl_InformacionBebida1.getHeight()));
+				numeroCafe=2;
 				break;
 			case "Café Americano":
-				vista.lbl_Cafe.setIcon(ajustarTamañoImg(cafes.get(3).getImagenBebida().getDescription(), vista.lbl_Cafe.getWidth(), vista.lbl_Cafe.getHeight()));
-				vista.lbl_PrecioCafe.setText(String.valueOf(cafes.get(3).getPrecio()));
-				vista.lbl_IconoEuro1.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro1.getWidth(), vista.lbl_IconoEuro1.getHeight()));
-				vista.lbl_InformacionBebida1.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida1.getWidth(), vista.lbl_InformacionBebida1.getHeight()));
+				numeroCafe=3;
 				break;
-			case "Café Bombón":
-				vista.lbl_Cafe.setIcon(ajustarTamañoImg(cafes.get(4).getImagenBebida().getDescription(), vista.lbl_Cafe.getWidth(), vista.lbl_Cafe.getHeight()));
-				vista.lbl_PrecioCafe.setText(String.valueOf(cafes.get(4).getPrecio()));
-				vista.lbl_IconoEuro1.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro1.getWidth(), vista.lbl_IconoEuro1.getHeight()));
-				vista.lbl_InformacionBebida1.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida1.getWidth(), vista.lbl_InformacionBebida1.getHeight()));
+			case "Café Bombon":
+				numeroCafe=4;
 				break;
 			case "Café Cortado":
-				vista.lbl_Cafe.setIcon(ajustarTamañoImg(cafes.get(5).getImagenBebida().getDescription(), vista.lbl_Cafe.getWidth(), vista.lbl_Cafe.getHeight()));
-				vista.lbl_PrecioCafe.setText(String.valueOf(cafes.get(5).getPrecio()));
-				vista.lbl_IconoEuro1.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro1.getWidth(), vista.lbl_IconoEuro1.getHeight()));
-				vista.lbl_InformacionBebida1.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida1.getWidth(), vista.lbl_InformacionBebida1.getHeight()));
+				numeroCafe=5;
 				break;
 			default:
-				vista.lbl_Cafe.setIcon(ajustarTamañoImg(cafes.get(0).getImagenBebida().getDescription(), vista.lbl_Cafe.getWidth(), vista.lbl_Cafe.getHeight()));
-				vista.lbl_PrecioCafe.setText("");
-				vista.lbl_IconoEuro1.setIcon(null);
-				vista.lbl_InformacionBebida1.setIcon(null);
+				numeroCafe = 0;
 				break;
+		}
+		
+		if(numeroCafe>0) {
+			vista.lbl_Cafe.setIcon(ajustarTamañoImg(cafes.get(numeroCafe).getImagenProducto().getDescription(), vista.lbl_Cafe.getWidth(), vista.lbl_Cafe.getHeight()));
+			vista.lbl_PrecioCafe.setText(String.valueOf(cafes.get(numeroCafe).getPrecio()));
+			vista.lbl_IconoEuro1.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro1.getWidth(), vista.lbl_IconoEuro1.getHeight()));
+			vista.lbl_InformacionBebida1.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida1.getWidth(), vista.lbl_InformacionBebida1.getHeight()));
+		}else {
+			vista.lbl_Cafe.setIcon(ajustarTamañoImg(cafes.get(numeroCafe).getImagenProducto().getDescription(), vista.lbl_Cafe.getWidth(), vista.lbl_Cafe.getHeight()));
+			vista.lbl_PrecioCafe.setText("");
+			vista.lbl_IconoEuro1.setIcon(null);
+			vista.lbl_InformacionBebida1.setIcon(null);
 		}
 	}//MOSTRAR INFORMACION CAFE SELECCIONADO
 	
@@ -670,37 +635,37 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		
 		switch(tipoBatido) {
 			case "Batido Chocolate":
-				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(1).getImagenBebida().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
+				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(1).getImagenProducto().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
 				vista.lbl_PrecioBatido.setText(String.valueOf(batidos.get(1).getPrecio()));
 				vista.lbl_IconoEuro2.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro2.getWidth(), vista.lbl_IconoEuro2.getHeight()));
 				vista.lbl_InformacionBebida2.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida2.getWidth(), vista.lbl_InformacionBebida2.getHeight()));
 				break;
 			case "Batido Fresa":
-				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(2).getImagenBebida().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
+				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(2).getImagenProducto().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
 				vista.lbl_PrecioBatido.setText(String.valueOf(batidos.get(2).getPrecio()));
 				vista.lbl_IconoEuro2.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro2.getWidth(), vista.lbl_IconoEuro2.getHeight()));
 				vista.lbl_InformacionBebida2.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida2.getWidth(), vista.lbl_InformacionBebida2.getHeight()));
 				break;
 			case "Batido Oreo":
-				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(3).getImagenBebida().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
+				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(3).getImagenProducto().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
 				vista.lbl_PrecioBatido.setText(String.valueOf(batidos.get(3).getPrecio()));
 				vista.lbl_IconoEuro2.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro2.getWidth(), vista.lbl_IconoEuro2.getHeight()));
 				vista.lbl_InformacionBebida2.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida2.getWidth(), vista.lbl_InformacionBebida2.getHeight()));
 				break;
 			case "Batido Vainilla":
-				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(4).getImagenBebida().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
+				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(4).getImagenProducto().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
 				vista.lbl_PrecioBatido.setText(String.valueOf(batidos.get(4).getPrecio()));
 				vista.lbl_IconoEuro2.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro2.getWidth(), vista.lbl_IconoEuro2.getHeight()));
 				vista.lbl_InformacionBebida2.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida2.getWidth(), vista.lbl_InformacionBebida2.getHeight()));
 				break;
 			case "Batido Mango":
-				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(5).getImagenBebida().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
+				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(5).getImagenProducto().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
 				vista.lbl_PrecioBatido.setText(String.valueOf(batidos.get(5).getPrecio()));
 				vista.lbl_IconoEuro2.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro2.getWidth(), vista.lbl_IconoEuro2.getHeight()));
 				vista.lbl_InformacionBebida2.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida2.getWidth(), vista.lbl_InformacionBebida2.getHeight()));
 				break;
 			default:
-				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(0).getImagenBebida().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
+				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(0).getImagenProducto().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
 				vista.lbl_PrecioBatido.setText("");
 				vista.lbl_IconoEuro2.setIcon(null);
 				vista.lbl_InformacionBebida2.setIcon(null);
@@ -713,37 +678,37 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		
 		switch(tipoRefresco) {
 			case "Agua":
-				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(1).getImagenBebida().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
+				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(1).getImagenProducto().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
 				vista.lbl_PrecioRefresco.setText(String.valueOf(refrescos.get(1).getPrecio()));
 				vista.lbl_IconoEuro3.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro3.getWidth(), vista.lbl_IconoEuro3.getHeight()));
 				vista.lbl_InformacionBebida3.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida3.getWidth(), vista.lbl_InformacionBebida3.getHeight()));
 				break;
 			case "Aquarius Limón":
-				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(2).getImagenBebida().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
+				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(2).getImagenProducto().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
 				vista.lbl_PrecioRefresco.setText(String.valueOf(refrescos.get(2).getPrecio()));
 				vista.lbl_IconoEuro3.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro3.getWidth(), vista.lbl_IconoEuro3.getHeight()));
 				vista.lbl_InformacionBebida3.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida3.getWidth(), vista.lbl_InformacionBebida3.getHeight()));
 				break;
 			case "Fanta Naranja":
-				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(3).getImagenBebida().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
+				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(3).getImagenProducto().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
 				vista.lbl_PrecioRefresco.setText(String.valueOf(refrescos.get(3).getPrecio()));
 				vista.lbl_IconoEuro3.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro3.getWidth(), vista.lbl_IconoEuro3.getHeight()));
 				vista.lbl_InformacionBebida3.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida3.getWidth(), vista.lbl_InformacionBebida3.getHeight()));
 				break;
 			case "Nestea":
-				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(4).getImagenBebida().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
+				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(4).getImagenProducto().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
 				vista.lbl_PrecioRefresco.setText(String.valueOf(refrescos.get(4).getPrecio()));
 				vista.lbl_IconoEuro3.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro3.getWidth(), vista.lbl_IconoEuro3.getHeight()));
 				vista.lbl_InformacionBebida3.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida3.getWidth(), vista.lbl_InformacionBebida3.getHeight()));
 				break;
 			case "Coca-Cola":
-				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(5).getImagenBebida().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
+				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(5).getImagenProducto().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
 				vista.lbl_PrecioRefresco.setText(String.valueOf(refrescos.get(5).getPrecio()));
 				vista.lbl_IconoEuro3.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro3.getWidth(), vista.lbl_IconoEuro3.getHeight()));
 				vista.lbl_InformacionBebida3.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida3.getWidth(), vista.lbl_InformacionBebida3.getHeight()));
 				break;
 			default:
-				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(0).getImagenBebida().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
+				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(0).getImagenProducto().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
 				vista.lbl_PrecioRefresco.setText("");
 				vista.lbl_IconoEuro3.setIcon(null);
 				vista.lbl_InformacionBebida3.setIcon(null);
@@ -756,49 +721,57 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		
 		switch(tipoBebidaCalienteOFria) {
 			case "Chocolate caliente":
-				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(1).getImagenBebida().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
+				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(1).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
 				vista.lbl_PrecioBebidaVariada.setText(String.valueOf(bebidasCalientesOFrias.get(1).getPrecio()));
 				vista.lbl_IconoEuro4.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro4.getWidth(), vista.lbl_IconoEuro4.getHeight()));
 				vista.lbl_InformacionBebida4.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida4.getWidth(), vista.lbl_InformacionBebida4.getHeight()));
 				break;
 			case "Té de menta":
-				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(2).getImagenBebida().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
+				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(2).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
 				vista.lbl_PrecioBebidaVariada.setText(String.valueOf(bebidasCalientesOFrias.get(2).getPrecio()));
 				vista.lbl_IconoEuro4.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro4.getWidth(), vista.lbl_IconoEuro4.getHeight()));
 				vista.lbl_InformacionBebida4.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida4.getWidth(), vista.lbl_InformacionBebida4.getHeight()));
 				break;
 			case "Té de frutos rojos":
-				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(3).getImagenBebida().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
+				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(3).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
 				vista.lbl_PrecioBebidaVariada.setText(String.valueOf(bebidasCalientesOFrias.get(3).getPrecio()));
 				vista.lbl_IconoEuro4.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro4.getWidth(), vista.lbl_IconoEuro4.getHeight()));
 				vista.lbl_InformacionBebida4.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida4.getWidth(), vista.lbl_InformacionBebida4.getHeight()));
 				break;
 			case "Horchata":
-				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(4).getImagenBebida().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
+				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(4).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
 				vista.lbl_PrecioBebidaVariada.setText(String.valueOf(bebidasCalientesOFrias.get(4).getPrecio()));
 				vista.lbl_IconoEuro4.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro4.getWidth(), vista.lbl_IconoEuro4.getHeight()));
 				vista.lbl_InformacionBebida4.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida4.getWidth(), vista.lbl_InformacionBebida4.getHeight()));
 				break;
 			case "Limonada":
-				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(5).getImagenBebida().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
+				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(5).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
 				vista.lbl_PrecioBebidaVariada.setText(String.valueOf(bebidasCalientesOFrias.get(5).getPrecio()));
 				vista.lbl_IconoEuro4.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro4.getWidth(), vista.lbl_IconoEuro4.getHeight()));
 				vista.lbl_InformacionBebida4.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida4.getWidth(), vista.lbl_InformacionBebida4.getHeight()));
 				break;
 			case "Infusión":
-				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(6).getImagenBebida().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
+				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(6).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
 				vista.lbl_PrecioBebidaVariada.setText(String.valueOf(bebidasCalientesOFrias.get(6).getPrecio()));
 				vista.lbl_IconoEuro4.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro4.getWidth(), vista.lbl_IconoEuro4.getHeight()));
 				vista.lbl_InformacionBebida4.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida4.getWidth(), vista.lbl_InformacionBebida4.getHeight()));
 				break;
 			default:
-				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(0).getImagenBebida().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
+				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(0).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
 				vista.lbl_PrecioBebidaVariada.setText("");
 				vista.lbl_IconoEuro4.setIcon(null);
 				vista.lbl_InformacionBebida4.setIcon(null);
 				break;
 		}
 	}//MOSTRAR INFORMACION BEBIDA SELECCIONADA
+	
+	private void retirarBebidas(ArrayList<Producto> bebidas, String bebidaSeleccionada) {
+		for(int i=0; i<bebidas.size(); i++) {
+			if(bebidaSeleccionada.equals(bebidas.get(i).getNombre())) {
+				eliminarBebidaDeComanda(bebidas.get(i).getNombre());
+			}
+		}
+	}
 	
 	private void gestionarSeleccionBebidasPorDefecto() {
 		vista.comboBox_TipoCafe.setSelectedIndex(0);
@@ -807,145 +780,240 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		vista.comboBox_TipoBebidaCalienteoFria.setSelectedIndex(0);
 	}
 	
-	private void gestionarMesaOTaburete(String nombreComanda) {
+	private void inicializarLugares() {
+		lugares.add(new Lugar("Mesa 1"));
+		lugares.add(new Lugar("Mesa 2"));
+		lugares.add(new Lugar("Mesa 3"));
+		lugares.add(new Lugar("Mesa 4"));
+		lugares.add(new Lugar("Mesa 5"));
+		lugares.add(new Lugar("Taburete 1"));
+		lugares.add(new Lugar("Taburete 2"));
+		lugares.add(new Lugar("Taburete 3"));
+	}
+	
+	private Lugar buscarLugar(String nombre) {
+		for(int i=0; i<lugares.size(); i++) {
+			if(lugares.get(i).getNombreLugar().equalsIgnoreCase(nombre)) {
+				return lugares.get(i);
+			}
+		}
+		return null;
+	}//BUSCAR LUGAR
+	
+	private void gestionarComandaMesaOTaburete(String sitio) {
 		vista.panel_GestionComandas.setVisible(true);
 		vista.panel_PantallaPrincipal.setVisible(false);
-		iniciarGestionComandas();
-		vista.lbl_Mesa_o_Taburete.setText(nombreComanda);
+		
+		Lugar lugarElegido = buscarLugar(sitio);
+		
+		if(lugarElegido != null) {
+			
+			if(lugarElegido.obtenerComanda(1)==null || lugarElegido.getComandas().isEmpty()){
+				lugarElegido.añadirNuevaComanda();
+			}
+			
+			comandaActual = lugarElegido.obtenerComanda(1);
+			
+			actualizarJListComanda(comandaActual);
+
+			iniciarGestionComandas();
+			vista.lbl_Mesa_o_Taburete.setText(sitio);
+			vista.lbl_IdComanda.setText("COMANDA " + comandaActual.getId());
+		}
+		
 	}
 	
 	private void añadirComidasAComanda(String nombreComida) {
+		Lugar lugarElegido = buscarLugar(vista.lbl_Mesa_o_Taburete.getText());
+		Comanda comandaActual = lugarElegido.obtenerComanda(1);
+		double precio = 0.0;
 		
-		if(pedidos.containsKey(nombreComida)) {
-			pedidos.put(nombreComida, pedidos.get(nombreComida)+1);
-		}else {
-			pedidos.put(nombreComida, 1);
+		for(int i=0; i<comidas.size(); i++) {
+			if(comidas.get(i).getNombre().equals(nombreComida)) {
+				precio = comidas.get(i).getPrecio();
+			}
 		}
 		
-		if(pedidos.get(nombreComida)>0) {
-			habilitarBotonesRetirarComidas(nombreComida, true);
-		}
+		comandaActual.añadirProducto(nombreComida, precio);
 		
-		actualizarComandas();
+		actualizarJListComanda(comandaActual);
 	}
 	
 	private void eliminarComidaDeComanda(String nombreComida) {
-		if(pedidos.containsKey(nombreComida)) {
-			if(pedidos.get(nombreComida)>1) {
-				pedidos.put(nombreComida, pedidos.get(nombreComida)-1);
-			}else {
-				pedidos.remove(nombreComida);
-				habilitarBotonesRetirarComidas(nombreComida, false);
+		Lugar lugarElegido = buscarLugar(vista.lbl_Mesa_o_Taburete.getText());
+		Comanda comandaActual = lugarElegido.obtenerComanda(1);
+		double precio = 0.0;
+		
+		for(int i=0; i<comidas.size(); i++) {
+			if(comidas.get(i).getNombre().equals(nombreComida)) {
+				precio = comidas.get(i).getPrecio();
 			}
 		}
-		actualizarComandas();
+		
+		comandaActual.eliminarProducto(nombreComida, precio);
+
+		actualizarJListComanda(comandaActual);
 	}
 	
 	private void añadirBebidasAComanda(String nombreBebida) {
-		if(pedidos.containsKey(nombreBebida)) {
-			pedidos.put(nombreBebida, pedidos.get(nombreBebida)+1);
-		}else {
-			pedidos.put(nombreBebida, 1);
+		Lugar lugarElegido = buscarLugar(vista.lbl_Mesa_o_Taburete.getText());
+		Comanda comandaActual = lugarElegido.obtenerComanda(1);
+		double precio = 0.0;
+		
+		for(int i=0; i<cafes.size(); i++) {
+			if(cafes.get(i).getNombre().equals(nombreBebida)) {
+				precio = cafes.get(i).getPrecio();
+			}
 		}
 		
-		if(pedidos.get(nombreBebida)>0) {
-			habilitarBotonesRetirarBebidas(nombreBebida, true);
+		for(int i=0; i<batidos.size(); i++) {
+			if(batidos.get(i).getNombre().equals(nombreBebida)) {
+				precio = batidos.get(i).getPrecio();
+			}
 		}
 		
-		actualizarComandas();
+		for(int i=0; i<refrescos.size(); i++) {
+			if(refrescos.get(i).getNombre().equals(nombreBebida)) {
+				precio = refrescos.get(i).getPrecio();
+			}
+		}
+		
+		for(int i=0; i<bebidasCalientesOFrias.size(); i++) {
+			if(bebidasCalientesOFrias.get(i).getNombre().equals(nombreBebida)) {
+				precio = bebidasCalientesOFrias.get(i).getPrecio();
+			}
+		}
+		
+		comandaActual.añadirProducto(nombreBebida, precio);
+		
+		actualizarJListComanda(comandaActual);
+		
+		comprobarBebidaComanda(nombreBebida);
 	}
 	
 	private void eliminarBebidaDeComanda(String nombreBebida) {
-		if(pedidos.containsKey(nombreBebida)) {
-			if(pedidos.get(nombreBebida)>1) {
-				pedidos.put(nombreBebida, pedidos.get(nombreBebida)-1);
-			}else {
-				pedidos.remove(nombreBebida);
-				habilitarBotonesRetirarBebidas(nombreBebida, false);
+		Lugar lugarElegido = buscarLugar(vista.lbl_Mesa_o_Taburete.getText());
+		Comanda comandaActual = lugarElegido.obtenerComanda(1);
+		double precio = 0.0;
+		
+		for(int i=0; i<cafes.size(); i++) {
+			if(cafes.get(i).getNombre().equals(nombreBebida)) {
+				precio = cafes.get(i).getPrecio();
 			}
 		}
-		actualizarComandas();
-	}
-	
-	private void actualizarComandas() {
-		comanda.clear();
-
-		for(Map.Entry<String, Integer> entry : pedidos.entrySet()) {
-			comanda.addElement(entry.getKey() + " - " + entry.getValue());
+		
+		for(int i=0; i<batidos.size(); i++) {
+			if(batidos.get(i).getNombre().equals(nombreBebida)) {
+				precio = batidos.get(i).getPrecio();
+			}
 		}
+		
+		for(int i=0; i<refrescos.size(); i++) {
+			if(refrescos.get(i).getNombre().equals(nombreBebida)) {
+				precio = refrescos.get(i).getPrecio();
+			}
+		}
+		
+		for(int i=0; i<bebidasCalientesOFrias.size(); i++) {
+			if(bebidasCalientesOFrias.get(i).getNombre().equals(nombreBebida)) {
+				precio = bebidasCalientesOFrias.get(i).getPrecio();
+			}
+		}
+		
+		comandaActual.eliminarProducto(nombreBebida, precio);
+		
+		actualizarJListComanda(comandaActual);
+		
+		comprobarBebidaComanda(nombreBebida);
+	}
+
+	private void actualizarJListComanda(Comanda comandaActual) {
+		comanda.clear();
+		
+		deshabilitarBotones();
+		
+		HashMap<String, Integer> productos = comandaActual.getProductos();
+		
+		for(Map.Entry<String, Integer> entrada :productos.entrySet()) {
+			comanda.addElement(entrada.getKey() + " || " + entrada.getValue());
+		
+		}
+		
+		vista.lbl_PrecioTotalComanda.setText("PRECIO TOTAL: " + comandaActual.getPrecioTotal() + "€");
 		
 		vista.list_ListaPedidos.setModel(comanda);
+		
+		for(Map.Entry<String, Integer> entrada:productos.entrySet()) {
+			if(entrada.getKey().equals(comidas.get(0).getNombre())) {
+				vista.btnEliminarComida1.setEnabled(true);
+			}else if (entrada.getKey().equals(comidas.get(1).getNombre())) {
+				vista.btnEliminarComida2.setEnabled(true);
+			}else if (entrada.getKey().equals(comidas.get(2).getNombre())) {
+				vista.btnEliminarComida3.setEnabled(true);
+			}else if (entrada.getKey().equals(comidas.get(3).getNombre())) {
+				vista.btnEliminarComida4.setEnabled(true);
+			}else if (entrada.getKey().equals(comidas.get(4).getNombre())) {
+				vista.btnEliminarComida5.setEnabled(true);
+			}else if (entrada.getKey().equals(comidas.get(5).getNombre())) {
+				vista.btnEliminarComida6.setEnabled(true);
+			}
+		}
+		
 	}
 	
-	private void habilitarBotonesRetirarComidas(String nombreComida, boolean habilitarBoton) {
-		if(nombreComida.equals(comidas.get(0).getNombre())) {
-			vista.btnEliminarComida1.setEnabled(habilitarBoton);
-		}else if(nombreComida.equals(comidas.get(1).getNombre())) {
-			vista.btnEliminarComida2.setEnabled(habilitarBoton);
-		}else if(nombreComida.equals(comidas.get(2).getNombre())) {
-			vista.btnEliminarComida3.setEnabled(habilitarBoton);
-		}else if(nombreComida.equals(comidas.get(3).getNombre())) {
-			vista.btnEliminarComida4.setEnabled(habilitarBoton);
-		}else if(nombreComida.equals(comidas.get(4).getNombre())) {
-			vista.btnEliminarComida5.setEnabled(habilitarBoton);
-		}else if(nombreComida.equals(comidas.get(5).getNombre())) {
-			vista.btnEliminarComida6.setEnabled(habilitarBoton);
+	private boolean comprobarBebidaComanda(String bebidaSeleccionada) {
+		boolean bebidaComanda = false;
+		Lugar lugarElegido = buscarLugar(vista.lbl_Mesa_o_Taburete.getText());
+		comandaActual = lugarElegido.obtenerComanda(1);
+		HashMap<String, Integer> elementosComanda = comandaActual.getProductos();
+	
+		for(Map.Entry<String, JButton> entrada: botonesRetirarBebidas.entrySet()) {
+			entrada.getValue().setEnabled(false);
+		}
+		
+		for(Map.Entry<String, Integer> entrada:elementosComanda.entrySet()) {
+			if(entrada.getKey().equals(bebidaSeleccionada)) {
+				if(botonesRetirarBebidas.get(entrada.getKey()) != null) {
+					botonesRetirarBebidas.get(entrada.getKey()).setEnabled(true);
+					bebidaComanda=true;
+				}
+			}
+		}
+		
+		return bebidaComanda;
+	}
+	
+	private void inicializarBotonesRetirarBebidas() {
+		for(int i=1; i<cafes.size(); i++) {
+			botonesRetirarBebidas.put(cafes.get(i).getNombre(), vista.btnRetirarBebida1);
+		}
+		
+		for(int i=1; i<batidos.size(); i++) {
+			botonesRetirarBebidas.put(batidos.get(i).getNombre(), vista.btnRetirarBebida2);
+		}
+		
+		for(int i=1; i<refrescos.size(); i++) {
+			botonesRetirarBebidas.put(refrescos.get(i).getNombre(), vista.btnRetirarBebida3);
+		}
+		
+		for(int i=1; i<bebidasCalientesOFrias.size(); i++) {
+			botonesRetirarBebidas.put(bebidasCalientesOFrias.get(i).getNombre(), vista.btnRetirarBebida4);
 		}
 	}
 	
-	private void habilitarBotonesRetirarBebidas(String bebida, boolean habilitarBoton) {
-		//BOTONES PARA CAFES
-		if(bebida.equals(cafes.get(1).getNombre())) {
-			vista.btnRetirarBebida1.setEnabled(habilitarBoton);
-		}else if(bebida.equals(cafes.get(2).getNombre())) {
-			vista.btnRetirarBebida1.setEnabled(habilitarBoton);
-		}else if(bebida.equals(cafes.get(3).getNombre())) {
-			vista.btnRetirarBebida1.setEnabled(habilitarBoton);
-		}else if(bebida.equals(cafes.get(4).getNombre())) {
-			vista.btnRetirarBebida1.setEnabled(habilitarBoton);
-		}else if(bebida.equals(cafes.get(5).getNombre())) {
-			vista.btnRetirarBebida1.setEnabled(habilitarBoton);
-		}
+	private void deshabilitarBotones() {
+
+		vista.btnEliminarComida1.setEnabled(false);
+		vista.btnEliminarComida2.setEnabled(false);
+		vista.btnEliminarComida3.setEnabled(false);
+		vista.btnEliminarComida4.setEnabled(false);
+		vista.btnEliminarComida5.setEnabled(false);
+		vista.btnEliminarComida6.setEnabled(false);
 		
-		//BOTONES PARA BATIDOS
-		if(bebida.equals(batidos.get(1).getNombre())) {
-			vista.btnRetirarBebida2.setEnabled(habilitarBoton);
-		}else if(bebida.equals(batidos.get(2).getNombre())) {
-			vista.btnRetirarBebida2.setEnabled(habilitarBoton);
-		}else if(bebida.equals(batidos.get(3).getNombre())) {
-			vista.btnRetirarBebida2.setEnabled(habilitarBoton);
-		}else if(bebida.equals(batidos.get(4).getNombre())) {
-			vista.btnRetirarBebida2.setEnabled(habilitarBoton);
-		}else if(bebida.equals(batidos.get(5).getNombre())) {
-			vista.btnRetirarBebida2.setEnabled(habilitarBoton);
-		}	
-		
-		//BOTONES PARA REFRESCOS
-		if(bebida.equals(refrescos.get(1).getNombre())) {
-			vista.btnRetirarBebida3.setEnabled(habilitarBoton);
-		}else if(bebida.equals(refrescos.get(2).getNombre())) {
-			vista.btnRetirarBebida3.setEnabled(habilitarBoton);
-		}else if(bebida.equals(refrescos.get(3).getNombre())) {
-			vista.btnRetirarBebida3.setEnabled(habilitarBoton);
-		}else if(bebida.equals(refrescos.get(4).getNombre())) {
-			vista.btnRetirarBebida3.setEnabled(habilitarBoton);
-		}else if(bebida.equals(refrescos.get(5).getNombre())) {
-			vista.btnRetirarBebida3.setEnabled(habilitarBoton);
-		}
-		
-		//BOTONES PARA BEBIDAS CALIENTES O FRIAS
-		if(bebida.equals(bebidasCalientesOFrias.get(1).getNombre())) {
-			vista.btnRetirarBebida4.setEnabled(habilitarBoton);
-		}else if(bebida.equals(bebidasCalientesOFrias.get(2).getNombre())) {
-			vista.btnRetirarBebida4.setEnabled(habilitarBoton);
-		}else if(bebida.equals(bebidasCalientesOFrias.get(3).getNombre())) {
-			vista.btnRetirarBebida4.setEnabled(habilitarBoton);
-		}else if(bebida.equals(bebidasCalientesOFrias.get(4).getNombre())) {
-			vista.btnRetirarBebida4.setEnabled(habilitarBoton);
-		}else if(bebida.equals(bebidasCalientesOFrias.get(5).getNombre())) {
-			vista.btnRetirarBebida4.setEnabled(habilitarBoton);
-		}
-		
+		vista.btnRetirarBebida1.setEnabled(false);
+		vista.btnRetirarBebida2.setEnabled(false);
+		vista.btnRetirarBebida3.setEnabled(false);
+		vista.btnRetirarBebida4.setEnabled(false);
 	}
 	
 	private void iniciarPanelInformacionProductos() {
@@ -983,6 +1051,12 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 			}
 		}
 		
+		if(e.getClickCount()==2 && e.getSource()==vista.lbl_Salir) {
+			vista.panel_DetallesEmpleado.setVisible(false);
+			vista.panel_PantallaPrincipal.setVisible(true);
+			vista.textArea_MensajeInformacionCambiosRealizados.setText("");
+		}
+		
 		if(e.getClickCount()==1 && e.getSource()==vista.lbl_Detalles) {
 			vista.panel_DetallesEmpleado.setVisible(true);
 			vista.panel_PantallaPrincipal.setVisible(false);
@@ -992,28 +1066,28 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		
 		if(e.getClickCount()==1) {
 			if (e.getSource()==vista.lbl_Mesa1) {
-				gestionarMesaOTaburete("MESA 1");
+				gestionarComandaMesaOTaburete("MESA 1");
 				gestionarSeleccionBebidasPorDefecto();
 			}else if (e.getSource()==vista.lbl_Mesa2) {
-				gestionarMesaOTaburete("MESA 2");
+				gestionarComandaMesaOTaburete("MESA 2");
 				gestionarSeleccionBebidasPorDefecto();
 			}else if (e.getSource()==vista.lbl_Mesa3) {
-				gestionarMesaOTaburete("MESA 3");
+				gestionarComandaMesaOTaburete("MESA 3");
 				gestionarSeleccionBebidasPorDefecto();
 			}else if (e.getSource()==vista.lbl_Mesa4) {
-				gestionarMesaOTaburete("MESA 4");
+				gestionarComandaMesaOTaburete("MESA 4");
 				gestionarSeleccionBebidasPorDefecto();
 			}else if (e.getSource()==vista.lbl_Mesa5) {
-				gestionarMesaOTaburete("MESA 5");
+				gestionarComandaMesaOTaburete("MESA 5");
 				gestionarSeleccionBebidasPorDefecto();
 			}else if (e.getSource()==vista.lbl_Taburete1) {
-				gestionarMesaOTaburete("TABURETE 1");
+				gestionarComandaMesaOTaburete("TABURETE 1");
 				gestionarSeleccionBebidasPorDefecto();
 			}else if (e.getSource()==vista.lbl_Taburete2) {
-				gestionarMesaOTaburete("TABURETE 2");
+				gestionarComandaMesaOTaburete("TABURETE 2");
 				gestionarSeleccionBebidasPorDefecto();
 			}else if (e.getSource()==vista.lbl_Taburete3) {
-				gestionarMesaOTaburete("TABURETE 3");
+				gestionarComandaMesaOTaburete("TABURETE 3");
 				gestionarSeleccionBebidasPorDefecto();
 			}
 		}

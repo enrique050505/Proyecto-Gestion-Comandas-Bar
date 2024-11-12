@@ -2,24 +2,24 @@ package Modelo;
 
 import javax.swing.ImageIcon;
 
-public class Comida {
+public class Producto {
 	
-	private ImageIcon imagenComida;
+	private ImageIcon imagenProducto;
 	private double precio;
 	private String nombre;
 	
-	public Comida(ImageIcon imagenComida, double precio, String nombre) {
-		this.imagenComida = imagenComida;
+	public Producto(ImageIcon imagenProducto, double precio, String nombre) {
+		this.imagenProducto = imagenProducto;
 		this.precio = precio;
 		this.nombre = nombre;
 	}
 
-	public ImageIcon getImagenComida() {
-		return imagenComida;
+	public ImageIcon getImagenProducto() {
+		return imagenProducto;
 	}
 
-	public void setImagenComida(ImageIcon imagenComida) {
-		this.imagenComida = imagenComida;
+	public void setImagenProducto(ImageIcon imagenProducto) {
+		this.imagenProducto = imagenProducto;
 	}
 
 	public double getPrecio() {
@@ -37,5 +37,7 @@ public class Comida {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
+	
+	
+	
 }

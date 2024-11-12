@@ -181,6 +181,8 @@ public class InterfazApp extends JFrame {
 	public JLabel lbl_SimboloEuroComida6;
 	public JLabel lbl_PedirComanda;
 	public JLabel lbl_PagarComanda;
+	public JLabel lbl_IdComanda;
+	public JLabel lbl_PrecioTotalComanda;
 
 	/**
 	 * Launch the application.
@@ -216,6 +218,19 @@ public class InterfazApp extends JFrame {
 		panel_GestionComandas.setBounds(0, 0, 897, 532);
 		contentPane.add(panel_GestionComandas);
 		panel_GestionComandas.setLayout(null);
+		
+		lbl_PrecioTotalComanda = new JLabel("");
+		lbl_PrecioTotalComanda.setForeground(Color.BLACK);
+		lbl_PrecioTotalComanda.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_PrecioTotalComanda.setBounds(718, 333, 178, 30);
+		panel_GestionComandas.add(lbl_PrecioTotalComanda);
+		
+		lbl_IdComanda = new JLabel("");
+		lbl_IdComanda.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_IdComanda.setForeground(Color.BLACK);
+		lbl_IdComanda.setFont(new Font("Consolas", Font.BOLD, 18));
+		lbl_IdComanda.setBounds(731, 55, 142, 37);
+		panel_GestionComandas.add(lbl_IdComanda);
 		
 		panel_Bebidas = new JPanel();
 		panel_Bebidas.setBackground(new Color(245, 209, 215));
@@ -397,11 +412,11 @@ public class InterfazApp extends JFrame {
 		panel_Bebidas.add(progressBar_Bebida4);
 		
 		lbl_PagarComanda = new JLabel("");
-		lbl_PagarComanda.setBounds(775, 416, 64, 64);
+		lbl_PagarComanda.setBounds(775, 445, 64, 64);
 		panel_GestionComandas.add(lbl_PagarComanda);
 		
 		lbl_PedirComanda = new JLabel("");
-		lbl_PedirComanda.setBounds(775, 340, 64, 64);
+		lbl_PedirComanda.setBounds(775, 375, 64, 64);
 		panel_GestionComandas.add(lbl_PedirComanda);
 		
 		panel_Comidas = new JPanel();
@@ -683,7 +698,7 @@ public class InterfazApp extends JFrame {
 		lbl_Mesa_o_Taburete.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_Mesa_o_Taburete.setForeground(new Color(0, 0, 0));
 		lbl_Mesa_o_Taburete.setFont(new Font("Consolas", Font.BOLD, 18));
-		lbl_Mesa_o_Taburete.setBounds(733, 50, 142, 37);
+		lbl_Mesa_o_Taburete.setBounds(731, 12, 142, 37);
 		panel_GestionComandas.add(lbl_Mesa_o_Taburete);
 		
 		comboBox_Menu = new JComboBox();
