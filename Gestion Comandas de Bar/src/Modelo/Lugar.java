@@ -29,12 +29,13 @@ public class Lugar {
 	}
 	
 	public Comanda obtenerComanda(int num) {
-		for(Comanda comanda:comandas) {
-			if(comanda.getId()==num) {
-				return comanda;
+		Comanda comanda = null;
+		for(Comanda comandaActual:comandas) {
+			if(comandaActual.getId()==num) {
+				comanda = comandaActual;
 			}
 		}
-		return null;
+		return comanda;
 	}
 	
 }

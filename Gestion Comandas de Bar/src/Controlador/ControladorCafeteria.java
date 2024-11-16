@@ -17,9 +17,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
 
 import Modelo.Comanda;
 import Modelo.Empleado;
+import Modelo.Ingrediente;
 import Modelo.Lugar;
 import Modelo.Producto;
 import Vista.InterfazApp;
@@ -77,6 +79,9 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		this.vista.btnRetirarBebida3.addActionListener(this);
 		this.vista.btnRetirarBebida4.addActionListener(this);
 		
+		//CHECK BOX
+		this.vista.checkBox_MostrarTablaIngredientes.addActionListener(this);
+		
 		//MOUSE LISTENERS
 		this.vista.lbl_Detalles.addMouseListener(this);
 		this.vista.lbl_CerrarSesion.addMouseListener(this);
@@ -91,6 +96,16 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		this.vista.lbl_Taburete2.addMouseListener(this);
 		this.vista.lbl_Taburete3.addMouseListener(this);
 		this.vista.lbl_InformacionComida1.addMouseListener(this);
+		this.vista.lbl_InformacionComida2.addMouseListener(this);
+		this.vista.lbl_InformacionComida3.addMouseListener(this);
+		this.vista.lbl_InformacionComida4.addMouseListener(this);
+		this.vista.lbl_InformacionComida5.addMouseListener(this);
+		this.vista.lbl_InformacionComida6.addMouseListener(this);
+		this.vista.lbl_InformacionBebida1.addMouseListener(this);
+		this.vista.lbl_InformacionBebida2.addMouseListener(this);
+		this.vista.lbl_InformacionBebida3.addMouseListener(this);
+		this.vista.lbl_InformacionBebida4.addMouseListener(this);
+		this.vista.lbl_SalirInformacionProductos.addMouseListener(this);
 		
 		this.vista.list_ListaPedidos.setModel(comanda);
 		
@@ -228,9 +243,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 			
 			if(indiceCafeSeleccionado > 0) {
 				Producto cafeSeleccionado = cafes.get(indiceCafeSeleccionado);
-				
 				añadirBebidasAComanda(cafeSeleccionado.getNombre());
-				
 				vista.btnRetirarBebida1.setEnabled(comprobarBebidaComanda(cafeSeleccionado.getNombre()));
 			}else {
 				vista.btnRetirarBebida1.setEnabled(false);
@@ -242,9 +255,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 			
 			if(indiceBatidoSeleccionado > 0) {
 				Producto batidoSeleccionado = batidos.get(indiceBatidoSeleccionado);
-				
 				añadirBebidasAComanda(batidoSeleccionado.getNombre());
-				
 				vista.btnRetirarBebida2.setEnabled(comprobarBebidaComanda(batidoSeleccionado.getNombre()));
 			}else {
 				vista.btnRetirarBebida2.setEnabled(false);
@@ -256,9 +267,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 			
 			if(indiceRefrescoSeleccionado > 0) {
 				Producto refrescoSeleccionado = refrescos.get(indiceRefrescoSeleccionado);
-				
 				añadirBebidasAComanda(refrescoSeleccionado.getNombre());
-				
 				vista.btnRetirarBebida3.setEnabled(comprobarBebidaComanda(refrescoSeleccionado.getNombre()));
 			}else {
 				vista.btnRetirarBebida3.setEnabled(false);
@@ -270,12 +279,10 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 			
 			if(indiceBebidaSeleccionada > 0) {
 				Producto bebidaSeleccionada = bebidasCalientesOFrias.get(indiceBebidaSeleccionada);
-				
 				añadirBebidasAComanda(bebidaSeleccionada.getNombre());
-				
-				vista.btnRetirarBebida3.setEnabled(comprobarBebidaComanda(bebidaSeleccionada.getNombre()));
+				vista.btnRetirarBebida4.setEnabled(comprobarBebidaComanda(bebidaSeleccionada.getNombre()));
 			}else {
-				vista.btnRetirarBebida3.setEnabled(false);
+				vista.btnRetirarBebida4.setEnabled(false);
 			}
 		}
 		
@@ -284,27 +291,38 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 			String cafeSeleccionado = vista.comboBox_TipoCafe.getSelectedItem().toString();
 			
 			retirarBebidas(cafes, cafeSeleccionado);
+			vista.btnRetirarBebida1.setEnabled(comprobarBebidaComanda(cafeSeleccionado));
 		}
 		
 		if(e.getSource()==vista.btnRetirarBebida2) {
 			String batidoSeleccionado = vista.comboBox_TipoBatido.getSelectedItem().toString();
 			
 			retirarBebidas(batidos, batidoSeleccionado);
+			vista.btnRetirarBebida2.setEnabled(comprobarBebidaComanda(batidoSeleccionado));
 		}
 		
 		if(e.getSource()==vista.btnRetirarBebida3) {
 			String refrescoSeleccionado= vista.comboBox_TipoRefresco.getSelectedItem().toString();
 			
 			retirarBebidas(refrescos, refrescoSeleccionado);
+			vista.btnRetirarBebida3.setEnabled(comprobarBebidaComanda(refrescoSeleccionado));
 		}
 		
 		if(e.getSource()==vista.btnRetirarBebida4) {
 			String bebidaSeleccionada = vista.comboBox_TipoBebidaCalienteoFria.getSelectedItem().toString();
 			
 			retirarBebidas(bebidasCalientesOFrias, bebidaSeleccionada);
+			vista.btnRetirarBebida4.setEnabled(comprobarBebidaComanda(bebidaSeleccionada));
 		}
 
-		
+		if(e.getSource()==vista.checkBox_MostrarTablaIngredientes) {
+			boolean mostrarTabla = vista.checkBox_MostrarTablaIngredientes.isSelected();
+			vista.lbl_Ingredientes.setVisible(mostrarTabla);
+			vista.tabla_Ingredientes.setVisible(mostrarTabla);
+			vista.checkBox_MostrarTablaIngredientes.setSelected(mostrarTabla);
+			vista.tabla_Ingredientes.getTableHeader().setVisible(mostrarTabla);
+			vista.scrollPane_Ingredientes.setVisible(mostrarTabla);
+		}
 	}//FIN ACTION PERFORMED	
 	
 	public void autenticarEmpleado(ArrayList<Empleado> empleados) {
@@ -365,7 +383,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 	}//FIN RELLENAR LISTA EMPLEADOS
 	
 	private void iniciarAppDetallesEmpleado() {
-		vista.lbl_ImgDetallesEmpleado.setIcon(ajustarTamañoImg("src/img/fondoDetallesEmpleado.png", vista.lbl_ImgDetallesEmpleado.getWidth(), vista.lbl_ImgDetallesEmpleado.getHeight()));
+		vista.lbl_ImgDetallesEmpleado.setIcon(ajustarTamañoImg("src/img/fondoDetalles.png", vista.lbl_ImgDetallesEmpleado.getWidth(), vista.lbl_ImgDetallesEmpleado.getHeight()));
 		vista.lbl_Salir.setIcon(ajustarTamañoImg("src/img/volverAtras.png", vista.lbl_Salir.getWidth(), vista.lbl_Salir.getHeight()));
 	}
 	
@@ -428,12 +446,12 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		boolean telefonoValido=true;
 		
 		if(telefono.length() != 9) {
-			return telefonoValido=false;
+			telefonoValido=false;
 		}
 		for(int i=0; i<telefono.length(); i++) {
 			char c= telefono.charAt(i);
 			if(c < '0' || c>'9') {
-				return telefonoValido=false;
+				telefonoValido=false;
 			}
 		}
 		return telefonoValido;
@@ -473,20 +491,70 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		
 		for(int i=0; i<vista.comboBox_Menu.getItemCount(); i++) {
 			if(vista.comboBox_Menu.getItemAt(i).equals(item)) {
-				return itemExistente=true;
+				itemExistente=true;
 			}
 		}
 		return itemExistente;
 	}
 	
 	private void rellenarComidas(ArrayList<Producto> comidas) {
-		comidas.add(new Producto(new ImageIcon("src/img/bizcocho.png"), 3.50, "Bizcocho"));
-		comidas.add(new Producto(new ImageIcon("src/img/napolitana.png"), 1.80, "Napolitana"));
-		comidas.add(new Producto(new ImageIcon("src/img/croissant.png"), 1.50, "Croissant"));
-		comidas.add(new Producto(new ImageIcon("src/img/brazo de gitano.png"), 3.25, "Brazo de gitano"));
-		comidas.add(new Producto(new ImageIcon("src/img/milhojas de crema.png"), 2.50, "Milhojas de crema"));
-		comidas.add(new Producto(new ImageIcon("src/img/tarta de queso.png"), 3.50, "Tarta de queso"));
+		comidas.add(new Producto(new ImageIcon("src/img/bizcocho.png"), 3.50, "Bizcocho", rellenarIngredientesComidas(0), 5, 20));
+		comidas.add(new Producto(new ImageIcon("src/img/napolitana.png"), 1.80, "Napolitana", rellenarIngredientesComidas(1), 6, 25));
+		comidas.add(new Producto(new ImageIcon("src/img/croissant.png"), 1.50, "Croissant", rellenarIngredientesComidas(2), 7, 25));
+		comidas.add(new Producto(new ImageIcon("src/img/brazo de gitano.png"), 3.25, "Brazo de gitano", rellenarIngredientesComidas(3), 5, 18.5));
+		comidas.add(new Producto(new ImageIcon("src/img/milhojas de crema.png"), 2.50, "Milhojas de crema", rellenarIngredientesComidas(4), 6, 25));
+		comidas.add(new Producto(new ImageIcon("src/img/tarta de queso.png"), 3.50, "Tarta de queso", rellenarIngredientesComidas(5), 6.5, 28));
 	}//RELLENAR ARRAYLIST COMIDAS
+	
+	private ArrayList<Ingrediente> rellenarIngredientesComidas(int numeroComida){
+		ArrayList<Ingrediente> ingredientes = new ArrayList<>();
+		
+		switch(numeroComida) {
+			case 0:
+				ingredientes.add(new Ingrediente("Harina de trigo", 500, "g", 364, 1820));
+				ingredientes.add(new Ingrediente("Azúcar", 200, "g", 387, 774));
+				ingredientes.add(new Ingrediente("Huevos", 4, "unidades", 155, 310));
+				ingredientes.add(new Ingrediente("Mantequilla", 100, "g", 717, 717));
+				ingredientes.add(new Ingrediente("Leche", 100, "ml", 42, 42));
+				break;
+			case 1:
+				ingredientes.add(new Ingrediente("Harina de trigo", 400, "g", 364, 1456));
+				ingredientes.add(new Ingrediente("Mantequilla", 150, "g", 717, 1075.5));
+				ingredientes.add(new Ingrediente("Azúcar", 100, "g", 387, 387));
+				ingredientes.add(new Ingrediente("Chocolate", 50, "g", 546, 273));
+				break;
+			case 2:
+				ingredientes.add(new Ingrediente("Harina de trigo", 300, "g", 364, 1092));
+				ingredientes.add(new Ingrediente("Mantequilla", 150, "g", 717, 1075.5));
+				ingredientes.add(new Ingrediente("Leche entera", 100, "ml", 61, 61));
+				ingredientes.add(new Ingrediente("Azúcar", 50, "g", 387, 193.5));
+				ingredientes.add(new Ingrediente("Levadura", 10, "g", 360, 36));
+				break;
+			case 3:
+				ingredientes.add(new Ingrediente("Harina de trigo", 450, "g", 364, 1638));
+				ingredientes.add(new Ingrediente("Huevos", 6, "unidades", 155, 465));
+				ingredientes.add(new Ingrediente("Azúcar", 200, "g", 387, 774));
+				ingredientes.add(new Ingrediente("Nata para montar", 200, "ml", 345, 690));
+				break;
+			case 4:
+				ingredientes.add(new Ingrediente("Hojaldre", 400, "g", 550, 2200));
+				ingredientes.add(new Ingrediente("Crema pastelera", 250, "g", 325, 812.5));
+				ingredientes.add(new Ingrediente("Azúcar glas", 50, "g", 387, 193.5));
+				break;
+			case 5:
+				ingredientes.add(new Ingrediente("Queso cremoso", 600, "g", 350, 2100));
+				ingredientes.add(new Ingrediente("Gallestas digestivas", 150, "g", 500, 750));
+				ingredientes.add(new Ingrediente("Mantequilla", 100, "ml", 717, 717));
+				ingredientes.add(new Ingrediente("Azúcar", 150, "g", 387, 580.5));
+				ingredientes.add(new Ingrediente("Huevos", 3, "unidades", 155, 232.5));
+				ingredientes.add(new Ingrediente("Nata para montar", 100, "ml", 345, 345));
+				break;
+			default:
+				System.out.println("No existe la comida");
+				break;	
+		}
+		return ingredientes;
+	}
 	
 	private void mostrarComidas() {
 		for(int i=0; i<comidas.size(); i++) {
@@ -534,40 +602,184 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 	}
 	
 	private void rellenarCafes(ArrayList<Producto> cafes) {
-		cafes.add(new Producto(new ImageIcon("src/img/cafe.png"), 0.00, "Cafés"));
-		cafes.add(new Producto(new ImageIcon("src/img/cafe con leche.png"), 1.30, "Café con leche"));
-		cafes.add(new Producto(new ImageIcon("src/img/capuccino.png"), 1.80, "Capuccino"));
-		cafes.add(new Producto(new ImageIcon("src/img/cafe americano.png"), 1.40, "Café Americano"));
-		cafes.add(new Producto(new ImageIcon("src/img/cafe bombon.png"), 1.90, "Café Bombón"));
-		cafes.add(new Producto(new ImageIcon("src/img/cafe cortado.png"), 1.25, "Café Cortado"));
+		cafes.add(new Producto(new ImageIcon("src/img/cafe.png"), 0.00, "Cafés", null, 0, 0));
+		cafes.add(new Producto(new ImageIcon("src/img/cafe con leche.png"), 1.30, "Café con leche", rellenarIngredientesCafes(0), 3.3, 3.2));
+		cafes.add(new Producto(new ImageIcon("src/img/capuccino.png"), 1.80, "Capuccino", rellenarIngredientesCafes(1), 5, 4.4));
+		cafes.add(new Producto(new ImageIcon("src/img/cafe americano.png"), 1.40, "Café Americano", rellenarIngredientesCafes(2), 0.2, 0.1));
+		cafes.add(new Producto(new ImageIcon("src/img/cafe bombon.png"), 1.90, "Café Bombón", rellenarIngredientesCafes(3), 2.6, 3.4));
+		cafes.add(new Producto(new ImageIcon("src/img/cafe cortado.png"), 1.25, "Café Cortado", rellenarIngredientesCafes(4), 1.2, 1.1));
 	}
+	
+	private ArrayList<Ingrediente> rellenarIngredientesCafes(int numeroCafe){
+		ArrayList<Ingrediente> ingredientesCafes = new ArrayList<>();
+		
+		switch(numeroCafe) {
+		case 0:
+			ingredientesCafes.add(new Ingrediente("Café", 1, "ml", 2, 2));
+			ingredientesCafes.add(new Ingrediente("Leche", 100, "ml", 61, 61));
+			break;
+		case 1:
+			ingredientesCafes.add(new Ingrediente("Café Espresso", 30, "ml", 2, 2));
+			ingredientesCafes.add(new Ingrediente("Leche Vaporizada", 100, "ml", 61, 61));
+			ingredientesCafes.add(new Ingrediente("Espuma de Leche", 50, "ml", 31, 31));
+			break;
+		case 2:
+			ingredientesCafes.add(new Ingrediente("Café Espresso", 30, "ml", 2, 2));
+			ingredientesCafes.add(new Ingrediente("Agua", 150, "ml", 0, 0));
+			break;
+		case 3:
+			ingredientesCafes.add(new Ingrediente("Café Espresso", 30, "ml", 2, 2));
+			ingredientesCafes.add(new Ingrediente("Leche Condensada", 50, "ml", 129, 64.5));
+			break;
+		case 4:
+			ingredientesCafes.add(new Ingrediente("Café Espresso", 30, "ml", 2, 2));
+			ingredientesCafes.add(new Ingrediente("Leche", 30, "ml", 18, 18));
+			break;
+		default:
+			System.out.println("No existe el cafe");
+			break;	
+		}
+		
+		return ingredientesCafes;
+	}//RELLENAR INGREDIENTES CAFES
 	
 	private void rellenarRefrescos(ArrayList<Producto> refrescos) {
-		refrescos.add(new Producto(new ImageIcon("src/img/refresco.png"), 0.00, "Refrescos"));
-		refrescos.add(new Producto(new ImageIcon("src/img/agua.png"), 1.00, "Agua"));
-		refrescos.add(new Producto(new ImageIcon("src/img/aquarius.png"), 1.75, "Aquarius Limón"));
-		refrescos.add(new Producto(new ImageIcon("src/img/fanta de naranja.png"), 1.75, "Fanta Naranja"));
-		refrescos.add(new Producto(new ImageIcon("src/img/nestea.png"), 1.60, "Nestea"));
-		refrescos.add(new Producto(new ImageIcon("src/img/coca cola.png"), 1.90, "Coca-Cola"));
+		refrescos.add(new Producto(new ImageIcon("src/img/refresco.png"), 0.00, "Refrescos", null, 0, 0));
+		refrescos.add(new Producto(new ImageIcon("src/img/agua.png"), 1.00, "Agua", rellenarIngredientesRefrescos(0), 0, 0));
+		refrescos.add(new Producto(new ImageIcon("src/img/aquarius.png"), 1.75, "Aquarius Limón", rellenarIngredientesRefrescos(1), 0.2, 0));
+		refrescos.add(new Producto(new ImageIcon("src/img/fanta de naranja.png"), 1.75, "Fanta Naranja", rellenarIngredientesRefrescos(2), 0, 0));
+		refrescos.add(new Producto(new ImageIcon("src/img/nestea.png"), 1.60, "Nestea", rellenarIngredientesRefrescos(3), 0.1, 0));
+		refrescos.add(new Producto(new ImageIcon("src/img/coca cola.png"), 1.90, "Coca-Cola", rellenarIngredientesRefrescos(4), 0, 0));
 	}
+	
+	private ArrayList<Ingrediente> rellenarIngredientesRefrescos(int numeroRefresco){
+		ArrayList<Ingrediente> ingredientesRefrescos = new ArrayList<>();
+		
+		switch(numeroRefresco) {
+		case 0:
+			ingredientesRefrescos.add(new Ingrediente("Agua", 1000, "ml", 0, 0));
+			break;
+		case 1:
+			ingredientesRefrescos.add(new Ingrediente("Agua", 800, "ml", 0, 0));
+			ingredientesRefrescos.add(new Ingrediente("Azúcar", 150, "g", 387, 580));
+			ingredientesRefrescos.add(new Ingrediente("Aromatizantes artificales", 50, "g", 0, 0));
+			break;
+		case 2:
+			ingredientesRefrescos.add(new Ingrediente("Agua", 700, "ml", 0, 0));
+			ingredientesRefrescos.add(new Ingrediente("Azúcar", 170, "g", 387, 658));
+			ingredientesRefrescos.add(new Ingrediente("Saborizante de Naranja", 30, "ml", 0, 0));
+			break;
+		case 3:
+			ingredientesRefrescos.add(new Ingrediente("Agua", 800, "ml", 0, 0));
+			ingredientesRefrescos.add(new Ingrediente("Azúcar", 100, "g", 387, 387));
+			ingredientesRefrescos.add(new Ingrediente("Té helado concentrado", 50, "g", 0, 0));
+			break;
+		case 4:
+			ingredientesRefrescos.add(new Ingrediente("Agua", 600, "ml", 0, 0));
+			ingredientesRefrescos.add(new Ingrediente("Azúcar", 200, "g", 387, 774));
+			ingredientesRefrescos.add(new Ingrediente("Aromatizantes", 50, "g", 0, 0));
+			break;
+		default:
+			System.out.println("No existe el refresco");
+			break;	
+		}
+		
+		return ingredientesRefrescos;
+	}//RELLENAR INGREDIENTES REFRESCOS
 	
 	private void rellenarBatidos(ArrayList<Producto> batidos) {
-		batidos.add(new Producto(new ImageIcon("src/img/batido.png"), 0.00, "Batidos"));
-		batidos.add(new Producto(new ImageIcon("src/img/batido de chocolate.png"), 3.00, "Batido Chocolate"));
-		batidos.add(new Producto(new ImageIcon("src/img/batido de fresa.png"), 3.00, "Batido Fresa"));
-		batidos.add(new Producto(new ImageIcon("src/img/batido de oreo.png"), 3.50, "Batido Oreo"));
-		batidos.add(new Producto(new ImageIcon("src/img/batido de vainilla.png"), 3.00, "Batido Vainilla"));
-		batidos.add(new Producto(new ImageIcon("src/img/batido de mango.png"), 3.25, "Batido Mango"));
+		batidos.add(new Producto(new ImageIcon("src/img/batido.png"), 0.00, "Batidos", null, 0, 0));
+		batidos.add(new Producto(new ImageIcon("src/img/batido de chocolate.png"), 3.00, "Batido Chocolate", rellenarIngredientesBatidos(0), 8, 10));
+		batidos.add(new Producto(new ImageIcon("src/img/batido de fresa.png"), 3.00, "Batido Fresa", rellenarIngredientesBatidos(1), 7, 8));
+		batidos.add(new Producto(new ImageIcon("src/img/batido de oreo.png"), 3.50, "Batido Oreo", rellenarIngredientesBatidos(2), 8, 12));
+		batidos.add(new Producto(new ImageIcon("src/img/batido de vainilla.png"), 3.00, "Batido Vainilla", rellenarIngredientesBatidos(3), 7, 8));
+		batidos.add(new Producto(new ImageIcon("src/img/batido de mango.png"), 3.25, "Batido Mango", rellenarIngredientesBatidos(4), 6, 8));
 	}
 	
+	private ArrayList<Ingrediente> rellenarIngredientesBatidos(int numeroBatido){
+		ArrayList<Ingrediente> ingredientesBatidos = new ArrayList<>();
+		
+		switch(numeroBatido) {
+		case 0:
+			ingredientesBatidos.add(new Ingrediente("Leche", 250, "ml", 42, 105));
+			ingredientesBatidos.add(new Ingrediente("Cacao", 50, "g", 315, 187.5));
+			ingredientesBatidos.add(new Ingrediente("Azúcar", 100, "g", 387, 387));
+			break;
+		case 1:
+			ingredientesBatidos.add(new Ingrediente("Leche", 250, "ml", 42, 105));
+			ingredientesBatidos.add(new Ingrediente("Azúcar", 75, "g", 387, 290.25));
+			ingredientesBatidos.add(new Ingrediente("Fresas", 100, "g", 32, 32));
+			break;
+		case 2:
+			ingredientesBatidos.add(new Ingrediente("Leche", 250, "ml", 42, 105));
+			ingredientesBatidos.add(new Ingrediente("Galletas Oreo", 50, "g", 530, 265));
+			ingredientesBatidos.add(new Ingrediente("Azúcar", 100, "g", 387, 387));
+			break;
+		case 3:
+			ingredientesBatidos.add(new Ingrediente("Leche", 250, "ml", 42, 105));
+			ingredientesBatidos.add(new Ingrediente("Vainilla", 10, "g", 288, 28.8));
+			ingredientesBatidos.add(new Ingrediente("Azúcar", 100, "g", 387, 387));
+			break;
+		case 4:
+			ingredientesBatidos.add(new Ingrediente("Leche", 250, "ml", 42, 105));
+			ingredientesBatidos.add(new Ingrediente("Mango", 10, "g", 60, 60));
+			ingredientesBatidos.add(new Ingrediente("Azúcar", 100, "g", 387, 387));
+			break;
+		default:
+			System.out.println("No existe el batido");
+			break;	
+		}
+		
+		return ingredientesBatidos;
+	}//RELLENAR INGREDIENTES REFRESCOS
+	
 	private void rellenarBebidasCalientesOFrias(ArrayList<Producto> bebidasCalientesOFrias) {
-		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/bebida caliente.png"), 0.00, "Bebidas Mixtas"));
-		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/chocolate caliente.png"), 3.00, "Chocolate caliente"));
-		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/te de menta.png"), 1.60, "Té de menta"));
-		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/te de frutos rojos.png"), 2.20, "Té de frutos rojos"));
-		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/horchata.png"), 2.00, "Horchata"));
-		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/limonada.png"), 2.00, "Limonada"));
-		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/infusion de canela y manzana.png"), 2.75, "Infusión"));
+		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/bebida caliente.png"), 0.00, "Bebidas Mixtas", null, 0, 0));
+		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/chocolate caliente.png"), 3.00, "Chocolate caliente", rellenarIngredientesBebidasCalientesOFrias(0), 4, 8));
+		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/te de menta.png"), 1.60, "Té de menta", rellenarIngredientesBebidasCalientesOFrias(1), 1, 0));
+		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/te de frutos rojos.png"), 2.20, "Té de frutos rojos", rellenarIngredientesBebidasCalientesOFrias(2), 1.5, 0));
+		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/horchata.png"), 2.00, "Horchata", rellenarIngredientesBebidasCalientesOFrias(3), 1.5, 4));
+		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/limonada.png"), 2.00, "Limonada", rellenarIngredientesBebidasCalientesOFrias(4), 0, 0));
+		bebidasCalientesOFrias.add(new Producto(new ImageIcon("src/img/infusion de canela y manzana.png"), 2.75, "Infusión", rellenarIngredientesBebidasCalientesOFrias(5), 1, 0));
+	}
+	
+	private ArrayList<Ingrediente> rellenarIngredientesBebidasCalientesOFrias(int numeroBebida){
+		ArrayList<Ingrediente> ingredientes = new ArrayList<>();
+		
+		switch(numeroBebida) {
+			case 0:
+				ingredientes.add(new Ingrediente("Cacao", 50, "ml", 375, 187.5));
+				ingredientes.add(new Ingrediente("Azúcar", 80, "g", 387, 309.6));
+				ingredientes.add(new Ingrediente("Leche", 250, "ml", 42, 105));
+				break;
+			case 1:
+				ingredientes.add(new Ingrediente("Agua", 200, "ml", 0, 0));
+				ingredientes.add(new Ingrediente("Menta", 10, "g", 1, 0));
+				break;
+			case 2:
+				ingredientes.add(new Ingrediente("Agua", 200, "ml", 0, 0));
+				ingredientes.add(new Ingrediente("Frutos Rojos", 10, "g", 30, 3));
+				break;
+			case 3:
+				ingredientes.add(new Ingrediente("Agua", 250, "ml", 0, 0));
+				ingredientes.add(new Ingrediente("Arroz", 50, "g", 130, 65));
+				ingredientes.add(new Ingrediente("Azúcar", 75, "g", 387, 290.25));
+				break;
+			case 4:
+				ingredientes.add(new Ingrediente("Agua", 300, "ml", 0, 0));
+				ingredientes.add(new Ingrediente("Limón", 50, "g", 29, 14.5));
+				ingredientes.add(new Ingrediente("Azúcar", 50, "g", 387, 193.5));
+				break;
+			case 5:
+				ingredientes.add(new Ingrediente("Agua", 200, "ml", 0, 0));
+				ingredientes.add(new Ingrediente("Canela", 10, "g", 131, 13.1));
+				ingredientes.add(new Ingrediente("Azúcar", 50, "g", 52, 26));
+				break;
+			default:
+				System.out.println("No existe la bebida caliente o fria");
+				break;	
+		}
+		return ingredientes;
 	}
 	
 	private void rellenarComboBoxBebidas(ArrayList<Producto> cafes, ArrayList<Producto> refrescos, ArrayList<Producto> batidos, ArrayList<Producto> bebidasCalientesOFrias) {
@@ -593,24 +805,24 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 	}
 	
 	private void mostrarInformacionCafeSeleccionado() {
-		String tipoCafe = (String) vista.comboBox_TipoCafe.getSelectedItem();
+		String tipoCafe = vista.comboBox_TipoCafe.getSelectedItem().toString();
 		int numeroCafe;
 		
 		switch(tipoCafe) {
 			case "Café con leche":
-				numeroCafe=1;
+				numeroCafe = 1;
 				break;
 			case "Capuccino":
-				numeroCafe=2;
+				numeroCafe = 2;
 				break;
 			case "Café Americano":
-				numeroCafe=3;
+				numeroCafe = 3;
 				break;
-			case "Café Bombon":
-				numeroCafe=4;
+			case "Café Bombón":
+				numeroCafe = 4;
 				break;
 			case "Café Cortado":
-				numeroCafe=5;
+				numeroCafe = 5;
 				break;
 			default:
 				numeroCafe = 0;
@@ -631,137 +843,119 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 	}//MOSTRAR INFORMACION CAFE SELECCIONADO
 	
 	private void mostrarInformacionBatidoSeleccionado() {
-		String tipoBatido = (String) vista.comboBox_TipoBatido.getSelectedItem();
+		String tipoBatido = vista.comboBox_TipoBatido.getSelectedItem().toString();
+		int numeroBatido;
 		
 		switch(tipoBatido) {
 			case "Batido Chocolate":
-				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(1).getImagenProducto().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
-				vista.lbl_PrecioBatido.setText(String.valueOf(batidos.get(1).getPrecio()));
-				vista.lbl_IconoEuro2.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro2.getWidth(), vista.lbl_IconoEuro2.getHeight()));
-				vista.lbl_InformacionBebida2.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida2.getWidth(), vista.lbl_InformacionBebida2.getHeight()));
+				numeroBatido = 1;
 				break;
 			case "Batido Fresa":
-				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(2).getImagenProducto().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
-				vista.lbl_PrecioBatido.setText(String.valueOf(batidos.get(2).getPrecio()));
-				vista.lbl_IconoEuro2.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro2.getWidth(), vista.lbl_IconoEuro2.getHeight()));
-				vista.lbl_InformacionBebida2.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida2.getWidth(), vista.lbl_InformacionBebida2.getHeight()));
+				numeroBatido = 2;
 				break;
 			case "Batido Oreo":
-				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(3).getImagenProducto().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
-				vista.lbl_PrecioBatido.setText(String.valueOf(batidos.get(3).getPrecio()));
-				vista.lbl_IconoEuro2.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro2.getWidth(), vista.lbl_IconoEuro2.getHeight()));
-				vista.lbl_InformacionBebida2.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida2.getWidth(), vista.lbl_InformacionBebida2.getHeight()));
+				numeroBatido = 3;
 				break;
 			case "Batido Vainilla":
-				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(4).getImagenProducto().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
-				vista.lbl_PrecioBatido.setText(String.valueOf(batidos.get(4).getPrecio()));
-				vista.lbl_IconoEuro2.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro2.getWidth(), vista.lbl_IconoEuro2.getHeight()));
-				vista.lbl_InformacionBebida2.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida2.getWidth(), vista.lbl_InformacionBebida2.getHeight()));
+				numeroBatido = 4;
 				break;
 			case "Batido Mango":
-				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(5).getImagenProducto().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
-				vista.lbl_PrecioBatido.setText(String.valueOf(batidos.get(5).getPrecio()));
-				vista.lbl_IconoEuro2.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro2.getWidth(), vista.lbl_IconoEuro2.getHeight()));
-				vista.lbl_InformacionBebida2.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida2.getWidth(), vista.lbl_InformacionBebida2.getHeight()));
+				numeroBatido = 5;
 				break;
 			default:
-				vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(0).getImagenProducto().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
-				vista.lbl_PrecioBatido.setText("");
-				vista.lbl_IconoEuro2.setIcon(null);
-				vista.lbl_InformacionBebida2.setIcon(null);
+				numeroBatido = 0;
 				break;
+		}
+		
+		if(numeroBatido>0) {
+			vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(numeroBatido).getImagenProducto().getDescription(), vista.lbl_Batido.getWidth(), vista.lbl_Batido.getHeight()));
+			vista.lbl_PrecioBatido.setText(String.valueOf(batidos.get(numeroBatido).getPrecio()));
+			vista.lbl_IconoEuro2.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro2.getWidth(), vista.lbl_IconoEuro2.getHeight()));
+			vista.lbl_InformacionBebida2.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida2.getWidth(), vista.lbl_InformacionBebida2.getHeight()));
+		}else {
+			vista.lbl_Batido.setIcon(ajustarTamañoImg(batidos.get(numeroBatido).getImagenProducto().getDescription(), vista.lbl_Cafe.getWidth(), vista.lbl_Cafe.getHeight()));
+			vista.lbl_PrecioBatido.setText("");
+			vista.lbl_IconoEuro2.setIcon(null);
+			vista.lbl_InformacionBebida2.setIcon(null);
 		}
 	}//MOSTRAR INFORMACION BATIDO SELECCIONADO
 	
 	private void mostrarInformacionRefrescoSeleccionado() {
-		String tipoRefresco = (String) vista.comboBox_TipoRefresco.getSelectedItem();
+		String tipoRefresco = vista.comboBox_TipoRefresco.getSelectedItem().toString();
+		int numeroRefresco;
 		
 		switch(tipoRefresco) {
 			case "Agua":
-				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(1).getImagenProducto().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
-				vista.lbl_PrecioRefresco.setText(String.valueOf(refrescos.get(1).getPrecio()));
-				vista.lbl_IconoEuro3.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro3.getWidth(), vista.lbl_IconoEuro3.getHeight()));
-				vista.lbl_InformacionBebida3.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida3.getWidth(), vista.lbl_InformacionBebida3.getHeight()));
+				numeroRefresco = 1;
 				break;
 			case "Aquarius Limón":
-				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(2).getImagenProducto().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
-				vista.lbl_PrecioRefresco.setText(String.valueOf(refrescos.get(2).getPrecio()));
-				vista.lbl_IconoEuro3.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro3.getWidth(), vista.lbl_IconoEuro3.getHeight()));
-				vista.lbl_InformacionBebida3.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida3.getWidth(), vista.lbl_InformacionBebida3.getHeight()));
+				numeroRefresco = 2;
 				break;
 			case "Fanta Naranja":
-				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(3).getImagenProducto().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
-				vista.lbl_PrecioRefresco.setText(String.valueOf(refrescos.get(3).getPrecio()));
-				vista.lbl_IconoEuro3.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro3.getWidth(), vista.lbl_IconoEuro3.getHeight()));
-				vista.lbl_InformacionBebida3.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida3.getWidth(), vista.lbl_InformacionBebida3.getHeight()));
+				numeroRefresco = 3;
 				break;
 			case "Nestea":
-				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(4).getImagenProducto().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
-				vista.lbl_PrecioRefresco.setText(String.valueOf(refrescos.get(4).getPrecio()));
-				vista.lbl_IconoEuro3.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro3.getWidth(), vista.lbl_IconoEuro3.getHeight()));
-				vista.lbl_InformacionBebida3.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida3.getWidth(), vista.lbl_InformacionBebida3.getHeight()));
+				numeroRefresco = 4;
 				break;
 			case "Coca-Cola":
-				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(5).getImagenProducto().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
-				vista.lbl_PrecioRefresco.setText(String.valueOf(refrescos.get(5).getPrecio()));
-				vista.lbl_IconoEuro3.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro3.getWidth(), vista.lbl_IconoEuro3.getHeight()));
-				vista.lbl_InformacionBebida3.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida3.getWidth(), vista.lbl_InformacionBebida3.getHeight()));
+				numeroRefresco = 5;
 				break;
 			default:
-				vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(0).getImagenProducto().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
-				vista.lbl_PrecioRefresco.setText("");
-				vista.lbl_IconoEuro3.setIcon(null);
-				vista.lbl_InformacionBebida3.setIcon(null);
+				numeroRefresco = 0;
 				break;
+		}
+		
+		if(numeroRefresco>0) {
+			vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(numeroRefresco).getImagenProducto().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
+			vista.lbl_PrecioRefresco.setText(String.valueOf(refrescos.get(numeroRefresco).getPrecio()));
+			vista.lbl_IconoEuro3.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro3.getWidth(), vista.lbl_IconoEuro3.getHeight()));
+			vista.lbl_InformacionBebida3.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida3.getWidth(), vista.lbl_InformacionBebida3.getHeight()));
+		}else {
+			vista.lbl_Refresco.setIcon(ajustarTamañoImg(refrescos.get(numeroRefresco).getImagenProducto().getDescription(), vista.lbl_Refresco.getWidth(), vista.lbl_Refresco.getHeight()));
+			vista.lbl_PrecioRefresco.setText("");
+			vista.lbl_IconoEuro3.setIcon(null);
+			vista.lbl_InformacionBebida3.setIcon(null);
 		}
 	}//MOSTRAR INFORMACION REFRESCO SELECCIONADO
 	
 	private void mostrarInformacionBebidaCalienteOFriaSeleccionada() {
-		String tipoBebidaCalienteOFria = (String) vista.comboBox_TipoBebidaCalienteoFria.getSelectedItem();
+		String tipoBebida = vista.comboBox_TipoBebidaCalienteoFria.getSelectedItem().toString();
+		int numeroBebida;
 		
-		switch(tipoBebidaCalienteOFria) {
+		switch(tipoBebida) {
 			case "Chocolate caliente":
-				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(1).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
-				vista.lbl_PrecioBebidaVariada.setText(String.valueOf(bebidasCalientesOFrias.get(1).getPrecio()));
-				vista.lbl_IconoEuro4.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro4.getWidth(), vista.lbl_IconoEuro4.getHeight()));
-				vista.lbl_InformacionBebida4.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida4.getWidth(), vista.lbl_InformacionBebida4.getHeight()));
+				numeroBebida = 1;
 				break;
 			case "Té de menta":
-				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(2).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
-				vista.lbl_PrecioBebidaVariada.setText(String.valueOf(bebidasCalientesOFrias.get(2).getPrecio()));
-				vista.lbl_IconoEuro4.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro4.getWidth(), vista.lbl_IconoEuro4.getHeight()));
-				vista.lbl_InformacionBebida4.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida4.getWidth(), vista.lbl_InformacionBebida4.getHeight()));
+				numeroBebida = 2;
 				break;
 			case "Té de frutos rojos":
-				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(3).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
-				vista.lbl_PrecioBebidaVariada.setText(String.valueOf(bebidasCalientesOFrias.get(3).getPrecio()));
-				vista.lbl_IconoEuro4.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro4.getWidth(), vista.lbl_IconoEuro4.getHeight()));
-				vista.lbl_InformacionBebida4.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida4.getWidth(), vista.lbl_InformacionBebida4.getHeight()));
+				numeroBebida = 3;
 				break;
 			case "Horchata":
-				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(4).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
-				vista.lbl_PrecioBebidaVariada.setText(String.valueOf(bebidasCalientesOFrias.get(4).getPrecio()));
-				vista.lbl_IconoEuro4.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro4.getWidth(), vista.lbl_IconoEuro4.getHeight()));
-				vista.lbl_InformacionBebida4.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida4.getWidth(), vista.lbl_InformacionBebida4.getHeight()));
+				numeroBebida = 4;
 				break;
 			case "Limonada":
-				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(5).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
-				vista.lbl_PrecioBebidaVariada.setText(String.valueOf(bebidasCalientesOFrias.get(5).getPrecio()));
-				vista.lbl_IconoEuro4.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro4.getWidth(), vista.lbl_IconoEuro4.getHeight()));
-				vista.lbl_InformacionBebida4.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida4.getWidth(), vista.lbl_InformacionBebida4.getHeight()));
+				numeroBebida = 5;
 				break;
 			case "Infusión":
-				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(6).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
-				vista.lbl_PrecioBebidaVariada.setText(String.valueOf(bebidasCalientesOFrias.get(6).getPrecio()));
-				vista.lbl_IconoEuro4.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro4.getWidth(), vista.lbl_IconoEuro4.getHeight()));
-				vista.lbl_InformacionBebida4.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida4.getWidth(), vista.lbl_InformacionBebida4.getHeight()));
+				numeroBebida = 6;
 				break;
 			default:
-				vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(0).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
-				vista.lbl_PrecioBebidaVariada.setText("");
-				vista.lbl_IconoEuro4.setIcon(null);
-				vista.lbl_InformacionBebida4.setIcon(null);
+				numeroBebida = 0;
 				break;
+		}
+		
+		if(numeroBebida>0) {
+			vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(numeroBebida).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
+			vista.lbl_PrecioBebidaVariada.setText(String.valueOf(bebidasCalientesOFrias.get(numeroBebida).getPrecio()));
+			vista.lbl_IconoEuro4.setIcon(ajustarTamañoImg("src/img/euro.png", vista.lbl_IconoEuro4.getWidth(), vista.lbl_IconoEuro4.getHeight()));
+			vista.lbl_InformacionBebida4.setIcon(ajustarTamañoImg("src/img/informacion.png", vista.lbl_InformacionBebida4.getWidth(), vista.lbl_InformacionBebida4.getHeight()));
+		}else {
+			vista.lbl_BebidaCalienteoFria.setIcon(ajustarTamañoImg(bebidasCalientesOFrias.get(numeroBebida).getImagenProducto().getDescription(), vista.lbl_BebidaCalienteoFria.getWidth(), vista.lbl_BebidaCalienteoFria.getHeight()));
+			vista.lbl_PrecioBebidaVariada.setText("");
+			vista.lbl_IconoEuro4.setIcon(null);
+			vista.lbl_InformacionBebida4.setIcon(null);
 		}
 	}//MOSTRAR INFORMACION BEBIDA SELECCIONADA
 	
@@ -773,7 +967,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		}
 	}
 	
-	private void gestionarSeleccionBebidasPorDefecto() {
+	private void seleccionarSeleccionBebidasPorDefecto() {
 		vista.comboBox_TipoCafe.setSelectedIndex(0);
 		vista.comboBox_TipoBatido.setSelectedIndex(0);
 		vista.comboBox_TipoRefresco.setSelectedIndex(0);
@@ -792,12 +986,13 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 	}
 	
 	private Lugar buscarLugar(String nombre) {
+		Lugar lugarEncontrado = null;
 		for(int i=0; i<lugares.size(); i++) {
 			if(lugares.get(i).getNombreLugar().equalsIgnoreCase(nombre)) {
-				return lugares.get(i);
+				lugarEncontrado = lugares.get(i);
 			}
 		}
-		return null;
+		return lugarEncontrado;
 	}//BUSCAR LUGAR
 	
 	private void gestionarComandaMesaOTaburete(String sitio) {
@@ -814,7 +1009,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 			
 			comandaActual = lugarElegido.obtenerComanda(1);
 			
-			actualizarJListComanda(comandaActual);
+			actualizarComanda(comandaActual);
 
 			iniciarGestionComandas();
 			vista.lbl_Mesa_o_Taburete.setText(sitio);
@@ -836,7 +1031,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		
 		comandaActual.añadirProducto(nombreComida, precio);
 		
-		actualizarJListComanda(comandaActual);
+		actualizarComanda(comandaActual);
 	}
 	
 	private void eliminarComidaDeComanda(String nombreComida) {
@@ -852,7 +1047,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		
 		comandaActual.eliminarProducto(nombreComida, precio);
 
-		actualizarJListComanda(comandaActual);
+		actualizarComanda(comandaActual);
 	}
 	
 	private void añadirBebidasAComanda(String nombreBebida) {
@@ -886,9 +1081,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		
 		comandaActual.añadirProducto(nombreBebida, precio);
 		
-		actualizarJListComanda(comandaActual);
-		
-		comprobarBebidaComanda(nombreBebida);
+		actualizarComanda(comandaActual);
 	}
 	
 	private void eliminarBebidaDeComanda(String nombreBebida) {
@@ -922,12 +1115,10 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		
 		comandaActual.eliminarProducto(nombreBebida, precio);
 		
-		actualizarJListComanda(comandaActual);
-		
-		comprobarBebidaComanda(nombreBebida);
+		actualizarComanda(comandaActual);
 	}
 
-	private void actualizarJListComanda(Comanda comandaActual) {
+	private void actualizarComanda(Comanda comandaActual) {
 		comanda.clear();
 		
 		deshabilitarBotones();
@@ -935,30 +1126,73 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		HashMap<String, Integer> productos = comandaActual.getProductos();
 		
 		for(Map.Entry<String, Integer> entrada :productos.entrySet()) {
-			comanda.addElement(entrada.getKey() + " || " + entrada.getValue());
-		
+			comanda.addElement(entrada.getKey() + " ~> " + entrada.getValue());
 		}
 		
 		vista.lbl_PrecioTotalComanda.setText("PRECIO TOTAL: " + comandaActual.getPrecioTotal() + "€");
 		
 		vista.list_ListaPedidos.setModel(comanda);
+
+		comprobarProductosComanda(comandaActual);
+	}
+	
+	private void comprobarProductosComanda(Comanda comandaActual){
+		deshabilitarBotones();
+		
+		HashMap<String, Integer> productos = comandaActual.getProductos();
 		
 		for(Map.Entry<String, Integer> entrada:productos.entrySet()) {
-			if(entrada.getKey().equals(comidas.get(0).getNombre())) {
-				vista.btnEliminarComida1.setEnabled(true);
-			}else if (entrada.getKey().equals(comidas.get(1).getNombre())) {
-				vista.btnEliminarComida2.setEnabled(true);
-			}else if (entrada.getKey().equals(comidas.get(2).getNombre())) {
-				vista.btnEliminarComida3.setEnabled(true);
-			}else if (entrada.getKey().equals(comidas.get(3).getNombre())) {
-				vista.btnEliminarComida4.setEnabled(true);
-			}else if (entrada.getKey().equals(comidas.get(4).getNombre())) {
-				vista.btnEliminarComida5.setEnabled(true);
-			}else if (entrada.getKey().equals(comidas.get(5).getNombre())) {
-				vista.btnEliminarComida6.setEnabled(true);
+			for(int i=0; i<comidas.size(); i++) {
+				if(entrada.getKey().equals(comidas.get(i).getNombre())) {
+					switch(i) {
+						case 0:
+							vista.btnEliminarComida1.setEnabled(true);
+							break;
+						case 1:
+							vista.btnEliminarComida2.setEnabled(true);
+							break;
+						case 2:
+							vista.btnEliminarComida3.setEnabled(true);
+							break;
+						case 3:
+							vista.btnEliminarComida4.setEnabled(true);
+							break;
+						case 4:
+							vista.btnEliminarComida5.setEnabled(true);
+							break;
+						case 5:
+							vista.btnEliminarComida6.setEnabled(true);
+							break;
+						default:
+							break;
+					}
+				}
+			}
+			
+			for(int i=0; i<cafes.size(); i++) {
+				if(entrada.getKey().equals(cafes.get(i).getNombre())){
+					vista.btnRetirarBebida1.setEnabled(true);
+				}
+			}
+			
+			for(int i=0; i<batidos.size(); i++) {
+				if(entrada.getKey().equals(batidos.get(i).getNombre())) {
+					vista.btnRetirarBebida2.setEnabled(true);
+				}
+			}
+			
+			for(int i=0; i<refrescos.size(); i++) {
+				if(entrada.getKey().equals(refrescos.get(i).getNombre())) {
+					vista.btnRetirarBebida3.setEnabled(true);
+				}
+			}
+			
+			for(int i=0; i<bebidasCalientesOFrias.size(); i++) {
+				if(entrada.getKey().equals(bebidasCalientesOFrias.get(i).getNombre())) {
+					vista.btnRetirarBebida4.setEnabled(true);
+				}
 			}
 		}
-		
 	}
 	
 	private boolean comprobarBebidaComanda(String bebidaSeleccionada) {
@@ -966,17 +1200,10 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		Lugar lugarElegido = buscarLugar(vista.lbl_Mesa_o_Taburete.getText());
 		comandaActual = lugarElegido.obtenerComanda(1);
 		HashMap<String, Integer> elementosComanda = comandaActual.getProductos();
-	
-		for(Map.Entry<String, JButton> entrada: botonesRetirarBebidas.entrySet()) {
-			entrada.getValue().setEnabled(false);
-		}
 		
 		for(Map.Entry<String, Integer> entrada:elementosComanda.entrySet()) {
 			if(entrada.getKey().equals(bebidaSeleccionada)) {
-				if(botonesRetirarBebidas.get(entrada.getKey()) != null) {
-					botonesRetirarBebidas.get(entrada.getKey()).setEnabled(true);
-					bebidaComanda=true;
-				}
+				bebidaComanda=true;
 			}
 		}
 		
@@ -1002,7 +1229,6 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 	}
 	
 	private void deshabilitarBotones() {
-
 		vista.btnEliminarComida1.setEnabled(false);
 		vista.btnEliminarComida2.setEnabled(false);
 		vista.btnEliminarComida3.setEnabled(false);
@@ -1016,8 +1242,58 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		vista.btnRetirarBebida4.setEnabled(false);
 	}
 	
-	private void iniciarPanelInformacionProductos() {
-		vista.lbl_ImgFondoInfoProductos.setIcon(ajustarTamañoImg("src/img/fondoInformacionProducto.png", vista.lbl_ImgFondoInfoProductos.getWidth(), vista.lbl_ImgFondoInfoProductos.getHeight()));
+	private void iniciarPanelInformacionProductos(Producto producto) {
+		vista.lbl_ImgFondoInfoProductos.setIcon(ajustarTamañoImg("src/img/fondoDetalles.png", vista.lbl_ImgFondoInfoProductos.getWidth(), vista.lbl_ImgFondoInfoProductos.getHeight()));
+		vista.lbl_SalirInformacionProductos.setIcon(ajustarTamañoImg("src/img/volverAtras.png", vista.lbl_SalirInformacionProductos.getWidth(), vista.lbl_SalirInformacionProductos.getHeight()));
+		vista.lbl_InfoNombreProducto.setText(producto.getNombre());
+		vista.lbl_FotoProducto.setIcon(ajustarTamañoImg(producto.getImagenProducto().getDescription(), vista.lbl_FotoProducto.getWidth(), vista.lbl_FotoProducto.getHeight()));
+		mostrarIngredientesTabla(producto.getIngredientes());
+		vista.lbl_InfoProteinasProducto.setText(String.valueOf(producto.getProteinas()) + " g / 100 g");
+		vista.lbl_InfoGrasasProducto.setText(String.valueOf(producto.getGrasas()) + " g / 100 g");
+		vista.lbl_InfoCaloriasTotalesProducto.setText(String.valueOf(cacularTotalCalorias(producto.getIngredientes()))+ " kcal");
+		
+		vista.lbl_Ingredientes.setVisible(false);
+		vista.tabla_Ingredientes.setVisible(false);
+		vista.checkBox_MostrarTablaIngredientes.setSelected(false);
+		vista.tabla_Ingredientes.getTableHeader().setVisible(false);
+		vista.scrollPane_Ingredientes.setVisible(false);
+	}
+	
+	private void mostrarIngredientesTabla(ArrayList<Ingrediente> ingredientes) {
+		DefaultTableModel modeloTabla = (DefaultTableModel) vista.tabla_Ingredientes.getModel();
+		modeloTabla.setRowCount(0);
+		
+		for(Ingrediente ingrediente:ingredientes) {
+			String [] fila = {
+				ingrediente.getNombreIngrediente(),
+				String.valueOf(ingrediente.getCantidad()),
+				ingrediente.getUnidad(),
+				String.valueOf(ingrediente.getCaloriasPorUnidad()),
+				String.valueOf(ingrediente.getCaloriasTotalesPorIngrediente())
+			};
+			modeloTabla.addRow(fila);
+		}
+		vista.tabla_Ingredientes.setModel(modeloTabla);
+	}
+	
+	private double cacularTotalCalorias(ArrayList<Ingrediente> ingredientes) {
+		double totalCalorias = 0;
+		
+		for(int i=0; i<ingredientes.size(); i++) {
+			totalCalorias = totalCalorias + ingredientes.get(i).getCaloriasTotalesPorIngrediente();
+		}
+		return totalCalorias;
+	}
+	
+	private Producto obtenerNombreProductoSeleccionado(String nombreBebida, ArrayList<Producto> bebidas) {
+		Producto producto = null;
+		
+		for(Producto bebida: bebidas) {
+			if(bebida.getNombre().equals(nombreBebida)) {
+				producto = bebida;
+			}
+		}
+		return producto;
 	}
 
 	private ImageIcon ajustarTamañoImg(String ruta, int ancho, int alto) {
@@ -1067,42 +1343,91 @@ public class ControladorCafeteria implements ActionListener, MouseListener{
 		if(e.getClickCount()==1) {
 			if (e.getSource()==vista.lbl_Mesa1) {
 				gestionarComandaMesaOTaburete("MESA 1");
-				gestionarSeleccionBebidasPorDefecto();
+				seleccionarSeleccionBebidasPorDefecto();
 			}else if (e.getSource()==vista.lbl_Mesa2) {
 				gestionarComandaMesaOTaburete("MESA 2");
-				gestionarSeleccionBebidasPorDefecto();
+				seleccionarSeleccionBebidasPorDefecto();
 			}else if (e.getSource()==vista.lbl_Mesa3) {
 				gestionarComandaMesaOTaburete("MESA 3");
-				gestionarSeleccionBebidasPorDefecto();
+				seleccionarSeleccionBebidasPorDefecto();
 			}else if (e.getSource()==vista.lbl_Mesa4) {
 				gestionarComandaMesaOTaburete("MESA 4");
-				gestionarSeleccionBebidasPorDefecto();
+				seleccionarSeleccionBebidasPorDefecto();
 			}else if (e.getSource()==vista.lbl_Mesa5) {
 				gestionarComandaMesaOTaburete("MESA 5");
-				gestionarSeleccionBebidasPorDefecto();
+				seleccionarSeleccionBebidasPorDefecto();
 			}else if (e.getSource()==vista.lbl_Taburete1) {
 				gestionarComandaMesaOTaburete("TABURETE 1");
-				gestionarSeleccionBebidasPorDefecto();
+				seleccionarSeleccionBebidasPorDefecto();
 			}else if (e.getSource()==vista.lbl_Taburete2) {
 				gestionarComandaMesaOTaburete("TABURETE 2");
-				gestionarSeleccionBebidasPorDefecto();
+				seleccionarSeleccionBebidasPorDefecto();
 			}else if (e.getSource()==vista.lbl_Taburete3) {
 				gestionarComandaMesaOTaburete("TABURETE 3");
-				gestionarSeleccionBebidasPorDefecto();
+				seleccionarSeleccionBebidasPorDefecto();
+			}
+			if(e.getSource()==vista.lbl_SalirComandas) {
+				vista.panel_PantallaPrincipal.setVisible(true);
+				vista.panel_GestionComandas.setVisible(false);
+			}
+			if(e.getSource()==vista.lbl_SalirInformacionProductos) {
+				vista.panel_InformacionProducto.setVisible(false);
+				vista.panel_GestionComandas.setVisible(true);
 			}
 		}
 		
-		if(e.getClickCount()==1 && e.getSource()==vista.lbl_SalirComandas) {
-			vista.panel_PantallaPrincipal.setVisible(true);
-			vista.panel_GestionComandas.setVisible(false);
+		if(e.getClickCount()==1) {
+			if(e.getSource()==vista.lbl_InformacionComida1) {
+				vista.panel_GestionComandas.setVisible(false);
+				vista.panel_InformacionProducto.setVisible(true);
+				iniciarPanelInformacionProductos(comidas.get(0));
+			}else if(e.getSource()==vista.lbl_InformacionComida2) {
+				vista.panel_GestionComandas.setVisible(false);
+				vista.panel_InformacionProducto.setVisible(true);
+				iniciarPanelInformacionProductos(comidas.get(1));
+			}else if(e.getSource()==vista.lbl_InformacionComida3) {
+				vista.panel_GestionComandas.setVisible(false);
+				vista.panel_InformacionProducto.setVisible(true);
+				iniciarPanelInformacionProductos(comidas.get(2));
+			}else if(e.getSource()==vista.lbl_InformacionComida4) {
+				vista.panel_GestionComandas.setVisible(false);
+				vista.panel_InformacionProducto.setVisible(true);
+				iniciarPanelInformacionProductos(comidas.get(3));
+			}else if(e.getSource()==vista.lbl_InformacionComida5) {
+				vista.panel_GestionComandas.setVisible(false);
+				vista.panel_InformacionProducto.setVisible(true);
+				iniciarPanelInformacionProductos(comidas.get(4));
+			}else if(e.getSource()==vista.lbl_InformacionComida6) {
+				vista.panel_GestionComandas.setVisible(false);
+				vista.panel_InformacionProducto.setVisible(true);
+				iniciarPanelInformacionProductos(comidas.get(5));
+			}else if(e.getSource()==vista.lbl_InformacionBebida1) {
+				vista.panel_GestionComandas.setVisible(false);
+				vista.panel_InformacionProducto.setVisible(true);
+				String cafeSeleccionado = vista.comboBox_TipoCafe.getSelectedItem().toString();
+				Producto cafe = obtenerNombreProductoSeleccionado(cafeSeleccionado, cafes);
+				iniciarPanelInformacionProductos(cafe);
+			}else if(e.getSource()==vista.lbl_InformacionBebida2) {
+				vista.panel_GestionComandas.setVisible(false);
+				vista.panel_InformacionProducto.setVisible(true);
+				String batidoSeleccionado = vista.comboBox_TipoBatido.getSelectedItem().toString();
+				Producto batido = obtenerNombreProductoSeleccionado(batidoSeleccionado, batidos);
+				iniciarPanelInformacionProductos(batido);
+			}else if(e.getSource()==vista.lbl_InformacionBebida3) {
+				vista.panel_GestionComandas.setVisible(false);
+				vista.panel_InformacionProducto.setVisible(true);
+				String refrescoSeleccionado = vista.comboBox_TipoRefresco.getSelectedItem().toString();
+				Producto refresco = obtenerNombreProductoSeleccionado(refrescoSeleccionado, refrescos);
+				iniciarPanelInformacionProductos(refresco);
+			}else if(e.getSource()==vista.lbl_InformacionBebida4) {
+				vista.panel_GestionComandas.setVisible(false);
+				vista.panel_InformacionProducto.setVisible(true);
+				String bebidaSeleccionada = vista.comboBox_TipoBebidaCalienteoFria.getSelectedItem().toString();
+				Producto bebidaCalienteOFria = obtenerNombreProductoSeleccionado(bebidaSeleccionada, bebidasCalientesOFrias);
+				iniciarPanelInformacionProductos(bebidaCalienteOFria);
+			}
 		}
-		
-		if(e.getClickCount()==1 && e.getSource()==vista.lbl_InformacionComida1) {
-			vista.panel_GestionComandas.setVisible(false);
-			vista.panel_InformacionProducto.setVisible(true);
-			iniciarPanelInformacionProductos();
-		}
-		
+			
 	}
 
 	@Override
