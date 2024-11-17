@@ -34,6 +34,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.JCheckBox;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.ListSelectionModel;
 
 public class InterfazApp extends JFrame {
 
@@ -201,6 +204,39 @@ public class InterfazApp extends JFrame {
 	public JLabel lbl_InfoGrasasProducto;
 	public JLabel lbl_InfoCaloriasTotalesProducto;
 	public JCheckBox checkBox_MostrarTablaIngredientes;
+	public JPanel panel_Inventario;
+	public JLabel lbl_FondoInventario;
+	public JLabel lbl_SalirInventario;
+	public JComboBox comboBox_Inventario;
+	public JList list_ListaProductos;
+	public JLabel lbl_Comida1Agotada;
+	public JLabel lbl_Comida2Agotada;
+	public JLabel lbl_Comida3Agotada;
+	public JLabel lbl_Comida4Agotada;
+	public JLabel lbl_Comida5Agotada;
+	public JLabel lbl_Comida6Agotada;
+	public JLabel lbl_CafeAgotado;
+	public JLabel lbl_RefrescoAgotado;
+	public JLabel lbl_BatidoAgotado;
+	public JLabel lbl_BebidaCalienteOFriaAgotada;
+	public JLabel lbl_ComprobacionMesa1;
+	public JLabel lbl_ComprobacionMesa2;
+	public JLabel lbl_ComprobacionMesa3;
+	public JLabel lbl_ComprobacionMesa4;
+	public JLabel lbl_ComprobacionMesa5;
+	public JLabel lbl_ComprobacionTaburete1;
+	public JLabel lbl_ComprobacionTaburete2;
+	public JLabel lbl_ComprobacionTaburete3;
+	public JLabel lbl_FotoProductoInventario;
+	public JSpinner spinner_Inventario;
+	public JLabel lbl_PrecioProducto;
+	public JTextField textField_PrecioProducto;
+	public JButton btn_IngresarStock;
+	public JButton btn_ReducirStock;
+	public JLabel lbl_MensajeReduccionOIngresoStock;
+	public JLabel lbl_CantidadProducto;
+	public JLabel lbl_NumeroCantidadStock;
+	public JButton btn_ConfirmarPrecioNuevo;
 
 	/**
 	 * Launch the application.
@@ -231,126 +267,6 @@ public class InterfazApp extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		panel_InformacionProducto = new JPanel();
-		panel_InformacionProducto.setForeground(new Color(0, 0, 0));
-		panel_InformacionProducto.setBackground(new Color(245, 209, 215));
-		panel_InformacionProducto.setBounds(0, 0, 897, 532);
-		contentPane.add(panel_InformacionProducto);
-		panel_InformacionProducto.setLayout(null);
-		
-		String[] columnas = {"Nombre", "Cantidad", "Unidad", "Calorías cada 100g/ml", "Calorías/Ingrediente"};
-		
-		DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0);
-		
-		tabla_Ingredientes = new JTable();
-		tabla_Ingredientes.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		tabla_Ingredientes.setEnabled(false);
-		tabla_Ingredientes.setBackground(new Color(255,255,255));
-		tabla_Ingredientes.setForeground(new Color(0, 0, 0));
-		tabla_Ingredientes.setFont(new Font("Consolas", Font.PLAIN, 16));
-		tabla_Ingredientes.setModel(modeloTabla);
-		
-		tabla_Ingredientes.getColumnModel().getColumn(0).setPreferredWidth(650);
-		tabla_Ingredientes.getColumnModel().getColumn(1).setPreferredWidth(225);
-		tabla_Ingredientes.getColumnModel().getColumn(2).setPreferredWidth(225);
-		tabla_Ingredientes.getColumnModel().getColumn(3).setPreferredWidth(525);
-		tabla_Ingredientes.getColumnModel().getColumn(4).setPreferredWidth(525);
-		
-		tabla_Ingredientes.setRowHeight(30);
-		
-		tabla_Ingredientes.getTableHeader().setFont(new Font("Consolas", Font.BOLD, 15));
-		tabla_Ingredientes.getTableHeader().setForeground(Color.WHITE);
-		tabla_Ingredientes.getTableHeader().setBackground(new Color(128, 0, 128));
-		
-		checkBox_MostrarTablaIngredientes = new JCheckBox("Mostrar Tabla Ingredientes");
-		checkBox_MostrarTablaIngredientes.setBackground(new Color(245, 209, 215));
-		checkBox_MostrarTablaIngredientes.setForeground(new Color(0, 0, 0));
-		checkBox_MostrarTablaIngredientes.setFont(new Font("Consolas", Font.BOLD, 16));
-		checkBox_MostrarTablaIngredientes.setBounds(215, 235, 263, 35);
-		checkBox_MostrarTablaIngredientes.setOpaque(false);
-		checkBox_MostrarTablaIngredientes.setBorder(new LineBorder(new Color(60, 0, 200), 4));
-		panel_InformacionProducto.add(checkBox_MostrarTablaIngredientes);
-		
-		lbl_InfoCaloriasTotalesProducto = new JLabel("");
-		lbl_InfoCaloriasTotalesProducto.setForeground(Color.BLACK);
-		lbl_InfoCaloriasTotalesProducto.setFont(new Font("Consolas", Font.BOLD, 18));
-		lbl_InfoCaloriasTotalesProducto.setBounds(521, 200, 165, 26);
-		panel_InformacionProducto.add(lbl_InfoCaloriasTotalesProducto);
-		
-		lbl_InfoGrasasProducto = new JLabel("");
-		lbl_InfoGrasasProducto.setForeground(Color.BLACK);
-		lbl_InfoGrasasProducto.setFont(new Font("Consolas", Font.BOLD, 18));
-		lbl_InfoGrasasProducto.setBounds(461, 162, 150, 26);
-		panel_InformacionProducto.add(lbl_InfoGrasasProducto);
-		
-		lbl_InfoProteinasProducto = new JLabel("");
-		lbl_InfoProteinasProducto.setForeground(Color.BLACK);
-		lbl_InfoProteinasProducto.setFont(new Font("Consolas", Font.BOLD, 18));
-		lbl_InfoProteinasProducto.setBounds(461, 124, 150, 26);
-		panel_InformacionProducto.add(lbl_InfoProteinasProducto);
-		
-		lbl_GrasasProducto = new JLabel("GRASAS");
-		lbl_GrasasProducto.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_GrasasProducto.setForeground(new Color(60, 0, 200));
-		lbl_GrasasProducto.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_GrasasProducto.setBounds(363, 162, 58, 26);
-		panel_InformacionProducto.add(lbl_GrasasProducto);
-		
-		lbl_ProteinasProducto = new JLabel("PROTEÍNAS");
-		lbl_ProteinasProducto.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_ProteinasProducto.setForeground(new Color(60, 0, 200));
-		lbl_ProteinasProducto.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_ProteinasProducto.setBounds(363, 124, 83, 26);
-		panel_InformacionProducto.add(lbl_ProteinasProducto);
-		
-		lbl_CaloriasTotalesProducto = new JLabel("CALORÍAS TOTALES");
-		lbl_CaloriasTotalesProducto.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_CaloriasTotalesProducto.setForeground(new Color(60, 0, 200));
-		lbl_CaloriasTotalesProducto.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_CaloriasTotalesProducto.setBounds(363, 200, 146, 26);
-		panel_InformacionProducto.add(lbl_CaloriasTotalesProducto);
-		
-		scrollPane_Ingredientes = new JScrollPane();
-		scrollPane_Ingredientes.setEnabled(false);
-		scrollPane_Ingredientes.setBounds(61, 302, 768, 114);
-		scrollPane_Ingredientes.setBorder(new LineBorder(new Color(0, 0, 0), 4));
-		scrollPane_Ingredientes.setViewportView(tabla_Ingredientes);
-		panel_InformacionProducto.add(scrollPane_Ingredientes);
-		
-		lbl_InfoNombreProducto = new JLabel("");
-		lbl_InfoNombreProducto.setForeground(new Color(0, 0, 0));
-		lbl_InfoNombreProducto.setFont(new Font("Consolas", Font.BOLD, 18));
-		lbl_InfoNombreProducto.setBounds(433, 91, 203, 21);
-		panel_InformacionProducto.add(lbl_InfoNombreProducto);
-		
-		lbl_Ingredientes = new JLabel("INGREDIENTES");
-		lbl_Ingredientes.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_Ingredientes.setForeground(new Color(60, 0, 200));
-		lbl_Ingredientes.setFont(new Font("Consolas", Font.BOLD, 18));
-		lbl_Ingredientes.setBounds(377, 282, 127, 21);
-		panel_InformacionProducto.add(lbl_Ingredientes);
-		
-		lbl_NombreProducto = new JLabel("NOMBRE");
-		lbl_NombreProducto.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_NombreProducto.setForeground(new Color(60, 0, 200));
-		lbl_NombreProducto.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_NombreProducto.setBounds(363, 91, 58, 21);
-		panel_InformacionProducto.add(lbl_NombreProducto);
-		
-		lbl_FotoProducto = new JLabel("");
-		lbl_FotoProducto.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_FotoProducto.setBounds(215, 86, 139, 140);
-		lbl_FotoProducto.setBorder(new LineBorder(new Color(60, 0, 200), 5));
-		panel_InformacionProducto.add(lbl_FotoProducto);
-		
-		lbl_SalirInformacionProductos = new JLabel("");
-		lbl_SalirInformacionProductos.setBounds(0, 0, 68, 70);
-		panel_InformacionProducto.add(lbl_SalirInformacionProductos);
-		
-		lbl_ImgFondoInfoProductos = new JLabel("");
-		lbl_ImgFondoInfoProductos.setBounds(0, 0, 897, 532);
-		panel_InformacionProducto.add(lbl_ImgFondoInfoProductos);
-		
 		panel_GestionComandas = new JPanel();
 		panel_GestionComandas.setBackground(new Color(245, 209, 215));
 		panel_GestionComandas.setBounds(0, 0, 897, 532);
@@ -362,6 +278,22 @@ public class InterfazApp extends JFrame {
 		panel_Bebidas.setBounds(0, 82, 715, 450);
 		panel_GestionComandas.add(panel_Bebidas);
 		panel_Bebidas.setLayout(null);
+		
+		lbl_BebidaCalienteOFriaAgotada = new JLabel("");
+		lbl_BebidaCalienteOFriaAgotada.setBounds(625, 268, 64, 64);
+		panel_Bebidas.add(lbl_BebidaCalienteOFriaAgotada);
+		
+		lbl_BatidoAgotado = new JLabel("");
+		lbl_BatidoAgotado.setBounds(625, 40, 64, 64);
+		panel_Bebidas.add(lbl_BatidoAgotado);
+		
+		lbl_CafeAgotado = new JLabel("");
+		lbl_CafeAgotado.setBounds(283, 40, 64, 64);
+		panel_Bebidas.add(lbl_CafeAgotado);
+		
+		lbl_RefrescoAgotado = new JLabel("");
+		lbl_RefrescoAgotado.setBounds(283, 268, 64, 64);
+		panel_Bebidas.add(lbl_RefrescoAgotado);
 		
 		lbl_IconoEuro4 = new JLabel("");
 		lbl_IconoEuro4.setBounds(600, 413, 32, 32);
@@ -410,7 +342,7 @@ public class InterfazApp extends JFrame {
 		comboBox_TipoCafe = new JComboBox();
 		comboBox_TipoCafe.setFont(new Font("Consolas", Font.BOLD, 15));
 		comboBox_TipoCafe.setForeground(new Color(0, 0, 0));
-		comboBox_TipoCafe.setBounds(203, 22, 144, 33);
+		comboBox_TipoCafe.setBounds(203, 0, 144, 33);
 		panel_Bebidas.add(comboBox_TipoCafe);
 		
 		lbl_Cafe = new JLabel("");
@@ -436,13 +368,14 @@ public class InterfazApp extends JFrame {
 		panel_Bebidas.add(btnRetirarBebida1);
 		
 		progressBar_Bebida1 = new JProgressBar();
+		progressBar_Bebida1.setForeground(new Color(0, 0, 255));
 		progressBar_Bebida1.setBounds(22, 199, 169, 14);
 		panel_Bebidas.add(progressBar_Bebida1);
 		
 		comboBox_TipoRefresco = new JComboBox();
 		comboBox_TipoRefresco.setFont(new Font("Consolas", Font.BOLD, 15));
 		comboBox_TipoRefresco.setForeground(new Color(0, 0, 0));
-		comboBox_TipoRefresco.setBounds(203, 243, 144, 33);
+		comboBox_TipoRefresco.setBounds(203, 234, 144, 33);
 		panel_Bebidas.add(comboBox_TipoRefresco);
 		
 		btnAñadirBebida3 = new JButton("Añadir");
@@ -464,6 +397,7 @@ public class InterfazApp extends JFrame {
 		panel_Bebidas.add(lbl_InformacionBebida3);
 		
 		progressBar_Bebida3 = new JProgressBar();
+		progressBar_Bebida3.setForeground(new Color(0, 0, 255));
 		progressBar_Bebida3.setBounds(22, 420, 169, 14);
 		panel_Bebidas.add(progressBar_Bebida3);
 		
@@ -474,7 +408,7 @@ public class InterfazApp extends JFrame {
 		comboBox_TipoBatido = new JComboBox();
 		comboBox_TipoBatido.setForeground(new Color(0, 0, 0));
 		comboBox_TipoBatido.setFont(new Font("Consolas", Font.BOLD, 15));
-		comboBox_TipoBatido.setBounds(546, 22, 157, 33);
+		comboBox_TipoBatido.setBounds(546, 0, 157, 33);
 		panel_Bebidas.add(comboBox_TipoBatido);
 		
 		lbl_BebidaCalienteoFria = new JLabel("");
@@ -500,13 +434,14 @@ public class InterfazApp extends JFrame {
 		panel_Bebidas.add(btnRetirarBebida2);
 		
 		progressBar_Bebida2 = new JProgressBar();
+		progressBar_Bebida2.setForeground(new Color(0, 0, 255));
 		progressBar_Bebida2.setBounds(365, 199, 169, 14);
 		panel_Bebidas.add(progressBar_Bebida2);
 		
 		comboBox_TipoBebidaCalienteoFria = new JComboBox();
 		comboBox_TipoBebidaCalienteoFria.setForeground(new Color(0, 0, 0));
 		comboBox_TipoBebidaCalienteoFria.setFont(new Font("Consolas", Font.BOLD, 15));
-		comboBox_TipoBebidaCalienteoFria.setBounds(546, 243, 157, 33);
+		comboBox_TipoBebidaCalienteoFria.setBounds(546, 234, 157, 33);
 		panel_Bebidas.add(comboBox_TipoBebidaCalienteoFria);
 		
 		lbl_InformacionBebida4 = new JLabel("");
@@ -528,39 +463,39 @@ public class InterfazApp extends JFrame {
 		panel_Bebidas.add(btnRetirarBebida4);
 		
 		progressBar_Bebida4 = new JProgressBar();
+		progressBar_Bebida4.setForeground(new Color(0, 0, 255));
 		progressBar_Bebida4.setBounds(365, 420, 169, 14);
 		panel_Bebidas.add(progressBar_Bebida4);
-		
-		lbl_SalirComandas = new JLabel("");
-		lbl_SalirComandas.setBounds(0, 0, 68, 70);
-		panel_GestionComandas.add(lbl_SalirComandas);
-		
-		lbl_PrecioTotalComanda = new JLabel("");
-		lbl_PrecioTotalComanda.setForeground(Color.BLACK);
-		lbl_PrecioTotalComanda.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_PrecioTotalComanda.setBounds(718, 333, 178, 30);
-		panel_GestionComandas.add(lbl_PrecioTotalComanda);
-		
-		lbl_IdComanda = new JLabel("");
-		lbl_IdComanda.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_IdComanda.setForeground(Color.BLACK);
-		lbl_IdComanda.setFont(new Font("Consolas", Font.BOLD, 18));
-		lbl_IdComanda.setBounds(731, 55, 142, 37);
-		panel_GestionComandas.add(lbl_IdComanda);
-		
-		lbl_PagarComanda = new JLabel("");
-		lbl_PagarComanda.setBounds(775, 445, 64, 64);
-		panel_GestionComandas.add(lbl_PagarComanda);
-		
-		lbl_PedirComanda = new JLabel("");
-		lbl_PedirComanda.setBounds(775, 375, 64, 64);
-		panel_GestionComandas.add(lbl_PedirComanda);
 		
 		panel_Comidas = new JPanel();
 		panel_Comidas.setBackground(new Color(245, 209, 215));
 		panel_Comidas.setBounds(0, 82, 715, 450);
 		panel_GestionComandas.add(panel_Comidas);
 		panel_Comidas.setLayout(null);
+		
+		lbl_Comida5Agotada = new JLabel("");
+		lbl_Comida5Agotada.setBounds(424, 237, 64, 64);
+		panel_Comidas.add(lbl_Comida5Agotada);
+		
+		lbl_Comida6Agotada = new JLabel("");
+		lbl_Comida6Agotada.setBounds(650, 237, 64, 64);
+		panel_Comidas.add(lbl_Comida6Agotada);
+		
+		lbl_Comida4Agotada = new JLabel("");
+		lbl_Comida4Agotada.setBounds(177, 237, 64, 64);
+		panel_Comidas.add(lbl_Comida4Agotada);
+		
+		lbl_Comida3Agotada = new JLabel("");
+		lbl_Comida3Agotada.setBounds(650, 31, 64, 64);
+		panel_Comidas.add(lbl_Comida3Agotada);
+		
+		lbl_Comida2Agotada = new JLabel("");
+		lbl_Comida2Agotada.setBounds(424, 31, 64, 64);
+		panel_Comidas.add(lbl_Comida2Agotada);
+		
+		lbl_Comida1Agotada = new JLabel("");
+		lbl_Comida1Agotada.setBounds(177, 31, 64, 64);
+		panel_Comidas.add(lbl_Comida1Agotada);
 		
 		lbl_SimboloEuroComida1 = new JLabel("");
 		lbl_SimboloEuroComida1.setForeground(new Color(0, 0, 0));
@@ -574,26 +509,32 @@ public class InterfazApp extends JFrame {
 		panel_Comidas.add(lbl_PrecioComida1);
 		
 		progressBar_Comida6 = new JProgressBar();
-		progressBar_Comida6.setBounds(12, 419, 160, 14);
+		progressBar_Comida6.setForeground(new Color(0, 0, 255));
+		progressBar_Comida6.setBounds(480, 419, 160, 14);
 		panel_Comidas.add(progressBar_Comida6);
 		
 		progressBar_Comida5 = new JProgressBar();
+		progressBar_Comida5.setForeground(new Color(0, 0, 255));
 		progressBar_Comida5.setBounds(248, 419, 160, 14);
 		panel_Comidas.add(progressBar_Comida5);
 		
 		progressBar_Comida4 = new JProgressBar();
-		progressBar_Comida4.setBounds(480, 419, 160, 14);
+		progressBar_Comida4.setForeground(new Color(0, 0, 255));
+		progressBar_Comida4.setBounds(12, 419, 160, 14);
 		panel_Comidas.add(progressBar_Comida4);
 		
 		progressBar_Comida3 = new JProgressBar();
+		progressBar_Comida3.setForeground(new Color(0, 0, 255));
 		progressBar_Comida3.setBounds(480, 218, 160, 14);
 		panel_Comidas.add(progressBar_Comida3);
 		
 		progressBar_Comida2 = new JProgressBar();
+		progressBar_Comida2.setForeground(new Color(0, 0, 255));
 		progressBar_Comida2.setBounds(248, 218, 160, 14);
 		panel_Comidas.add(progressBar_Comida2);
 		
 		progressBar_Comida1 = new JProgressBar();
+		progressBar_Comida1.setForeground(new Color(0, 0, 255));
 		progressBar_Comida1.setBounds(12, 218, 160, 14);
 		panel_Comidas.add(progressBar_Comida1);
 		
@@ -831,6 +772,32 @@ public class InterfazApp extends JFrame {
 		lbl_SimboloEuroComida6.setBounds(671, 382, 32, 31);
 		panel_Comidas.add(lbl_SimboloEuroComida6);
 		
+		lbl_SalirComandas = new JLabel("");
+		lbl_SalirComandas.setBounds(0, 0, 68, 70);
+		panel_GestionComandas.add(lbl_SalirComandas);
+		
+		lbl_PrecioTotalComanda = new JLabel("");
+		lbl_PrecioTotalComanda.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_PrecioTotalComanda.setForeground(Color.BLACK);
+		lbl_PrecioTotalComanda.setFont(new Font("Consolas", Font.BOLD, 18));
+		lbl_PrecioTotalComanda.setBounds(718, 333, 178, 30);
+		panel_GestionComandas.add(lbl_PrecioTotalComanda);
+		
+		lbl_IdComanda = new JLabel("");
+		lbl_IdComanda.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_IdComanda.setForeground(Color.BLACK);
+		lbl_IdComanda.setFont(new Font("Consolas", Font.BOLD, 18));
+		lbl_IdComanda.setBounds(731, 55, 142, 37);
+		panel_GestionComandas.add(lbl_IdComanda);
+		
+		lbl_PagarComanda = new JLabel("");
+		lbl_PagarComanda.setBounds(775, 445, 64, 64);
+		panel_GestionComandas.add(lbl_PagarComanda);
+		
+		lbl_PedirComanda = new JLabel("");
+		lbl_PedirComanda.setBounds(775, 375, 64, 64);
+		panel_GestionComandas.add(lbl_PedirComanda);
+		
 		lbl_Mesa_o_Taburete = new JLabel("");
 		lbl_Mesa_o_Taburete.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_Mesa_o_Taburete.setForeground(new Color(0, 0, 0));
@@ -857,6 +824,95 @@ public class InterfazApp extends JFrame {
 		lbl_ImgFondoComandas.setBounds(0, 0, 897, 532);
 		panel_GestionComandas.add(lbl_ImgFondoComandas);
 		
+		panel_Inventario = new JPanel();
+		panel_Inventario.setBackground(new Color(245, 209, 215));
+		panel_Inventario.setBounds(0, 0, 897, 532);
+		contentPane.add(panel_Inventario);
+		panel_Inventario.setLayout(null);
+		
+		btn_ConfirmarPrecioNuevo = new JButton("");
+		btn_ConfirmarPrecioNuevo.setIcon(new ImageIcon(InterfazApp.class.getResource("/img/comprobar.png")));
+		btn_ConfirmarPrecioNuevo.setBounds(563, 194, 54, 39);
+		panel_Inventario.add(btn_ConfirmarPrecioNuevo);
+		
+		lbl_NumeroCantidadStock = new JLabel("");
+		lbl_NumeroCantidadStock.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_NumeroCantidadStock.setForeground(Color.BLACK);
+		lbl_NumeroCantidadStock.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_NumeroCantidadStock.setBounds(495, 163, 56, 24);
+		panel_Inventario.add(lbl_NumeroCantidadStock);
+		
+		lbl_MensajeReduccionOIngresoStock = new JLabel("");
+		lbl_MensajeReduccionOIngresoStock.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_MensajeReduccionOIngresoStock.setBounds(166, 356, 451, 30);
+		panel_Inventario.add(lbl_MensajeReduccionOIngresoStock);
+		
+		lbl_CantidadProducto = new JLabel("CANTIDAD STOCK");
+		lbl_CantidadProducto.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_CantidadProducto.setBounds(351, 157, 132, 39);
+		panel_Inventario.add(lbl_CantidadProducto);
+		
+		btn_ReducirStock = new JButton("RETIRAR");
+		btn_ReducirStock.setBackground(new Color(255, 0, 0));
+		btn_ReducirStock.setForeground(new Color(0, 0, 0));
+		btn_ReducirStock.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btn_ReducirStock.setBounds(419, 290, 132, 39);
+		panel_Inventario.add(btn_ReducirStock);
+		
+		btn_IngresarStock = new JButton("INGRESAR");
+		btn_IngresarStock.setBackground(new Color(0, 213, 0));
+		btn_IngresarStock.setForeground(new Color(0, 0, 0));
+		btn_IngresarStock.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btn_IngresarStock.setBounds(419, 239, 132, 39);
+		panel_Inventario.add(btn_IngresarStock);
+		
+		textField_PrecioProducto = new JTextField();
+		textField_PrecioProducto.setForeground(new Color(0, 0, 0));
+		textField_PrecioProducto.setFont(new Font("Consolas", Font.BOLD, 18));
+		textField_PrecioProducto.setBounds(419, 203, 132, 24);
+		panel_Inventario.add(textField_PrecioProducto);
+		textField_PrecioProducto.setColumns(10);
+		
+		lbl_PrecioProducto = new JLabel("PRECIO");
+		lbl_PrecioProducto.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_PrecioProducto.setForeground(new Color(0, 0, 0));
+		lbl_PrecioProducto.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_PrecioProducto.setBounds(351, 208, 56, 19);
+		panel_Inventario.add(lbl_PrecioProducto);
+		
+		spinner_Inventario = new JSpinner();
+		spinner_Inventario.setForeground(new Color(255, 255, 255));
+		spinner_Inventario.setFont(new Font("Consolas", Font.BOLD, 16));
+		spinner_Inventario.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spinner_Inventario.setBounds(351, 273, 56, 24);
+		panel_Inventario.add(spinner_Inventario);
+		
+		lbl_FotoProductoInventario = new JLabel("");
+		lbl_FotoProductoInventario.setBounds(635, 149, 141, 180);
+		panel_Inventario.add(lbl_FotoProductoInventario);
+		
+		list_ListaProductos = new JList();
+		list_ListaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list_ListaProductos.setForeground(new Color(0, 0, 0));
+		list_ListaProductos.setFont(new Font("Consolas", Font.BOLD, 16));
+		list_ListaProductos.setBorder(new LineBorder(new Color(128, 0, 128), 4));
+		list_ListaProductos.setBounds(166, 184, 173, 145);
+		panel_Inventario.add(list_ListaProductos);
+		
+		comboBox_Inventario = new JComboBox();
+		comboBox_Inventario.setForeground(new Color(0, 0, 0));
+		comboBox_Inventario.setFont(new Font("Consolas", Font.BOLD, 15));
+		comboBox_Inventario.setBounds(166, 12, 173, 42);
+		panel_Inventario.add(comboBox_Inventario);
+		
+		lbl_SalirInventario = new JLabel("");
+		lbl_SalirInventario.setBounds(0, 0, 68, 70);
+		panel_Inventario.add(lbl_SalirInventario);
+		
+		lbl_FondoInventario = new JLabel("");
+		lbl_FondoInventario.setBounds(0, 0, 897, 532);
+		panel_Inventario.add(lbl_FondoInventario);
+		
 		panel_PantallaPrincipal = new JPanel();
 		panel_PantallaPrincipal.setBackground(new Color(245, 209, 215));
 		panel_PantallaPrincipal.setBounds(0, 0, 897, 532);
@@ -864,6 +920,38 @@ public class InterfazApp extends JFrame {
 		contentPane.add(panel_PantallaPrincipal);
 		panel_PantallaPrincipal.setVisible(false);
 		panel_PantallaPrincipal.setLayout(null);
+		
+		lbl_ComprobacionTaburete3 = new JLabel("");
+		lbl_ComprobacionTaburete3.setBounds(698, 107, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionTaburete3);
+		
+		lbl_ComprobacionTaburete2 = new JLabel("");
+		lbl_ComprobacionTaburete2.setBounds(636, 107, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionTaburete2);
+		
+		lbl_ComprobacionTaburete1 = new JLabel("");
+		lbl_ComprobacionTaburete1.setBounds(595, 87, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionTaburete1);
+		
+		lbl_ComprobacionMesa5 = new JLabel("");
+		lbl_ComprobacionMesa5.setBounds(633, 292, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionMesa5);
+		
+		lbl_ComprobacionMesa4 = new JLabel("");
+		lbl_ComprobacionMesa4.setBounds(438, 292, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionMesa4);
+		
+		lbl_ComprobacionMesa3 = new JLabel("");
+		lbl_ComprobacionMesa3.setBounds(726, 192, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionMesa3);
+		
+		lbl_ComprobacionMesa2 = new JLabel("");
+		lbl_ComprobacionMesa2.setBounds(535, 192, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionMesa2);
+		
+		lbl_ComprobacionMesa1 = new JLabel("");
+		lbl_ComprobacionMesa1.setBounds(348, 192, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionMesa1);
 		
 		lbl_Taburete3 = new JLabel("");
 		lbl_Taburete3.setBounds(689, 124, 50, 56);
@@ -954,6 +1042,126 @@ public class InterfazApp extends JFrame {
 		lbl_ImgPrincipalApp = new JLabel("");
 		lbl_ImgPrincipalApp.setBounds(0, 0, 897, 532);
 		panel_PantallaPrincipal.add(lbl_ImgPrincipalApp);
+		
+		panel_InformacionProducto = new JPanel();
+		panel_InformacionProducto.setForeground(new Color(0, 0, 0));
+		panel_InformacionProducto.setBackground(new Color(245, 209, 215));
+		panel_InformacionProducto.setBounds(0, 0, 897, 532);
+		contentPane.add(panel_InformacionProducto);
+		panel_InformacionProducto.setLayout(null);
+		
+		String[] columnas = {"Nombre", "Cantidad", "Unidad", "Calorías cada 100g/ml", "Calorías/Ingrediente"};
+		
+		DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0);
+		
+		tabla_Ingredientes = new JTable();
+		tabla_Ingredientes.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		tabla_Ingredientes.setEnabled(false);
+		tabla_Ingredientes.setBackground(new Color(255,255,255));
+		tabla_Ingredientes.setForeground(new Color(0, 0, 0));
+		tabla_Ingredientes.setFont(new Font("Consolas", Font.PLAIN, 16));
+		tabla_Ingredientes.setModel(modeloTabla);
+		
+		tabla_Ingredientes.getColumnModel().getColumn(0).setPreferredWidth(650);
+		tabla_Ingredientes.getColumnModel().getColumn(1).setPreferredWidth(225);
+		tabla_Ingredientes.getColumnModel().getColumn(2).setPreferredWidth(225);
+		tabla_Ingredientes.getColumnModel().getColumn(3).setPreferredWidth(525);
+		tabla_Ingredientes.getColumnModel().getColumn(4).setPreferredWidth(525);
+		
+		tabla_Ingredientes.setRowHeight(30);
+		
+		tabla_Ingredientes.getTableHeader().setFont(new Font("Consolas", Font.BOLD, 15));
+		tabla_Ingredientes.getTableHeader().setForeground(Color.WHITE);
+		tabla_Ingredientes.getTableHeader().setBackground(new Color(128, 0, 128));
+		
+		checkBox_MostrarTablaIngredientes = new JCheckBox("Mostrar Tabla Ingredientes");
+		checkBox_MostrarTablaIngredientes.setBackground(new Color(245, 209, 215));
+		checkBox_MostrarTablaIngredientes.setForeground(new Color(0, 0, 0));
+		checkBox_MostrarTablaIngredientes.setFont(new Font("Consolas", Font.BOLD, 16));
+		checkBox_MostrarTablaIngredientes.setBounds(215, 235, 263, 35);
+		checkBox_MostrarTablaIngredientes.setOpaque(false);
+		checkBox_MostrarTablaIngredientes.setBorder(new LineBorder(new Color(60, 0, 200), 4));
+		panel_InformacionProducto.add(checkBox_MostrarTablaIngredientes);
+		
+		lbl_InfoCaloriasTotalesProducto = new JLabel("");
+		lbl_InfoCaloriasTotalesProducto.setForeground(Color.BLACK);
+		lbl_InfoCaloriasTotalesProducto.setFont(new Font("Consolas", Font.BOLD, 18));
+		lbl_InfoCaloriasTotalesProducto.setBounds(521, 200, 165, 26);
+		panel_InformacionProducto.add(lbl_InfoCaloriasTotalesProducto);
+		
+		lbl_InfoGrasasProducto = new JLabel("");
+		lbl_InfoGrasasProducto.setForeground(Color.BLACK);
+		lbl_InfoGrasasProducto.setFont(new Font("Consolas", Font.BOLD, 18));
+		lbl_InfoGrasasProducto.setBounds(461, 162, 150, 26);
+		panel_InformacionProducto.add(lbl_InfoGrasasProducto);
+		
+		lbl_InfoProteinasProducto = new JLabel("");
+		lbl_InfoProteinasProducto.setForeground(Color.BLACK);
+		lbl_InfoProteinasProducto.setFont(new Font("Consolas", Font.BOLD, 18));
+		lbl_InfoProteinasProducto.setBounds(461, 124, 150, 26);
+		panel_InformacionProducto.add(lbl_InfoProteinasProducto);
+		
+		lbl_GrasasProducto = new JLabel("GRASAS");
+		lbl_GrasasProducto.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_GrasasProducto.setForeground(new Color(60, 0, 200));
+		lbl_GrasasProducto.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_GrasasProducto.setBounds(363, 162, 58, 26);
+		panel_InformacionProducto.add(lbl_GrasasProducto);
+		
+		lbl_ProteinasProducto = new JLabel("PROTEÍNAS");
+		lbl_ProteinasProducto.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_ProteinasProducto.setForeground(new Color(60, 0, 200));
+		lbl_ProteinasProducto.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_ProteinasProducto.setBounds(363, 124, 83, 26);
+		panel_InformacionProducto.add(lbl_ProteinasProducto);
+		
+		lbl_CaloriasTotalesProducto = new JLabel("CALORÍAS TOTALES");
+		lbl_CaloriasTotalesProducto.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_CaloriasTotalesProducto.setForeground(new Color(60, 0, 200));
+		lbl_CaloriasTotalesProducto.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_CaloriasTotalesProducto.setBounds(363, 200, 146, 26);
+		panel_InformacionProducto.add(lbl_CaloriasTotalesProducto);
+		
+		scrollPane_Ingredientes = new JScrollPane();
+		scrollPane_Ingredientes.setEnabled(false);
+		scrollPane_Ingredientes.setBounds(61, 302, 768, 117);
+		scrollPane_Ingredientes.setBorder(new LineBorder(new Color(0, 0, 0), 4));
+		scrollPane_Ingredientes.setViewportView(tabla_Ingredientes);
+		panel_InformacionProducto.add(scrollPane_Ingredientes);
+		
+		lbl_InfoNombreProducto = new JLabel("");
+		lbl_InfoNombreProducto.setForeground(new Color(0, 0, 0));
+		lbl_InfoNombreProducto.setFont(new Font("Consolas", Font.BOLD, 18));
+		lbl_InfoNombreProducto.setBounds(433, 91, 203, 21);
+		panel_InformacionProducto.add(lbl_InfoNombreProducto);
+		
+		lbl_Ingredientes = new JLabel("INGREDIENTES");
+		lbl_Ingredientes.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_Ingredientes.setForeground(new Color(60, 0, 200));
+		lbl_Ingredientes.setFont(new Font("Consolas", Font.BOLD, 18));
+		lbl_Ingredientes.setBounds(377, 282, 127, 21);
+		panel_InformacionProducto.add(lbl_Ingredientes);
+		
+		lbl_NombreProducto = new JLabel("NOMBRE");
+		lbl_NombreProducto.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_NombreProducto.setForeground(new Color(60, 0, 200));
+		lbl_NombreProducto.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_NombreProducto.setBounds(363, 91, 58, 21);
+		panel_InformacionProducto.add(lbl_NombreProducto);
+		
+		lbl_FotoProducto = new JLabel("");
+		lbl_FotoProducto.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_FotoProducto.setBounds(215, 86, 139, 140);
+		lbl_FotoProducto.setBorder(new LineBorder(new Color(60, 0, 200), 5));
+		panel_InformacionProducto.add(lbl_FotoProducto);
+		
+		lbl_SalirInformacionProductos = new JLabel("");
+		lbl_SalirInformacionProductos.setBounds(0, 0, 68, 70);
+		panel_InformacionProducto.add(lbl_SalirInformacionProductos);
+		
+		lbl_ImgFondoInfoProductos = new JLabel("");
+		lbl_ImgFondoInfoProductos.setBounds(0, 0, 897, 532);
+		panel_InformacionProducto.add(lbl_ImgFondoInfoProductos);
 		
 		panel_InicioSesion = new JPanel();
 		panel_InicioSesion.setBackground(new Color(255, 209, 220));
@@ -1174,6 +1382,7 @@ public class InterfazApp extends JFrame {
 		panel_DetallesEmpleado.setVisible(false);
 		panel_InformacionProducto.setVisible(false);
 		panel_GestionComandas.setVisible(false);
+		panel_Inventario.setVisible(false);
 	}
 	
 	private ImageIcon ajustarTamañoImg(String ruta, int ancho, int alto) {
