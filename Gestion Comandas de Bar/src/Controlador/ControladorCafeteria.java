@@ -1110,10 +1110,8 @@ public class ControladorCafeteria implements ActionListener, MouseListener {
 		if(comandaActiva == null) {
 			comandaActual = lugarElegido.aumentarNumeroComanda();
 			comandaPagada = false;
-			System.out.println("Nueva Comanda: " + comandaActual.getId());
 		}else {
 			comandaActual=comandaActiva;
-			System.out.println("Comanda " + comandaActual.getId());
 		}
 
 		iniciarGestionComandas();
@@ -2172,6 +2170,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener {
 			if(!comprobarNumeroIBAN(vista.textField_IBAN.getText())) {
 				vista.textarea_MensajePagoTransferenciaBancaria.setText("EL NÚMERO IBAN NO TIENE EL FORMATO CORRECTO");
 				vista.textarea_MensajePagoTransferenciaBancaria.setForeground(Color.RED);
+				vista.textField_IBAN.setText("");
 			}else {
 				vista.textarea_MensajePagoTransferenciaBancaria.setText("DATOS INTRODUCIDOS CORRECTOS. ¿DESEA CONTINUAR LA TRANSFERENCIA?");
 				vista.textarea_MensajePagoTransferenciaBancaria.setForeground(new Color(0, 136, 0));
