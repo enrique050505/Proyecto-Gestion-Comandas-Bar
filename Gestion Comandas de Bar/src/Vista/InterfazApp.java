@@ -37,6 +37,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.ListSelectionModel;
+import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
+import javax.swing.border.TitledBorder;
+import javax.swing.JRadioButton;
 
 public class InterfazApp extends JFrame {
 
@@ -71,11 +75,10 @@ public class InterfazApp extends JFrame {
 	public JLabel lbl_Taburete3;
 	public JButton btn_Inventario;
 	public JButton btn_Contabilidad;
-	public JButton btn_Horario;
 	public JLabel lbl_Barra;
 	public JPanel panel_DetallesEmpleado;
 	public JLabel lbl_ImgDetallesEmpleado;
-	public JLabel lbl_Salir;
+	public JLabel lbl_SalirDetallesEmpleado;
 	public JLabel lbl_FotoEmpleado;
 	public JLabel lbl_Detalles;
 	public JPanel panel_FotoEmpleado;
@@ -233,10 +236,90 @@ public class InterfazApp extends JFrame {
 	public JTextField textField_PrecioProducto;
 	public JButton btn_IngresarStock;
 	public JButton btn_ReducirStock;
-	public JLabel lbl_MensajeReduccionOIngresoStock;
 	public JLabel lbl_CantidadProducto;
 	public JLabel lbl_NumeroCantidadStock;
 	public JButton btn_ConfirmarPrecioNuevo;
+	public JTextArea textArea_MensajeInformacionUsuario;
+	public JTextArea textArea_MensajeComandaPedida;
+	public JPanel panel_MetodosPago;
+	public JLabel lbl_FondoMetodosPago;
+	public JLabel lbl_SalirMetodosDePago;
+	public JLabel lbl_EleccionMetodosPago;
+	public JButton btn_PagarEfectivo;
+	public JRadioButton rdbtn_PagarEnEfectivo;
+	public JRadioButton rdbtn_PagarTarjetaCredito;
+	public JButton btn_PagarTarjetaCredito;
+	public JRadioButton rdbtn_PagarTransferenciaBancaria;
+	public JButton btn_PagarTransferenciaBancaria;
+	public JPanel panel_PagarComanda;
+	public JLabel lbl_FondoPagoEnEfectivo;
+	public JLabel lbl_SalirPagarComanda;
+	public JLabel lbl_TotalComanda;
+	public JPanel panel_PagoEnEfectivo;
+	public JLabel lbl_PrecioComandaEnEfectivo;
+	public JLabel lbl_IntroducirCantidad;
+	public JTextField textField_IngresarDinero;
+	public JButton btn_ConfirmarDineroIngresado;
+	public JLabel lbl_PreguntaConfirmarPago;
+	public JButton btnConfirmarPago;
+	public JButton btn_CancelarPago;
+	public JLabel lbl_Devolución;
+	public JLabel lbl_NumeroDevolucion;
+	public JLabel lbl_IconoDevolucion;
+	public JTextArea textArea_MensajePagoRealizadoOIncorrecto;
+	public JLabel lbl_Total;
+	public JLabel lbl_IconoEuroTotalComanda;
+	public JLabel lbl_IconoEuroTotalComanda_1;
+	public JPanel panel_PagoTarjetaCredito;
+	public JLabel lbl_PrecioComandaTarjetaCredito;
+	public JLabel lbl_IconoEuroTotalComanda_2;
+	public JLabel lbl_NumeroTarjeta;
+	public JTextField textField_NumeroTarjeta;
+	public JLabel lblFechaExpiracion;
+	public JTextField textField_FechaExpiracion;
+	public JLabel lbl_CodigoCVV;
+	public JLabel lblNombreDelTitular;
+	public JTextField textField_CodigoCVV;
+	public JTextField textField_NombreTitular;
+	public JLabel lbl_CantidadAPagar;
+	public JTextArea textArea_EspecificacionesPagoTarjetaCredito;
+	public JButton btnConfirmarPagoTarjetaCredito;
+	public JTextArea textArea_MensajeTarjetaCredito;
+	public JButton btn_CancelarPagoTarjetaCredito;
+	public JButton btn_ConfirmarTarjeta;
+	public JPanel panel_TransferenciaBancaria;
+	public JLabel lbl_PrecioComandaTransferenciaBancaria;
+	public JLabel lbl_IconoEuroTotalComanda_3;
+	public JLabel lbl_IBAN;
+	public JTextField textField_IBAN;
+	public JLabel lbl_TitularCuenta;
+	public JTextField textField_TitularCuenta;
+	public JLabel lbl_ConceptoDePago;
+	public JTextField textField_ConceptoDePago;
+	public JTextArea textarea_NumeroIban;
+	public JButton btnConfirmarPagoTransferenciaBancaria;
+	public JButton btn_CancelarPagoTransferenciaBancaria;
+	public JTextArea textarea_MensajePagoTransferenciaBancaria;
+	public JLabel lbl_TotalAPagarTransferenciaBancaria;
+	public JButton btn_ContinuarTransferenciaBancaria;
+	public JPanel panel_Contabilidad;
+	public JLabel lbl_FondoContabilidad;
+	public JLabel lbl_SalirContabilidad;
+	public JLabel lbl_IconoCajaRegistradora;
+	public JLabel lbl_Caja;
+	public JLabel lbl_CantidadCaja;
+	public JLabel lbl_IconoBanco;
+	public JLabel lbl_Banco;
+	public JLabel lbl_CantidadBanco;
+	public JLabel lbl_IconoEuroCaja;
+	public JLabel lbl_IconoEuroBanco;
+	public JLabel lblNewLabel;
+	public JLabel lbl_PorcentajeEfectivo;
+	public JProgressBar progressBar_PorcentajeEfectivo;
+	public JLabel lbl_PorcentajeTarjetaCredito;
+	public JProgressBar progressBar_PorcentajeTarjetaCredito;
+	public JProgressBar progressBar_PorcentajeTransferenciaBancaria;
+	public JLabel lbl_PorcentajeEfectivo_2;
 
 	/**
 	 * Launch the application.
@@ -266,6 +349,569 @@ public class InterfazApp extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		panel_PantallaPrincipal = new JPanel();
+		panel_PantallaPrincipal.setBackground(new Color(245, 209, 215));
+		panel_PantallaPrincipal.setBounds(0, 0, 897, 532);
+		panel_PantallaPrincipal.setBorder(new LineBorder(null, 0));
+		contentPane.add(panel_PantallaPrincipal);
+		panel_PantallaPrincipal.setVisible(false);
+		panel_PantallaPrincipal.setLayout(null);
+		
+		lbl_ComprobacionTaburete3 = new JLabel("");
+		lbl_ComprobacionTaburete3.setBounds(698, 107, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionTaburete3);
+		
+		lbl_ComprobacionTaburete2 = new JLabel("");
+		lbl_ComprobacionTaburete2.setBounds(636, 107, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionTaburete2);
+		
+		lbl_ComprobacionTaburete1 = new JLabel("");
+		lbl_ComprobacionTaburete1.setBounds(595, 87, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionTaburete1);
+		
+		lbl_ComprobacionMesa5 = new JLabel("");
+		lbl_ComprobacionMesa5.setBounds(633, 292, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionMesa5);
+		
+		lbl_ComprobacionMesa4 = new JLabel("");
+		lbl_ComprobacionMesa4.setBounds(438, 292, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionMesa4);
+		
+		lbl_ComprobacionMesa3 = new JLabel("");
+		lbl_ComprobacionMesa3.setBounds(726, 192, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionMesa3);
+		
+		lbl_ComprobacionMesa2 = new JLabel("");
+		lbl_ComprobacionMesa2.setBounds(535, 192, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionMesa2);
+		
+		lbl_ComprobacionMesa1 = new JLabel("");
+		lbl_ComprobacionMesa1.setBounds(348, 192, 32, 32);
+		panel_PantallaPrincipal.add(lbl_ComprobacionMesa1);
+		
+		lbl_Taburete3 = new JLabel("");
+		lbl_Taburete3.setBounds(689, 124, 50, 56);
+		panel_PantallaPrincipal.add(lbl_Taburete3);
+		
+		lbl_Taburete1 = new JLabel("");
+		lbl_Taburete1.setBounds(585, 106, 50, 56);
+		panel_PantallaPrincipal.add(lbl_Taburete1);
+		
+		lbl_Taburete2 = new JLabel("");
+		lbl_Taburete2.setBounds(627, 126, 50, 56);
+		panel_PantallaPrincipal.add(lbl_Taburete2);
+		
+		lbl_Detalles = new JLabel("");
+		lbl_Detalles.setBounds(419, 82, 61, 70);
+		panel_PantallaPrincipal.add(lbl_Detalles);
+		
+		lbl_Barra = new JLabel("");
+		lbl_Barra.setBounds(572, 22, 170, 156);
+		panel_PantallaPrincipal.add(lbl_Barra);
+		
+		btn_Contabilidad = new JButton("Contabilidad");
+		btn_Contabilidad.setForeground(Color.WHITE);
+		btn_Contabilidad.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btn_Contabilidad.setBorder(new LineBorder(null, 0));
+		btn_Contabilidad.setBackground(new Color(128, 0, 128));
+		btn_Contabilidad.setBounds(85, 256, 138, 48);
+		panel_PantallaPrincipal.add(btn_Contabilidad);
+		
+		btn_Inventario = new JButton("Inventario");
+		btn_Inventario.setForeground(Color.WHITE);
+		btn_Inventario.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btn_Inventario.setBorder(new LineBorder(null, 0));
+		btn_Inventario.setBackground(new Color(128, 0, 128));
+		btn_Inventario.setBounds(85, 196, 138, 48);
+		panel_PantallaPrincipal.add(btn_Inventario);
+		
+		lbl_Mesa5 = new JLabel("");
+		lbl_Mesa5.setBounds(595, 305, 110, 110);
+		panel_PantallaPrincipal.add(lbl_Mesa5);
+		
+		lbl_Mesa4 = new JLabel("");
+		lbl_Mesa4.setBounds(400, 305, 110, 110);
+		panel_PantallaPrincipal.add(lbl_Mesa4);
+		
+		lbl_Mesa3 = new JLabel("");
+		lbl_Mesa3.setBounds(688, 205, 110, 110);
+		panel_PantallaPrincipal.add(lbl_Mesa3);
+		
+		lbl_Mesa2 = new JLabel("");
+		lbl_Mesa2.setBounds(495, 205, 110, 110);
+		panel_PantallaPrincipal.add(lbl_Mesa2);
+		
+		lbl_Mesa1 = new JLabel("");
+		lbl_Mesa1.setBounds(310, 205, 110, 110);
+		panel_PantallaPrincipal.add(lbl_Mesa1);
+		
+		panel_ImgMarco = new JPanel();
+		panel_ImgMarco.setBackground(new Color(245, 209, 215));
+		panel_ImgMarco.setBorder(new LineBorder(new Color(70, 0, 130), 4));
+		panel_ImgMarco.setBounds(274, 22, 127, 130);
+		panel_PantallaPrincipal.add(panel_ImgMarco);
+		panel_ImgMarco.setLayout(null);
+		
+		lbl_ImgEmpleado = new JLabel("");
+		lbl_ImgEmpleado.setBounds(10, 10, 105, 108);
+		panel_ImgMarco.add(lbl_ImgEmpleado);
+		
+		lbl_NombreEmpleado = new JLabel("");
+		lbl_NombreEmpleado.setForeground(new Color(70, 0, 130));
+		lbl_NombreEmpleado.setBounds(257, 122, 96, 17);
+		panel_PantallaPrincipal.add(lbl_NombreEmpleado);
+		lbl_NombreEmpleado.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_NombreEmpleado.setFont(new Font("Consolas", Font.BOLD, 16));
+		
+		lbl_CerrarSesion = new JLabel("");
+		lbl_CerrarSesion.setBounds(10, 10, 68, 70);
+		panel_PantallaPrincipal.add(lbl_CerrarSesion);
+		
+		lbl_ImgPrincipalApp = new JLabel("");
+		lbl_ImgPrincipalApp.setBounds(0, 0, 897, 532);
+		panel_PantallaPrincipal.add(lbl_ImgPrincipalApp);
+		
+		panel_Contabilidad = new JPanel();
+		panel_Contabilidad.setBackground(new Color(245, 209, 215));
+		panel_Contabilidad.setBounds(0, 0, 895, 532);
+		contentPane.add(panel_Contabilidad);
+		panel_Contabilidad.setLayout(null);
+		
+		lbl_PorcentajeEfectivo_2 = new JLabel("TRANSFERENCIA BANCARIA");
+		lbl_PorcentajeEfectivo_2.setForeground(Color.BLACK);
+		lbl_PorcentajeEfectivo_2.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_PorcentajeEfectivo_2.setBounds(366, 340, 198, 32);
+		panel_Contabilidad.add(lbl_PorcentajeEfectivo_2);
+		
+		progressBar_PorcentajeTransferenciaBancaria = new JProgressBar();
+		progressBar_PorcentajeTransferenciaBancaria.setForeground(new Color(255, 255, 255));
+		progressBar_PorcentajeTransferenciaBancaria.setStringPainted(true);
+		progressBar_PorcentajeTransferenciaBancaria.setBounds(372, 374, 192, 20);
+		panel_Contabilidad.add(progressBar_PorcentajeTransferenciaBancaria);
+		
+		progressBar_PorcentajeTarjetaCredito = new JProgressBar();
+		progressBar_PorcentajeTarjetaCredito.setForeground(new Color(0, 0, 0));
+		progressBar_PorcentajeTarjetaCredito.setStringPainted(true);
+		progressBar_PorcentajeTarjetaCredito.setBounds(372, 302, 192, 20);
+		panel_Contabilidad.add(progressBar_PorcentajeTarjetaCredito);
+		
+		lbl_PorcentajeTarjetaCredito = new JLabel("TARJETA CRÉDITO");
+		lbl_PorcentajeTarjetaCredito.setForeground(Color.BLACK);
+		lbl_PorcentajeTarjetaCredito.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_PorcentajeTarjetaCredito.setBounds(398, 268, 135, 32);
+		panel_Contabilidad.add(lbl_PorcentajeTarjetaCredito);
+		
+		progressBar_PorcentajeEfectivo = new JProgressBar();
+		progressBar_PorcentajeEfectivo.setForeground(new Color(0, 0, 0));
+		progressBar_PorcentajeEfectivo.setStringPainted(true);
+		progressBar_PorcentajeEfectivo.setBounds(372, 226, 192, 20);
+		panel_Contabilidad.add(progressBar_PorcentajeEfectivo);
+		
+		lbl_PorcentajeEfectivo = new JLabel("EFECTIVO\r\n");
+		lbl_PorcentajeEfectivo.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_PorcentajeEfectivo.setForeground(new Color(0, 0, 0));
+		lbl_PorcentajeEfectivo.setBounds(427, 189, 79, 32);
+		panel_Contabilidad.add(lbl_PorcentajeEfectivo);
+		
+		lblNewLabel = new JLabel("PORCENTAJES POR TIPO DE PAGO ");
+		lblNewLabel.setForeground(new Color(60, 0, 200));
+		lblNewLabel.setFont(new Font("Consolas", Font.BOLD, 16));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(339, 157, 261, 32);
+		panel_Contabilidad.add(lblNewLabel);
+		
+		lbl_IconoEuroBanco = new JLabel("");
+		lbl_IconoEuroBanco.setBounds(680, 68, 32, 32);
+		panel_Contabilidad.add(lbl_IconoEuroBanco);
+		
+		lbl_IconoEuroCaja = new JLabel("");
+		lbl_IconoEuroCaja.setBounds(383, 68, 32, 32);
+		panel_Contabilidad.add(lbl_IconoEuroCaja);
+		
+		lbl_CantidadBanco = new JLabel("0.0");
+		lbl_CantidadBanco.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_CantidadBanco.setForeground(Color.BLACK);
+		lbl_CantidadBanco.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_CantidadBanco.setBounds(625, 71, 45, 30);
+		panel_Contabilidad.add(lbl_CantidadBanco);
+		
+		lbl_Banco = new JLabel("BANCO");
+		lbl_Banco.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_Banco.setForeground(Color.BLACK);
+		lbl_Banco.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_Banco.setBounds(625, 29, 45, 30);
+		panel_Contabilidad.add(lbl_Banco);
+		
+		lbl_IconoBanco = new JLabel("");
+		lbl_IconoBanco.setBounds(490, 29, 123, 104);
+		panel_Contabilidad.add(lbl_IconoBanco);
+		
+		lbl_CantidadCaja = new JLabel("0.0");
+		lbl_CantidadCaja.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_CantidadCaja.setForeground(new Color(0, 0, 0));
+		lbl_CantidadCaja.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_CantidadCaja.setBounds(329, 71, 45, 30);
+		panel_Contabilidad.add(lbl_CantidadCaja);
+		
+		lbl_Caja = new JLabel("CAJA");
+		lbl_Caja.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_Caja.setForeground(new Color(0, 0, 0));
+		lbl_Caja.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_Caja.setBounds(329, 29, 45, 30);
+		panel_Contabilidad.add(lbl_Caja);
+		
+		lbl_IconoCajaRegistradora = new JLabel("");
+		lbl_IconoCajaRegistradora.setBounds(203, 29, 114, 104);
+		panel_Contabilidad.add(lbl_IconoCajaRegistradora);
+		
+		lbl_SalirContabilidad = new JLabel("");
+		lbl_SalirContabilidad.setBounds(0, 0, 68, 70);
+		panel_Contabilidad.add(lbl_SalirContabilidad);
+		
+		lbl_FondoContabilidad = new JLabel("");
+		lbl_FondoContabilidad.setBounds(0, 0, 895, 532);
+		panel_Contabilidad.add(lbl_FondoContabilidad);
+		
+		panel_PagarComanda = new JPanel();
+		panel_PagarComanda.setBackground(new Color(245, 209, 215));
+		panel_PagarComanda.setBounds(0, 0, 897, 532);
+		contentPane.add(panel_PagarComanda);
+		panel_PagarComanda.setLayout(null);
+		
+		panel_TransferenciaBancaria = new JPanel();
+		panel_TransferenciaBancaria.setBackground(new Color(245, 209, 215));
+		panel_TransferenciaBancaria.setBounds(218, 135, 499, 318);
+		panel_PagarComanda.add(panel_TransferenciaBancaria);
+		panel_TransferenciaBancaria.setOpaque(false);
+		panel_TransferenciaBancaria.setLayout(null);
+		
+		lbl_PrecioComandaTransferenciaBancaria = new JLabel("");
+		lbl_PrecioComandaTransferenciaBancaria.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_PrecioComandaTransferenciaBancaria.setForeground(Color.BLACK);
+		lbl_PrecioComandaTransferenciaBancaria.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_PrecioComandaTransferenciaBancaria.setBounds(268, 12, 65, 35);
+		panel_TransferenciaBancaria.add(lbl_PrecioComandaTransferenciaBancaria);
+		
+		lbl_IconoEuroTotalComanda_3 = new JLabel("");
+		lbl_IconoEuroTotalComanda_3.setBounds(322, 9, 37, 37);
+		panel_TransferenciaBancaria.add(lbl_IconoEuroTotalComanda_3);
+		lbl_IconoEuroTotalComanda_3.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		lbl_IBAN = new JLabel("Número de Cuenta (IBAN)*");
+		lbl_IBAN.setForeground(new Color(60, 0, 200));
+		lbl_IBAN.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_IBAN.setFont(new Font("Consolas", Font.BOLD, 15));
+		lbl_IBAN.setBounds(58, 55, 192, 26);
+		panel_TransferenciaBancaria.add(lbl_IBAN);
+		
+		textField_IBAN = new JTextField();
+		textField_IBAN.setForeground(new Color(0, 0, 0));
+		textField_IBAN.setFont(new Font("Consolas", Font.BOLD, 16));
+		textField_IBAN.setBounds(268, 55, 156, 26);
+		panel_TransferenciaBancaria.add(textField_IBAN);
+		textField_IBAN.setColumns(10);
+		
+		lbl_TitularCuenta = new JLabel("Titular de Cuenta*");
+		lbl_TitularCuenta.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_TitularCuenta.setForeground(new Color(60, 0, 200));
+		lbl_TitularCuenta.setFont(new Font("Consolas", Font.BOLD, 15));
+		lbl_TitularCuenta.setBounds(94, 93, 156, 26);
+		panel_TransferenciaBancaria.add(lbl_TitularCuenta);
+		
+		textField_TitularCuenta = new JTextField();
+		textField_TitularCuenta.setForeground(Color.BLACK);
+		textField_TitularCuenta.setFont(new Font("Consolas", Font.BOLD, 16));
+		textField_TitularCuenta.setColumns(10);
+		textField_TitularCuenta.setBounds(268, 93, 156, 26);
+		panel_TransferenciaBancaria.add(textField_TitularCuenta);
+		
+		lbl_ConceptoDePago = new JLabel("Concepto de Pago*");
+		lbl_ConceptoDePago.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_ConceptoDePago.setForeground(new Color(60, 0, 200));
+		lbl_ConceptoDePago.setFont(new Font("Consolas", Font.BOLD, 15));
+		lbl_ConceptoDePago.setBounds(94, 131, 156, 26);
+		panel_TransferenciaBancaria.add(lbl_ConceptoDePago);
+		
+		textField_ConceptoDePago = new JTextField();
+		textField_ConceptoDePago.setForeground(Color.BLACK);
+		textField_ConceptoDePago.setFont(new Font("Consolas", Font.BOLD, 16));
+		textField_ConceptoDePago.setColumns(10);
+		textField_ConceptoDePago.setBounds(268, 132, 156, 26);
+		panel_TransferenciaBancaria.add(textField_ConceptoDePago);
+		
+		textarea_NumeroIban = new JTextArea();
+		textarea_NumeroIban.setBackground(new Color(245, 209, 215));
+		textarea_NumeroIban.setText("*Número IBAN: 24 caracteres (letras y números). Sin espacios ni caracteres especiales");
+		textarea_NumeroIban.setForeground(new Color(83, 83, 83));
+		textarea_NumeroIban.setWrapStyleWord(true);
+		textarea_NumeroIban.setFont(new Font("Consolas", Font.BOLD, 13));
+		textarea_NumeroIban.setLineWrap(true);
+		textarea_NumeroIban.setEditable(false);
+		textarea_NumeroIban.setBounds(58, 165, 366, 35);
+		textarea_NumeroIban.setOpaque(false);
+		panel_TransferenciaBancaria.add(textarea_NumeroIban);
+		
+		btnConfirmarPagoTransferenciaBancaria = new JButton("CONFIRMAR");
+		btnConfirmarPagoTransferenciaBancaria.setForeground(Color.BLACK);
+		btnConfirmarPagoTransferenciaBancaria.setFont(new Font("Consolas", Font.BOLD, 16));
+		btnConfirmarPagoTransferenciaBancaria.setBackground(new Color(0, 213, 0));
+		btnConfirmarPagoTransferenciaBancaria.setBounds(145, 212, 116, 26);
+		btnConfirmarPagoTransferenciaBancaria.setVisible(false);
+		panel_TransferenciaBancaria.add(btnConfirmarPagoTransferenciaBancaria);
+		
+		btn_CancelarPagoTransferenciaBancaria = new JButton("CANCELAR");
+		btn_CancelarPagoTransferenciaBancaria.setForeground(Color.BLACK);
+		btn_CancelarPagoTransferenciaBancaria.setFont(new Font("Consolas", Font.BOLD, 16));
+		btn_CancelarPagoTransferenciaBancaria.setBackground(Color.RED);
+		btn_CancelarPagoTransferenciaBancaria.setBounds(268, 212, 106, 26);
+		btn_CancelarPagoTransferenciaBancaria.setVisible(false);
+		panel_TransferenciaBancaria.add(btn_CancelarPagoTransferenciaBancaria);
+		
+		textarea_MensajePagoTransferenciaBancaria = new JTextArea();
+		textarea_MensajePagoTransferenciaBancaria.setWrapStyleWord(true);
+		textarea_MensajePagoTransferenciaBancaria.setOpaque(false);
+		textarea_MensajePagoTransferenciaBancaria.setLineWrap(true);
+		textarea_MensajePagoTransferenciaBancaria.setForeground(new Color(83, 83, 83));
+		textarea_MensajePagoTransferenciaBancaria.setFont(new Font("Consolas", Font.BOLD, 16));
+		textarea_MensajePagoTransferenciaBancaria.setEditable(false);
+		textarea_MensajePagoTransferenciaBancaria.setBackground(new Color(245, 209, 215));
+		textarea_MensajePagoTransferenciaBancaria.setBounds(58, 250, 366, 56);
+		panel_TransferenciaBancaria.add(textarea_MensajePagoTransferenciaBancaria);
+		
+		lbl_TotalAPagarTransferenciaBancaria = new JLabel("Total a Pagar");
+		lbl_TotalAPagarTransferenciaBancaria.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_TotalAPagarTransferenciaBancaria.setForeground(new Color(60, 0, 200));
+		lbl_TotalAPagarTransferenciaBancaria.setFont(new Font("Consolas", Font.BOLD, 15));
+		lbl_TotalAPagarTransferenciaBancaria.setBounds(134, 14, 116, 26);
+		panel_TransferenciaBancaria.add(lbl_TotalAPagarTransferenciaBancaria);
+		
+		btn_ContinuarTransferenciaBancaria = new JButton("CONTINUAR");
+		btn_ContinuarTransferenciaBancaria.setFont(new Font("Consolas", Font.BOLD, 16));
+		btn_ContinuarTransferenciaBancaria.setBackground(new Color(0, 213, 0));
+		btn_ContinuarTransferenciaBancaria.setBounds(159, 212, 200, 26);
+		panel_TransferenciaBancaria.add(btn_ContinuarTransferenciaBancaria);
+		
+		panel_PagoTarjetaCredito = new JPanel();
+		panel_PagoTarjetaCredito.setBackground(new Color(245, 209, 215));
+		panel_PagoTarjetaCredito.setBounds(218, 135, 499, 318);
+		panel_PagarComanda.add(panel_PagoTarjetaCredito);
+		panel_PagoTarjetaCredito.setOpaque(false);
+		panel_PagoTarjetaCredito.setLayout(null);
+		
+		lbl_PrecioComandaTarjetaCredito = new JLabel("");
+		lbl_PrecioComandaTarjetaCredito.setForeground(new Color(0, 0, 0));
+		lbl_PrecioComandaTarjetaCredito.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_PrecioComandaTarjetaCredito.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_PrecioComandaTarjetaCredito.setBounds(230, 18, 65, 35);
+		panel_PagoTarjetaCredito.add(lbl_PrecioComandaTarjetaCredito);
+		
+		lbl_IconoEuroTotalComanda_2 = new JLabel("");
+		lbl_IconoEuroTotalComanda_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_IconoEuroTotalComanda_2.setBounds(287, 14, 37, 37);
+		panel_PagoTarjetaCredito.add(lbl_IconoEuroTotalComanda_2);
+		
+		lbl_NumeroTarjeta = new JLabel("Número de tarjeta*");
+		lbl_NumeroTarjeta.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_NumeroTarjeta.setForeground(new Color(60, 0, 200));
+		lbl_NumeroTarjeta.setFont(new Font("Consolas", Font.BOLD, 15));
+		lbl_NumeroTarjeta.setBounds(73, 58, 145, 20);
+		panel_PagoTarjetaCredito.add(lbl_NumeroTarjeta);
+		
+		textField_NumeroTarjeta = new JTextField();
+		textField_NumeroTarjeta.setForeground(new Color(0, 0, 0));
+		textField_NumeroTarjeta.setFont(new Font("Consolas", Font.BOLD, 16));
+		textField_NumeroTarjeta.setBounds(230, 58, 156, 20);
+		panel_PagoTarjetaCredito.add(textField_NumeroTarjeta);
+		textField_NumeroTarjeta.setColumns(10);
+		
+		lblFechaExpiracion = new JLabel("Fecha Expiración (MM/AA)*");
+		lblFechaExpiracion.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFechaExpiracion.setForeground(new Color(60, 0, 200));
+		lblFechaExpiracion.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblFechaExpiracion.setBounds(18, 90, 200, 20);
+		panel_PagoTarjetaCredito.add(lblFechaExpiracion);
+		
+		textField_FechaExpiracion = new JTextField();
+		textField_FechaExpiracion.setFont(new Font("Consolas", Font.BOLD, 16));
+		textField_FechaExpiracion.setColumns(10);
+		textField_FechaExpiracion.setBounds(230, 88, 156, 22);
+		panel_PagoTarjetaCredito.add(textField_FechaExpiracion);
+		
+		lbl_CodigoCVV = new JLabel("Código CVV*");
+		lbl_CodigoCVV.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_CodigoCVV.setForeground(new Color(60, 0, 200));
+		lbl_CodigoCVV.setFont(new Font("Consolas", Font.BOLD, 15));
+		lbl_CodigoCVV.setBounds(108, 122, 104, 20);
+		panel_PagoTarjetaCredito.add(lbl_CodigoCVV);
+		
+		lblNombreDelTitular = new JLabel("Nombre del Titular*");
+		lblNombreDelTitular.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNombreDelTitular.setForeground(new Color(60, 0, 200));
+		lblNombreDelTitular.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblNombreDelTitular.setBounds(65, 154, 153, 20);
+		panel_PagoTarjetaCredito.add(lblNombreDelTitular);
+		
+		textField_CodigoCVV = new JTextField();
+		textField_CodigoCVV.setForeground(new Color(0, 0, 0));
+		textField_CodigoCVV.setFont(new Font("Consolas", Font.BOLD, 16));
+		textField_CodigoCVV.setColumns(10);
+		textField_CodigoCVV.setBounds(230, 122, 156, 20);
+		panel_PagoTarjetaCredito.add(textField_CodigoCVV);
+		
+		textField_NombreTitular = new JTextField();
+		textField_NombreTitular.setForeground(Color.BLACK);
+		textField_NombreTitular.setFont(new Font("Consolas", Font.BOLD, 16));
+		textField_NombreTitular.setColumns(10);
+		textField_NombreTitular.setBounds(230, 152, 156, 22);
+		panel_PagoTarjetaCredito.add(textField_NombreTitular);
+		
+		lbl_CantidadAPagar = new JLabel("Cantidad a Pagar");
+		lbl_CantidadAPagar.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_CantidadAPagar.setForeground(new Color(60, 0, 200));
+		lbl_CantidadAPagar.setFont(new Font("Consolas", Font.BOLD, 15));
+		lbl_CantidadAPagar.setBounds(73, 25, 145, 20);
+		panel_PagoTarjetaCredito.add(lbl_CantidadAPagar);
+		
+		textArea_EspecificacionesPagoTarjetaCredito = new JTextArea();
+		textArea_EspecificacionesPagoTarjetaCredito.setText("- Número Tarjeta: debe contener 16 dígitos sin espacios ni caracteres especiales. (Ejemplo: 1234 5678  1111 111)\r\n- Código CVV: debe contener 3 dígitos sin espacios ni caracteres especiales. (Ejemplo: 123)");
+		textArea_EspecificacionesPagoTarjetaCredito.setForeground(new Color(83, 83, 83));
+		textArea_EspecificacionesPagoTarjetaCredito.setWrapStyleWord(true);
+		textArea_EspecificacionesPagoTarjetaCredito.setEditable(false);
+		textArea_EspecificacionesPagoTarjetaCredito.setLineWrap(true);
+		textArea_EspecificacionesPagoTarjetaCredito.setFont(new Font("Consolas", Font.BOLD, 13));
+		textArea_EspecificacionesPagoTarjetaCredito.setBackground(new Color(245, 209, 215));
+		textArea_EspecificacionesPagoTarjetaCredito.setBounds(12, 180, 475, 64);
+		textArea_EspecificacionesPagoTarjetaCredito.setOpaque(false);
+		panel_PagoTarjetaCredito.add(textArea_EspecificacionesPagoTarjetaCredito);
+		
+		btnConfirmarPagoTarjetaCredito = new JButton("ACEPTAR");
+		btnConfirmarPagoTarjetaCredito.setForeground(Color.BLACK);
+		btnConfirmarPagoTarjetaCredito.setFont(new Font("Consolas", Font.BOLD, 16));
+		btnConfirmarPagoTarjetaCredito.setBackground(new Color(0, 213, 0));
+		btnConfirmarPagoTarjetaCredito.setBounds(129, 243, 114, 26);
+		btnConfirmarPagoTarjetaCredito.setVisible(false);
+		panel_PagoTarjetaCredito.add(btnConfirmarPagoTarjetaCredito);
+		
+		textArea_MensajeTarjetaCredito = new JTextArea();
+		textArea_MensajeTarjetaCredito.setWrapStyleWord(true);
+		textArea_MensajeTarjetaCredito.setForeground(new Color(0, 0, 0));
+		textArea_MensajeTarjetaCredito.setLineWrap(true);
+		textArea_MensajeTarjetaCredito.setFont(new Font("Consolas", Font.BOLD, 16));
+		textArea_MensajeTarjetaCredito.setEditable(false);
+		textArea_MensajeTarjetaCredito.setBackground(new Color(245, 209, 215));
+		textArea_MensajeTarjetaCredito.setBounds(65, 277, 369, 52);
+		textArea_MensajeTarjetaCredito.setOpaque(false);
+		panel_PagoTarjetaCredito.add(textArea_MensajeTarjetaCredito);
+		
+		btn_CancelarPagoTarjetaCredito = new JButton("RECHAZAR");
+		btn_CancelarPagoTarjetaCredito.setForeground(Color.BLACK);
+		btn_CancelarPagoTarjetaCredito.setFont(new Font("Consolas", Font.BOLD, 16));
+		btn_CancelarPagoTarjetaCredito.setBackground(Color.RED);
+		btn_CancelarPagoTarjetaCredito.setBounds(255, 243, 114, 26);
+		btn_CancelarPagoTarjetaCredito.setVisible(false);
+		panel_PagoTarjetaCredito.add(btn_CancelarPagoTarjetaCredito);
+		
+		btn_ConfirmarTarjeta = new JButton("CONFIRMAR TARJETA");
+		btn_ConfirmarTarjeta.setBackground(new Color(0, 213, 0));
+		btn_ConfirmarTarjeta.setFont(new Font("Consolas", Font.BOLD, 16));
+		btn_ConfirmarTarjeta.setBounds(145, 243, 200, 26);
+		panel_PagoTarjetaCredito.add(btn_ConfirmarTarjeta);
+		
+		panel_PagoEnEfectivo = new JPanel();
+		panel_PagoEnEfectivo.setBackground(new Color(245, 209, 215));
+		panel_PagoEnEfectivo.setBounds(218, 135, 499, 318);
+		panel_PagarComanda.add(panel_PagoEnEfectivo);
+		panel_PagoEnEfectivo.setOpaque(false);
+		panel_PagoEnEfectivo.setLayout(null);
+		
+		lbl_Devolución = new JLabel("DEVOLUCIÓN:");
+		lbl_Devolución.setForeground(new Color(0, 0, 0));
+		lbl_Devolución.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_Devolución.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_Devolución.setBounds(123, 219, 117, 26);
+		panel_PagoEnEfectivo.add(lbl_Devolución);
+		
+		btn_ConfirmarDineroIngresado = new JButton("");
+		btn_ConfirmarDineroIngresado.setBackground(new Color(0, 255, 0));
+		btn_ConfirmarDineroIngresado.setIcon(new ImageIcon(InterfazApp.class.getResource("/img/cheque.png")));
+		btn_ConfirmarDineroIngresado.setBounds(297, 98, 30, 30);
+		panel_PagoEnEfectivo.add(btn_ConfirmarDineroIngresado);
+		
+		lbl_PrecioComandaEnEfectivo = new JLabel("");
+		lbl_PrecioComandaEnEfectivo.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_PrecioComandaEnEfectivo.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_PrecioComandaEnEfectivo.setBounds(192, 9, 78, 37);
+		panel_PagoEnEfectivo.add(lbl_PrecioComandaEnEfectivo);
+		
+		lbl_IntroducirCantidad = new JLabel("INTRODUZCA UNA CANTIDAD");
+		lbl_IntroducirCantidad.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_IntroducirCantidad.setBounds(142, 58, 216, 28);
+		panel_PagoEnEfectivo.add(lbl_IntroducirCantidad);
+		
+		textField_IngresarDinero = new JTextField();
+		textField_IngresarDinero.setFont(new Font("Consolas", Font.BOLD, 16));
+		textField_IngresarDinero.setBounds(166, 100, 119, 28);
+		panel_PagoEnEfectivo.add(textField_IngresarDinero);
+		textField_IngresarDinero.setColumns(10);
+		
+		lbl_PreguntaConfirmarPago = new JLabel("¿Deseas confirmar el pago?");
+		lbl_PreguntaConfirmarPago.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_PreguntaConfirmarPago.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_PreguntaConfirmarPago.setBounds(123, 135, 243, 28);
+		panel_PagoEnEfectivo.add(lbl_PreguntaConfirmarPago);
+		
+		btnConfirmarPago = new JButton("CONFIRMAR");
+		btnConfirmarPago.setBackground(new Color(0, 213, 0));
+		btnConfirmarPago.setForeground(new Color(0, 0, 0));
+		btnConfirmarPago.setFont(new Font("Consolas", Font.BOLD, 16));
+		btnConfirmarPago.setBounds(123, 169, 116, 26);
+		panel_PagoEnEfectivo.add(btnConfirmarPago);
+		
+		btn_CancelarPago = new JButton("CANCELAR");
+		btn_CancelarPago.setBackground(new Color(255, 0, 0));
+		btn_CancelarPago.setForeground(new Color(0, 0, 0));
+		btn_CancelarPago.setFont(new Font("Consolas", Font.BOLD, 16));
+		btn_CancelarPago.setBounds(250, 169, 106, 26);
+		panel_PagoEnEfectivo.add(btn_CancelarPago);
+		
+		lbl_NumeroDevolucion = new JLabel("");
+		lbl_NumeroDevolucion.setForeground(new Color(0, 0, 0));
+		lbl_NumeroDevolucion.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_NumeroDevolucion.setBounds(251, 218, 89, 28);
+		panel_PagoEnEfectivo.add(lbl_NumeroDevolucion);
+		
+		lbl_IconoDevolucion = new JLabel("");
+		lbl_IconoDevolucion.setBounds(307, 204, 55, 56);
+		panel_PagoEnEfectivo.add(lbl_IconoDevolucion);
+		
+		textArea_MensajePagoRealizadoOIncorrecto = new JTextArea();
+		textArea_MensajePagoRealizadoOIncorrecto.setEditable(false);
+		textArea_MensajePagoRealizadoOIncorrecto.setWrapStyleWord(true);
+		textArea_MensajePagoRealizadoOIncorrecto.setFont(new Font("Consolas", Font.BOLD, 15));
+		textArea_MensajePagoRealizadoOIncorrecto.setLineWrap(true);
+		textArea_MensajePagoRealizadoOIncorrecto.setBackground(new Color(245, 209, 215));
+		textArea_MensajePagoRealizadoOIncorrecto.setBounds(123, 264, 235, 49);
+		textArea_MensajePagoRealizadoOIncorrecto.setOpaque(false);
+		panel_PagoEnEfectivo.add(textArea_MensajePagoRealizadoOIncorrecto);
+		
+		lbl_IconoEuroTotalComanda_1 = new JLabel("");
+		lbl_IconoEuroTotalComanda_1.setBounds(251, 7, 37, 37);
+		panel_PagoEnEfectivo.add(lbl_IconoEuroTotalComanda_1);
+		
+		lbl_TotalComanda = new JLabel("PRECIO TOTAL DE LA COMANDA");
+		lbl_TotalComanda.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_TotalComanda.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_TotalComanda.setBounds(328, 110, 268, 35);
+		panel_PagarComanda.add(lbl_TotalComanda);
+		
+		lbl_SalirPagarComanda = new JLabel("");
+		lbl_SalirPagarComanda.setBounds(0, 0, 68, 70);
+		panel_PagarComanda.add(lbl_SalirPagarComanda);
+		
+		lbl_FondoPagoEnEfectivo = new JLabel("");
+		lbl_FondoPagoEnEfectivo.setBounds(0, 0, 897, 532);
+		panel_PagarComanda.add(lbl_FondoPagoEnEfectivo);
 		
 		panel_GestionComandas = new JPanel();
 		panel_GestionComandas.setBackground(new Color(245, 209, 215));
@@ -549,7 +1195,7 @@ public class InterfazApp extends JFrame {
 		lbl_NombreComida6.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_NombreComida6.setForeground(new Color(0, 0, 0));
 		lbl_NombreComida6.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_NombreComida6.setBounds(483, 391, 125, 16);
+		lbl_NombreComida6.setBounds(483, 391, 140, 16);
 		panel_Comidas.add(lbl_NombreComida6);
 		
 		lbl_InformacionComida6 = new JLabel("");
@@ -772,6 +1418,26 @@ public class InterfazApp extends JFrame {
 		lbl_SimboloEuroComida6.setBounds(671, 382, 32, 31);
 		panel_Comidas.add(lbl_SimboloEuroComida6);
 		
+		lbl_IconoEuroTotalComanda = new JLabel("");
+		lbl_IconoEuroTotalComanda.setBounds(851, 333, 32, 32);
+		panel_GestionComandas.add(lbl_IconoEuroTotalComanda);
+		
+		lbl_Total = new JLabel("TOTAL");
+		lbl_Total.setForeground(new Color(0, 0, 0));
+		lbl_Total.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_Total.setFont(new Font("Consolas", Font.BOLD, 16));
+		lbl_Total.setBounds(718, 333, 68, 30);
+		panel_GestionComandas.add(lbl_Total);
+		
+		textArea_MensajeComandaPedida = new JTextArea();
+		textArea_MensajeComandaPedida.setBackground(new Color(245, 209, 215));
+		textArea_MensajeComandaPedida.setWrapStyleWord(true);
+		textArea_MensajeComandaPedida.setLineWrap(true);
+		textArea_MensajeComandaPedida.setFont(new Font("Consolas", Font.BOLD, 17));
+		textArea_MensajeComandaPedida.setBounds(357, 18, 358, 37);
+		textArea_MensajeComandaPedida.setOpaque(false);
+		panel_GestionComandas.add(textArea_MensajeComandaPedida);
+		
 		lbl_SalirComandas = new JLabel("");
 		lbl_SalirComandas.setBounds(0, 0, 68, 70);
 		panel_GestionComandas.add(lbl_SalirComandas);
@@ -780,7 +1446,7 @@ public class InterfazApp extends JFrame {
 		lbl_PrecioTotalComanda.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_PrecioTotalComanda.setForeground(Color.BLACK);
 		lbl_PrecioTotalComanda.setFont(new Font("Consolas", Font.BOLD, 18));
-		lbl_PrecioTotalComanda.setBounds(718, 333, 178, 30);
+		lbl_PrecioTotalComanda.setBounds(787, 333, 68, 30);
 		panel_GestionComandas.add(lbl_PrecioTotalComanda);
 		
 		lbl_IdComanda = new JLabel("");
@@ -791,11 +1457,11 @@ public class InterfazApp extends JFrame {
 		panel_GestionComandas.add(lbl_IdComanda);
 		
 		lbl_PagarComanda = new JLabel("");
-		lbl_PagarComanda.setBounds(775, 445, 64, 64);
+		lbl_PagarComanda.setBounds(775, 432, 64, 64);
 		panel_GestionComandas.add(lbl_PagarComanda);
 		
 		lbl_PedirComanda = new JLabel("");
-		lbl_PedirComanda.setBounds(775, 375, 64, 64);
+		lbl_PedirComanda.setBounds(775, 360, 64, 64);
 		panel_GestionComandas.add(lbl_PedirComanda);
 		
 		lbl_Mesa_o_Taburete = new JLabel("");
@@ -824,11 +1490,87 @@ public class InterfazApp extends JFrame {
 		lbl_ImgFondoComandas.setBounds(0, 0, 897, 532);
 		panel_GestionComandas.add(lbl_ImgFondoComandas);
 		
+		panel_MetodosPago = new JPanel();
+		panel_MetodosPago.setBackground(new Color(245, 209, 215));
+		panel_MetodosPago.setBounds(0, 0, 897, 532);
+		contentPane.add(panel_MetodosPago);
+		panel_MetodosPago.setLayout(null);
+		
+		btn_PagarTransferenciaBancaria = new JButton("");
+		btn_PagarTransferenciaBancaria.setIcon(new ImageIcon(InterfazApp.class.getResource("/img/banco.png")));
+		btn_PagarTransferenciaBancaria.setBorder(new LineBorder(new Color(50, 205, 50), 3));
+		btn_PagarTransferenciaBancaria.setBackground(Color.WHITE);
+		btn_PagarTransferenciaBancaria.setBounds(646, 179, 98, 84);
+		panel_MetodosPago.add(btn_PagarTransferenciaBancaria);
+		
+		rdbtn_PagarTransferenciaBancaria = new JRadioButton("TRANSFERENCIA BANCARIA");
+		rdbtn_PagarTransferenciaBancaria.setOpaque(false);
+		rdbtn_PagarTransferenciaBancaria.setHorizontalAlignment(SwingConstants.CENTER);
+		rdbtn_PagarTransferenciaBancaria.setFont(new Font("Consolas", Font.BOLD, 16));
+		rdbtn_PagarTransferenciaBancaria.setBackground(new Color(245, 209, 215));
+		rdbtn_PagarTransferenciaBancaria.setBounds(562, 126, 229, 24);
+		panel_MetodosPago.add(rdbtn_PagarTransferenciaBancaria);
+		
+		btn_PagarTarjetaCredito = new JButton("");
+		btn_PagarTarjetaCredito.setIcon(new ImageIcon(InterfazApp.class.getResource("/img/pos-terminal.png")));
+		btn_PagarTarjetaCredito.setBorder(new LineBorder(new Color(50, 205, 50), 3));
+		btn_PagarTarjetaCredito.setBackground(Color.WHITE);
+		btn_PagarTarjetaCredito.setBounds(375, 179, 98, 84);
+		panel_MetodosPago.add(btn_PagarTarjetaCredito);
+		
+		rdbtn_PagarTarjetaCredito = new JRadioButton("TARJETA DE CRÉDITO");
+		rdbtn_PagarTarjetaCredito.setOpaque(false);
+		rdbtn_PagarTarjetaCredito.setHorizontalAlignment(SwingConstants.CENTER);
+		rdbtn_PagarTarjetaCredito.setFont(new Font("Consolas", Font.BOLD, 16));
+		rdbtn_PagarTarjetaCredito.setBackground(new Color(245, 209, 215));
+		rdbtn_PagarTarjetaCredito.setBounds(317, 126, 198, 24);
+		panel_MetodosPago.add(rdbtn_PagarTarjetaCredito);
+		
+		btn_PagarEfectivo = new JButton("");
+		btn_PagarEfectivo.setIcon(new ImageIcon(InterfazApp.class.getResource("/img/dinero-en-efectivo.png")));
+		btn_PagarEfectivo.setBackground(new Color(255, 255, 255));
+		btn_PagarEfectivo.setBounds(146, 179, 98, 84);
+		btn_PagarEfectivo.setBorder(new LineBorder(new Color(50, 205, 50), 3));
+		panel_MetodosPago.add(btn_PagarEfectivo);
+		
+		rdbtn_PagarEnEfectivo = new JRadioButton("EFECTIVO");
+		rdbtn_PagarEnEfectivo.setHorizontalAlignment(SwingConstants.CENTER);
+		rdbtn_PagarEnEfectivo.setBackground(new Color(245, 209, 215));
+		rdbtn_PagarEnEfectivo.setFont(new Font("Consolas", Font.BOLD, 16));
+		rdbtn_PagarEnEfectivo.setBounds(146, 126, 98, 24);
+		rdbtn_PagarEnEfectivo.setOpaque(false);
+		panel_MetodosPago.add(rdbtn_PagarEnEfectivo);
+		
+		lbl_EleccionMetodosPago = new JLabel("ELIJA EL MÉTODO DE PAGO DESEADO");
+		lbl_EleccionMetodosPago.setForeground(new Color(128, 0, 128));
+		lbl_EleccionMetodosPago.setFont(new Font("Consolas", Font.BOLD, 20));
+		lbl_EleccionMetodosPago.setBounds(271, 31, 347, 33);
+		panel_MetodosPago.add(lbl_EleccionMetodosPago);
+		
+		lbl_SalirMetodosDePago = new JLabel("");
+		lbl_SalirMetodosDePago.setBounds(0, 0, 68, 70);
+		panel_MetodosPago.add(lbl_SalirMetodosDePago);
+		
+		lbl_FondoMetodosPago = new JLabel("");
+		lbl_FondoMetodosPago.setBounds(0, 0, 897, 532);
+		panel_MetodosPago.add(lbl_FondoMetodosPago);
+		
 		panel_Inventario = new JPanel();
 		panel_Inventario.setBackground(new Color(245, 209, 215));
 		panel_Inventario.setBounds(0, 0, 897, 532);
 		contentPane.add(panel_Inventario);
 		panel_Inventario.setLayout(null);
+		
+		textArea_MensajeInformacionUsuario = new JTextArea();
+		textArea_MensajeInformacionUsuario.setBackground(new Color(245, 209, 215));
+		textArea_MensajeInformacionUsuario.setFont(new Font("Consolas", Font.BOLD, 16));
+		textArea_MensajeInformacionUsuario.setForeground(new Color(0, 0, 0));
+		textArea_MensajeInformacionUsuario.setWrapStyleWord(true);
+		textArea_MensajeInformacionUsuario.setLineWrap(true);
+		textArea_MensajeInformacionUsuario.setEditable(false);
+		textArea_MensajeInformacionUsuario.setOpaque(false);
+		textArea_MensajeInformacionUsuario.setBounds(166, 341, 451, 49);
+		panel_Inventario.add(textArea_MensajeInformacionUsuario);
 		
 		btn_ConfirmarPrecioNuevo = new JButton("");
 		btn_ConfirmarPrecioNuevo.setIcon(new ImageIcon(InterfazApp.class.getResource("/img/comprobar.png")));
@@ -841,11 +1583,6 @@ public class InterfazApp extends JFrame {
 		lbl_NumeroCantidadStock.setFont(new Font("Consolas", Font.BOLD, 16));
 		lbl_NumeroCantidadStock.setBounds(495, 163, 56, 24);
 		panel_Inventario.add(lbl_NumeroCantidadStock);
-		
-		lbl_MensajeReduccionOIngresoStock = new JLabel("");
-		lbl_MensajeReduccionOIngresoStock.setFont(new Font("Consolas", Font.BOLD, 16));
-		lbl_MensajeReduccionOIngresoStock.setBounds(166, 356, 451, 30);
-		panel_Inventario.add(lbl_MensajeReduccionOIngresoStock);
 		
 		lbl_CantidadProducto = new JLabel("CANTIDAD STOCK");
 		lbl_CantidadProducto.setFont(new Font("Consolas", Font.BOLD, 16));
@@ -912,136 +1649,6 @@ public class InterfazApp extends JFrame {
 		lbl_FondoInventario = new JLabel("");
 		lbl_FondoInventario.setBounds(0, 0, 897, 532);
 		panel_Inventario.add(lbl_FondoInventario);
-		
-		panel_PantallaPrincipal = new JPanel();
-		panel_PantallaPrincipal.setBackground(new Color(245, 209, 215));
-		panel_PantallaPrincipal.setBounds(0, 0, 897, 532);
-		panel_PantallaPrincipal.setBorder(new LineBorder(null, 0));
-		contentPane.add(panel_PantallaPrincipal);
-		panel_PantallaPrincipal.setVisible(false);
-		panel_PantallaPrincipal.setLayout(null);
-		
-		lbl_ComprobacionTaburete3 = new JLabel("");
-		lbl_ComprobacionTaburete3.setBounds(698, 107, 32, 32);
-		panel_PantallaPrincipal.add(lbl_ComprobacionTaburete3);
-		
-		lbl_ComprobacionTaburete2 = new JLabel("");
-		lbl_ComprobacionTaburete2.setBounds(636, 107, 32, 32);
-		panel_PantallaPrincipal.add(lbl_ComprobacionTaburete2);
-		
-		lbl_ComprobacionTaburete1 = new JLabel("");
-		lbl_ComprobacionTaburete1.setBounds(595, 87, 32, 32);
-		panel_PantallaPrincipal.add(lbl_ComprobacionTaburete1);
-		
-		lbl_ComprobacionMesa5 = new JLabel("");
-		lbl_ComprobacionMesa5.setBounds(633, 292, 32, 32);
-		panel_PantallaPrincipal.add(lbl_ComprobacionMesa5);
-		
-		lbl_ComprobacionMesa4 = new JLabel("");
-		lbl_ComprobacionMesa4.setBounds(438, 292, 32, 32);
-		panel_PantallaPrincipal.add(lbl_ComprobacionMesa4);
-		
-		lbl_ComprobacionMesa3 = new JLabel("");
-		lbl_ComprobacionMesa3.setBounds(726, 192, 32, 32);
-		panel_PantallaPrincipal.add(lbl_ComprobacionMesa3);
-		
-		lbl_ComprobacionMesa2 = new JLabel("");
-		lbl_ComprobacionMesa2.setBounds(535, 192, 32, 32);
-		panel_PantallaPrincipal.add(lbl_ComprobacionMesa2);
-		
-		lbl_ComprobacionMesa1 = new JLabel("");
-		lbl_ComprobacionMesa1.setBounds(348, 192, 32, 32);
-		panel_PantallaPrincipal.add(lbl_ComprobacionMesa1);
-		
-		lbl_Taburete3 = new JLabel("");
-		lbl_Taburete3.setBounds(689, 124, 50, 56);
-		panel_PantallaPrincipal.add(lbl_Taburete3);
-		
-		lbl_Taburete1 = new JLabel("");
-		lbl_Taburete1.setBounds(585, 106, 50, 56);
-		panel_PantallaPrincipal.add(lbl_Taburete1);
-		
-		lbl_Taburete2 = new JLabel("");
-		lbl_Taburete2.setBounds(627, 126, 50, 56);
-		panel_PantallaPrincipal.add(lbl_Taburete2);
-		
-		lbl_Detalles = new JLabel("");
-		lbl_Detalles.setBounds(419, 82, 61, 70);
-		panel_PantallaPrincipal.add(lbl_Detalles);
-		
-		lbl_Barra = new JLabel("");
-		lbl_Barra.setBounds(572, 22, 170, 156);
-		panel_PantallaPrincipal.add(lbl_Barra);
-		
-		btn_Horario = new JButton("Horario");
-		btn_Horario.setForeground(Color.WHITE);
-		btn_Horario.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btn_Horario.setBorder(new LineBorder(null, 0));
-		btn_Horario.setBackground(new Color(128, 0, 128));
-		btn_Horario.setBounds(85, 280, 138, 48);
-		panel_PantallaPrincipal.add(btn_Horario);
-		
-		btn_Contabilidad = new JButton("Contabilidad");
-		btn_Contabilidad.setForeground(Color.WHITE);
-		btn_Contabilidad.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btn_Contabilidad.setBorder(new LineBorder(null, 0));
-		btn_Contabilidad.setBackground(new Color(128, 0, 128));
-		btn_Contabilidad.setBounds(85, 220, 138, 48);
-		panel_PantallaPrincipal.add(btn_Contabilidad);
-		
-		btn_Inventario = new JButton("Inventario");
-		btn_Inventario.setForeground(Color.WHITE);
-		btn_Inventario.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btn_Inventario.setBorder(new LineBorder(null, 0));
-		btn_Inventario.setBackground(new Color(128, 0, 128));
-		btn_Inventario.setBounds(85, 160, 138, 48);
-		panel_PantallaPrincipal.add(btn_Inventario);
-		
-		lbl_Mesa5 = new JLabel("");
-		lbl_Mesa5.setBounds(595, 305, 110, 110);
-		panel_PantallaPrincipal.add(lbl_Mesa5);
-		
-		lbl_Mesa4 = new JLabel("");
-		lbl_Mesa4.setBounds(400, 305, 110, 110);
-		panel_PantallaPrincipal.add(lbl_Mesa4);
-		
-		lbl_Mesa3 = new JLabel("");
-		lbl_Mesa3.setBounds(688, 205, 110, 110);
-		panel_PantallaPrincipal.add(lbl_Mesa3);
-		
-		lbl_Mesa2 = new JLabel("");
-		lbl_Mesa2.setBounds(495, 205, 110, 110);
-		panel_PantallaPrincipal.add(lbl_Mesa2);
-		
-		lbl_Mesa1 = new JLabel("");
-		lbl_Mesa1.setBounds(310, 205, 110, 110);
-		panel_PantallaPrincipal.add(lbl_Mesa1);
-		
-		panel_ImgMarco = new JPanel();
-		panel_ImgMarco.setBackground(new Color(245, 209, 215));
-		panel_ImgMarco.setBorder(new LineBorder(new Color(70, 0, 130), 4));
-		panel_ImgMarco.setBounds(274, 22, 127, 130);
-		panel_PantallaPrincipal.add(panel_ImgMarco);
-		panel_ImgMarco.setLayout(null);
-		
-		lbl_ImgEmpleado = new JLabel("");
-		lbl_ImgEmpleado.setBounds(10, 10, 105, 108);
-		panel_ImgMarco.add(lbl_ImgEmpleado);
-		
-		lbl_NombreEmpleado = new JLabel("");
-		lbl_NombreEmpleado.setForeground(new Color(70, 0, 130));
-		lbl_NombreEmpleado.setBounds(257, 122, 96, 17);
-		panel_PantallaPrincipal.add(lbl_NombreEmpleado);
-		lbl_NombreEmpleado.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_NombreEmpleado.setFont(new Font("Consolas", Font.BOLD, 16));
-		
-		lbl_CerrarSesion = new JLabel("");
-		lbl_CerrarSesion.setBounds(10, 10, 68, 70);
-		panel_PantallaPrincipal.add(lbl_CerrarSesion);
-		
-		lbl_ImgPrincipalApp = new JLabel("");
-		lbl_ImgPrincipalApp.setBounds(0, 0, 897, 532);
-		panel_PantallaPrincipal.add(lbl_ImgPrincipalApp);
 		
 		panel_InformacionProducto = new JPanel();
 		panel_InformacionProducto.setForeground(new Color(0, 0, 0));
@@ -1364,9 +1971,9 @@ public class InterfazApp extends JFrame {
 		lbl_FotoEmpleado.setBounds(12, 12, 160, 189);
 		panel_FotoEmpleado.add(lbl_FotoEmpleado);
 		
-		lbl_Salir = new JLabel("");
-		lbl_Salir.setBounds(0, 0, 68, 66);
-		panel_DetallesEmpleado.add(lbl_Salir);
+		lbl_SalirDetallesEmpleado = new JLabel("");
+		lbl_SalirDetallesEmpleado.setBounds(0, 0, 68, 66);
+		panel_DetallesEmpleado.add(lbl_SalirDetallesEmpleado);
 		
 		lbl_ImgDetallesEmpleado = new JLabel("");
 		lbl_ImgDetallesEmpleado.setBounds(0, 0, 897, 532);
@@ -1383,6 +1990,9 @@ public class InterfazApp extends JFrame {
 		panel_InformacionProducto.setVisible(false);
 		panel_GestionComandas.setVisible(false);
 		panel_Inventario.setVisible(false);
+		panel_MetodosPago.setVisible(false);
+		panel_PagarComanda.setVisible(false);
+		panel_Contabilidad.setVisible(false);
 	}
 	
 	private ImageIcon ajustarTamañoImg(String ruta, int ancho, int alto) {

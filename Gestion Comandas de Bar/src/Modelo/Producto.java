@@ -13,7 +13,7 @@ public class Producto {
 	private double proteinas;
 	private double grasas;
 	private int cantidadStock;
-	private final int stockMaximo;
+	private int stockMaximo;
 	
 	public Producto(ImageIcon imagenProducto, double precio, String nombre, ArrayList<Ingrediente> ingredientes,
 			double proteinas, double grasas, int stockMaximo) {
@@ -85,6 +85,10 @@ public class Producto {
 
 	public int getStockMaximo() {
 		return stockMaximo;
+	}
+
+	public void setStockMaximo(int stockMaximo) {
+		this.stockMaximo = stockMaximo;
 	}
 
 	@Override
