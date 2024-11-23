@@ -1122,8 +1122,8 @@ public class ControladorCafeteria implements ActionListener, MouseListener {
 	}
 
 	public void actualizarIconoDisponibilidadLugares(Lugar lugar) {
-		if (lugar.obtenerComanda(1) != null && !lugar.obtenerComanda(1).getProductos().isEmpty()) {
-			switch (lugar.getNombreLugar()) {
+		if(lugar.obtenerComanda(1) != null && !lugar.obtenerComanda(1).getProductos().isEmpty()) {
+			switch (lugar.getNombreLugar()){
 			case "MESA 1":
 				vista.lbl_ComprobacionMesa1.setIcon(ajustarTamañoImg("src/img/ocupado.png", vista.lbl_ComprobacionMesa1.getHeight(), vista.lbl_ComprobacionMesa1.getWidth()));
 				break;
@@ -1151,8 +1151,8 @@ public class ControladorCafeteria implements ActionListener, MouseListener {
 			default:
 				break;
 			}
-		} else {
-			switch (lugar.getNombreLugar()) {
+		}else{
+			switch(lugar.getNombreLugar()){
 			case "MESA 1":
 				vista.lbl_ComprobacionMesa1.setIcon(ajustarTamañoImg("src/img/disponible.png", vista.lbl_ComprobacionMesa1.getHeight(), vista.lbl_ComprobacionMesa1.getWidth()));
 				break;
@@ -1199,21 +1199,20 @@ public class ControladorCafeteria implements ActionListener, MouseListener {
 		comandaActual = lugarElegido.obtenerComanda(1);
 		double precio = 0.0;
 
-		for (int i = 0; i < comidas.size(); i++) {
-			if (comidas.get(i).getNombre().equals(nombreComida)) {
+		for(int i = 0; i < comidas.size(); i++) {
+			if(comidas.get(i).getNombre().equals(nombreComida)) {
 
-				if (comidas.get(i).getCantidadStock() > 0) {
+				if(comidas.get(i).getCantidadStock() > 0) {
 					comidas.get(i).setCantidadStock(comidas.get(i).getCantidadStock() - 1);
 					precio = comidas.get(i).getPrecio();
 
-					actualizarStockBarraProgreso(progressBarsComidas[i], comidas.get(i).getCantidadStock(),
-							comidas.get(i).getStockMaximo());
+					actualizarStockBarraProgreso(progressBarsComidas[i], comidas.get(i).getCantidadStock(),comidas.get(i).getStockMaximo());
 
 					comandaActual.añadirProducto(nombreComida, precio);
 
 					lbComidasAgotadas[i].setVisible(false);
 
-					if (comidas.get(i).getCantidadStock() == 0) {
+					if(comidas.get(i).getCantidadStock() == 0) {
 						botonesAñadirComidas[i].setEnabled(false);
 						lbComidasAgotadas[i].setVisible(true);
 						lbComidasAgotadas[i].setIcon(ajustarTamañoImg("src/img/sin stock.png", lbComidasAgotadas[i].getWidth(), lbComidasAgotadas[i].getHeight()));
@@ -1230,14 +1229,14 @@ public class ControladorCafeteria implements ActionListener, MouseListener {
 		comandaActual = lugarElegido.obtenerComanda(1);
 		double precio = 0.0;
 
-		for (int i = 0; i < comidas.size(); i++) {
-			if (comidas.get(i).getNombre().equals(nombreComida)) {
+		for(int i = 0; i < comidas.size(); i++) {
+			if(comidas.get(i).getNombre().equals(nombreComida)) {
 				comidas.get(i).setCantidadStock(comidas.get(i).getCantidadStock() + 1);
 				precio = comidas.get(i).getPrecio();
 
 				actualizarStockBarraProgreso(progressBarsComidas[i], comidas.get(i).getCantidadStock(), comidas.get(i).getStockMaximo());
 
-				if (comidas.get(i).getCantidadStock() > 0) {
+				if(comidas.get(i).getCantidadStock() > 0) {
 					lbComidasAgotadas[i].setVisible(false);
 					botonesAñadirComidas[i].setEnabled(true);
 				}
@@ -1254,26 +1253,22 @@ public class ControladorCafeteria implements ActionListener, MouseListener {
 		comandaActual = lugarElegido.obtenerComanda(1);
 		double precio = 0.0;
 
-		precio = reducirStockBebida(nombreBebida, cafes, vista.progressBar_Bebida1, vista.lbl_CafeAgotado,
-				vista.btnAñadirBebida1);
+		precio = reducirStockBebida(nombreBebida, cafes, vista.progressBar_Bebida1, vista.lbl_CafeAgotado, vista.btnAñadirBebida1);
 		if (precio > 0.0) {
 			comandaActual.añadirProducto(nombreBebida, precio);
 		}
 
-		precio = reducirStockBebida(nombreBebida, batidos, vista.progressBar_Bebida2, vista.lbl_BatidoAgotado,
-				vista.btnAñadirBebida2);
+		precio = reducirStockBebida(nombreBebida, batidos, vista.progressBar_Bebida2, vista.lbl_BatidoAgotado, vista.btnAñadirBebida2);
 		if (precio > 0.0) {
 			comandaActual.añadirProducto(nombreBebida, precio);
 		}
 
-		precio = reducirStockBebida(nombreBebida, refrescos, vista.progressBar_Bebida3, vista.lbl_RefrescoAgotado,
-				vista.btnAñadirBebida3);
+		precio = reducirStockBebida(nombreBebida, refrescos, vista.progressBar_Bebida3, vista.lbl_RefrescoAgotado, vista.btnAñadirBebida3);
 		if (precio > 0.0) {
 			comandaActual.añadirProducto(nombreBebida, precio);
 		}
 
-		precio = reducirStockBebida(nombreBebida, bebidasCalientesOFrias, vista.progressBar_Bebida4,
-				vista.lbl_BebidaCalienteOFriaAgotada, vista.btnAñadirBebida4);
+		precio = reducirStockBebida(nombreBebida, bebidasCalientesOFrias, vista.progressBar_Bebida4, vista.lbl_BebidaCalienteOFriaAgotada, vista.btnAñadirBebida4);
 		if (precio > 0.0) {
 			comandaActual.añadirProducto(nombreBebida, precio);
 		}
@@ -1281,8 +1276,7 @@ public class ControladorCafeteria implements ActionListener, MouseListener {
 		actualizarComanda(comandaActual);
 	}
 
-	public double reducirStockBebida(String nombreBebida, ArrayList<Producto> bebidas, JProgressBar progressBarBebida,
-		JLabel lblAgotado, JButton btnAñadirBebida) {
+	public double reducirStockBebida(String nombreBebida, ArrayList<Producto> bebidas, JProgressBar progressBarBebida, JLabel lblAgotado, JButton btnAñadirBebida) {
 		double precio = 0.0;
 
 		for (int i = 0; i < bebidas.size(); i++) {
@@ -1406,22 +1400,22 @@ public class ControladorCafeteria implements ActionListener, MouseListener {
 			}
 
 			String cafeSeleccionado = vista.comboBox_TipoCafe.getSelectedItem().toString();
-			if (entrada.getKey().equals(cafeSeleccionado)) {
+			if(entrada.getKey().equals(cafeSeleccionado)) {
 				vista.btnRetirarBebida1.setEnabled(true);
 			}
 
 			String batidoSeleccionado = vista.comboBox_TipoBatido.getSelectedItem().toString();
-			if (entrada.getKey().equals(batidoSeleccionado)) {
+			if(entrada.getKey().equals(batidoSeleccionado)) {
 				vista.btnRetirarBebida2.setEnabled(true);
 			}
 
 			String refrescoSeleccionado = vista.comboBox_TipoRefresco.getSelectedItem().toString();
-			if (entrada.getKey().equals(refrescoSeleccionado)) {
+			if(entrada.getKey().equals(refrescoSeleccionado)) {
 				vista.btnRetirarBebida3.setEnabled(true);
 			}
 
 			String bebidaCalienteOFriaSeleccionada = vista.comboBox_TipoBebidaCalienteoFria.getSelectedItem().toString();
-			if (entrada.getKey().equals(bebidaCalienteOFriaSeleccionada)) {
+			if(entrada.getKey().equals(bebidaCalienteOFriaSeleccionada)) {
 				vista.btnRetirarBebida4.setEnabled(true);
 			}
 		}
@@ -1433,8 +1427,8 @@ public class ControladorCafeteria implements ActionListener, MouseListener {
 		comandaActual = lugarElegido.obtenerComanda(1);
 		HashMap<String, Integer> elementosComanda = comandaActual.getProductos();
 
-		for (Map.Entry<String, Integer> entrada : elementosComanda.entrySet()) {
-			if (entrada.getKey().equals(bebidaSeleccionada)) {
+		for(Map.Entry<String, Integer> entrada : elementosComanda.entrySet()) {
+			if(entrada.getKey().equals(bebidaSeleccionada)) {
 				bebidaComanda = true;
 			}
 		}
@@ -1445,11 +1439,11 @@ public class ControladorCafeteria implements ActionListener, MouseListener {
 		progressBar.setMaximum(stockMaximo);
 		progressBar.setValue(cantidadStock);
 
-		if (cantidadStock > 0.75 * progressBar.getMaximum()) {
-			progressBar.setForeground(Color.GREEN);
-		} else if (cantidadStock > 0.25 * progressBar.getMaximum()) {
-			progressBar.setForeground(Color.YELLOW);
-		} else {
+		if(cantidadStock > 0.75 * progressBar.getMaximum()) {
+			progressBar.setForeground(new Color(0, 136, 0));
+		}else if(cantidadStock > 0.25 * progressBar.getMaximum()) {
+			progressBar.setForeground(new Color(228, 160, 16));
+		}else{
 			progressBar.setForeground(Color.RED);
 		}
 	}
